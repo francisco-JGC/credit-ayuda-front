@@ -1,9 +1,11 @@
-import { Routes } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
+import HomePage from './pages/home'
 
 export default function Router() {
 
   return (
     <Routes>
+      <Route index path="/" element={<HomePage />} />
       {/* <Route index path="/" element={<HomePage />} />
         <Route path="/sites" element={<SitesPage />} />
         <Route path="/about" element={<AboutPage />} />
