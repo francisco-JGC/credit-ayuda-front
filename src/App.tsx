@@ -5,9 +5,11 @@ import { Header } from './components/header'
 
 function App() {
   return (
-    <div className="mx-auto flex max-w-7xl items-center justify-between lg:px-8">
+    <div className="mx-auto flex flex-col max-w-7xl items-center justify-between lg:px-8">
       <Header />
-      <Router />
+      <div className='w-full mt-6'>
+        <Router />
+      </div>
       {/* <Footer /> */}
 
       <Toaster />
