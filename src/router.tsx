@@ -1,18 +1,13 @@
 import { Routes, Route } from 'react-router-dom'
 import HomePage from './pages/home'
+import LoginPage from './pages/login'
 
 export default function Router() {
 
   return (
     <Routes>
       <Route index path="/" element={<HomePage />} />
-      {/* <Route index path="/" element={<HomePage />} />
-        <Route path="/sites" element={<SitesPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/package" element={<PackagesPage />}>
-          <Route path=":destination" element={<PackagesPage />} />
-        </Route>
-        <Route path="/contact" element={<ContactPage />} /> */}
+      <Route index path="/login" element={<LoginPage />} />
     </Routes>
   )
 }
