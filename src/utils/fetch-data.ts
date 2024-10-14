@@ -19,7 +19,7 @@ export interface IPagination {
   limit: number;
 }
 
-export async function fetchData<TResponse, TData = any>({
+export async function fetchData<TData = any>({
   url,
   method,
   data,
