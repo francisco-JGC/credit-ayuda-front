@@ -6,26 +6,26 @@ import useForm from '@/hooks/useForm'
 import { toast } from 'sonner'
 
 interface ILogin {
-  email: string
+  username: string
   password: string
 }
 
 export default function LoginPage() {
   const { formValues, handleInputChange } = useForm<ILogin>({
-    email: '',
+    username: '',
     password: ''
   })
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (!formValues.email || !formValues.password)
+    if (!formValues.username || !formValues.password)
       return toast.info('Por favor complete los campos')
 
 
     toast.loading('Iniciando sesión...')
 
-    const response = await login(formValues.email, formValues.password)
+    const response = await login(formValues.username, formValues.password)
     toast.dismiss()
 
     if (response) {
@@ -40,14 +40,13 @@ export default function LoginPage() {
 
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+            <label htmlFor="username" className="block text-sm font-medium text-gray-700">Nombre de usuario</label>
             <Input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Correo Electronico"
+              id="username"
+              name="username"
+              placeholder="usuario"
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              value={formValues.email}
+              value={formValues.username}
               onChange={handleInputChange}
             />
           </div>
