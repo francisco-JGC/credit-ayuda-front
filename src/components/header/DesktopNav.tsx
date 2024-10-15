@@ -5,9 +5,9 @@ import { reports } from './data';
 
 export const DesktopNav = () => (
   <Popover className="hidden lg:flex lg:gap-x-12">
-    <Link to="#" className="font-semibold leading-6 text-gray-900">Inicio</Link>
+    <Link to="/" className="font-semibold leading-6 text-gray-900">Inicio</Link>
     <Link to="#" className="font-semibold leading-6 text-gray-900">Préstamos</Link>
-    <Link to="#" className="font-semibold leading-6 text-gray-900">Clientes</Link>
+    <Link to="/clients" className="font-semibold leading-6 text-gray-900">Clientes</Link>
     <Popover className="relative">
       <PopoverButton className="flex items-center gap-x-1 font-semibold leading-6 text-gray-900">
         Informes
