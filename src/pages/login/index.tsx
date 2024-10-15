@@ -4,6 +4,9 @@ import { Button } from '@/components/ui/button'
 import { login } from '@/actions/session'
 import useForm from '@/hooks/useForm'
 import { toast } from 'sonner'
+import { useAuth } from '@/components/protectedRoute/authProvider'
+import { useNavigate } from 'react-router-dom';
+
 
 interface ILogin {
   username: string
@@ -11,10 +14,13 @@ interface ILogin {
 }
 
 export default function LoginPage() {
+  const { setUser } = useAuth()
   const { formValues, handleInputChange } = useForm<ILogin>({
     username: '',
     password: ''
   })
+  const navigate = useNavigate();
+
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -25,11 +31,17 @@ export default function LoginPage() {
 
     toast.loading('Iniciando sesión...')
 
-    const response = await login(formValues.username, formValues.password)
+    const response = await login(formValues.username, formValues.password) as any
     toast.dismiss()
 
     if (response) {
-      // router.push('/dashboard')
+      setUser({
+        role: response.role,
+        username: response.username,
+        token: response.token
+      })
+
+      navigate('/');
     }
   }
 
