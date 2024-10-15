@@ -49,13 +49,13 @@ export async function fetchData<TData = any>({
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}${url}`,
+      `${import.meta.env.VITE_BASE_URL}${url}`,
       options
     );
 
     return await response.json();
-  } catch (error) {
-    console.error("Error en la solicitud:", error);
+  } catch (error: any) {
+    console.error("Error en la solicitud:", error.message);
     throw error;
   }
 }
