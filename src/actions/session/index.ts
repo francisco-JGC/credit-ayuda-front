@@ -1,15 +1,16 @@
 import { toast } from "sonner";
 import { fetchData } from "@/utils/fetch-data";
+import Cookies from "js-cookie"; // Importamos js-cookie
 
 export const login = async (
-  email: string,
+  username: string,
   password: string
-): Promise<boolean> => {
+): Promise<unknown> => {
   try {
     const response = await fetchData({
       url: "/auth/login",
       method: "POST",
-      data: { email, password },
+      data: { username, password },
     });
 
     toast.dismiss();
@@ -22,17 +23,16 @@ export const login = async (
     }
 
     toast.success("Inicio de sesión exitoso!");
-    // const { data } = response as { data: any };
-    // setCookie('token', data.token)
-    // setCookie('username', data.username)
-    // setCookie('email', data.email)
-    // setCookie('role', data.role)
-    return true;
+    const { data } = response as { data: any };
+    Cookies.set("token", data.token);
+    Cookies.set("username", data.username);
+    Cookies.set("role", data.role);
+    return response.data;
   } catch (error) {
     toast.error("Error al iniciar sesión", {
       description: "revisa las credenciales",
     });
-    return false;
+    return {};
   }
 };
 
@@ -40,7 +40,7 @@ export const logout = (): boolean => {
   try {
     // deleteCookie("token");
     // deleteCookie("username");
-    // deleteCookie("email");
+    // deleteCookie("username");
     // deleteCookie("role");
 
     toast.success("Sesión cerrada exitosamente");
