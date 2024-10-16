@@ -8,11 +8,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Client } from "@/types/clients";
+import { IClientTable } from "@/types/clients";
 import { Actions } from "./components/actions";
 import { formatPrice } from "@/utils/price-format";
 
-const items: Client[] = [
+const items: IClientTable[] = [
   {
     id: 1,
     name: 'Juan Pérez',
