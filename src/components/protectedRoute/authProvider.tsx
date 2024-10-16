@@ -1,10 +1,10 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
-import { User } from '@/types/user';
+import { UserLoggedin } from '@/types/user';
 
 type AuthContextType = {
-  user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  user: UserLoggedin | null;
+  setUser: React.Dispatch<React.SetStateAction<UserLoggedin | null>>;
   logout: () => void;
   isLoading: boolean;
 };
@@ -16,7 +16,7 @@ type AuthProviderProps = PropsWithChildren & {
 };
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserLoggedin | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

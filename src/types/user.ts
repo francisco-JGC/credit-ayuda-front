@@ -1,4 +1,4 @@
-export type User = {
+export type UserLoggedin = {
   username: string;
   token: string;
   role: string;
