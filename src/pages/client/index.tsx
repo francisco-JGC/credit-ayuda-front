@@ -133,7 +133,7 @@ export default function ClientPage() {
   const handleSetRouteFilter = (route: string) => setRouteFilter(route)
 
   return (
-    <div className="flex flex-col gap-8 p-6 md:p-8">
+    <div className="flex flex-col gap-8 p-4 md:p-6 lg:p-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <Link to={'/clients/create'}>
           <Button className="w-full md:w-auto">Nuevo cliente</Button>
