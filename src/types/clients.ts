@@ -1,4 +1,4 @@
-export type Client = {
+export interface IClientTable {
   id: number;
   name: string;
   phone: string;
@@ -6,4 +6,15 @@ export type Client = {
   currentDebt: number;
   route: string;
   loanStatus: "approved" | "pending" | "paid";
-};
+}
+
+export interface ICreateClient {
+  name: string;
+  dni: string;
+  primary_phone: string;
+  secondary_phone?: string;
+  primary_address: string;
+  secondary_address?: string;
+  business_type: string;
+  route_name: string;
+}
