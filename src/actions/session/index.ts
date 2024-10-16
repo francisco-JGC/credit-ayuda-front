@@ -1,6 +1,6 @@
 import { toast } from "sonner";
 import { fetchData } from "@/utils/fetch-data";
-import Cookies from "js-cookie"; // Importamos js-cookie
+import Cookies from "js-cookie";
 
 export const login = async (
   username: string,
@@ -34,33 +34,4 @@ export const login = async (
     });
     return {};
   }
-};
-
-export const logout = (): boolean => {
-  try {
-    // deleteCookie("token");
-    // deleteCookie("username");
-    // deleteCookie("username");
-    // deleteCookie("role");
-
-    toast.success("Sesión cerrada exitosamente");
-
-    return true;
-  } catch (error) {
-    toast.error("Error al cerrar sesión");
-    return false;
-  }
-};
-
-export const getSession = () => {
-  const token = localStorage.getItem("authToken");
-  if (!token) {
-    return null;
-  }
-
-  const user = localStorage.getItem("user");
-  return {
-    token,
-    user: user ? JSON.parse(user) : null,
-  };
 };
