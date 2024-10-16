@@ -132,68 +132,80 @@ export default function ClientPage() {
 
   const handleSetRouteFilter = (route: string) => setRouteFilter(route)
 
-
-
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex justify-between items-center">
+    <div className="flex flex-col gap-8 p-6 md:p-8">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <Link to={'/clients/create'}>
-          <Button>Nuevo cliente</Button>
+          <Button className="w-full md:w-auto">Nuevo cliente</Button>
         </Link>
 
-        <div className="flex justify-between gap-4">
-          <div className="relative">
-            <Search className="text-gray-500 absolute top-[6px] left-2" width={19} />
-            <Input placeholder="Cédula del cliente..." className="pl-10 w-[350px]"
+        <div className="flex flex-col md:flex-row justify-between gap-4 w-full md:w-auto">
+          <div className="relative w-full md:w-[350px]">
+            <Search className="text-gray-500 absolute top-2 left-2" width={19} />
+            <Input
+              placeholder="Cédula del cliente..."
+              className="pl-10 w-full"
               name="search_dni"
               onChange={handleInputChange}
               value={search.search_dni}
             />
           </div>
 
-          <div>
+          <div className="mt-2 md:mt-0">
             <FilterRoute handleSetRouteFilter={handleSetRouteFilter} routes={routes} />
           </div>
         </div>
       </div>
-      <Table className="overflow-ellipsis">
-        <TableCaption>Lista de clientes</TableCaption>
-        <TableHeader className="bg-gray-100">
-          < TableRow >
-            <TableHead className="text-gray-800 font-bold">Nombre del Cliente</TableHead>
-            <TableHead className="text-gray-800 font-bold">Teléfono</TableHead>
-            <TableHead className="text-gray-800 font-bold">Dirección</TableHead>
-            <TableHead className="text-gray-800 font-bold">Deuda Actual</TableHead>
-            <TableHead className="text-gray-800 font-bold">Ruta</TableHead>
-            <TableHead className="text-gray-800 font-bold">Estado de préstamo</TableHead>
-            <TableHead></TableHead>
-          </TableRow >
-        </TableHeader >
-        <TableBody>
-          {items.map((client) => (
-            <TableRow key={client.id}>
-              <TableCell className="font-semibold">{client.name}</TableCell>
-              <TableCell>{client.phone}</TableCell>
-              <TableCell>{client.address}</TableCell>
-              <TableCell>{formatPrice(client.currentDebt)}</TableCell>
-              <TableCell>{client.route}</TableCell>
-              <TableCell className={`font-bold ${client.loanStatus === 'approved' ? 'text-green-500' : client.loanStatus === 'pending' ? 'text-yellow-500' : 'text-blue-500'}`}>
-                {
-                  client.loanStatus === 'approved' ? 'Aprobado' : client.loanStatus === 'pending' ? 'Pendiente' : 'Pagado'
-                }
-              </TableCell>
-              <TableCell>
-                <Actions client={client} />
-              </TableCell>
+
+      <div className="overflow-x-auto mt-6">
+        <Table className="w-full">
+          <TableCaption>Lista de clientes</TableCaption>
+          <TableHeader className="bg-gray-100">
+            <TableRow>
+              <TableHead className="text-gray-800 font-bold py-4 px-6">Nombre del Cliente</TableHead>
+              <TableHead className="text-gray-800 font-bold py-4 px-6">Teléfono</TableHead>
+              <TableHead className="text-gray-800 font-bold py-4 px-6">Dirección</TableHead>
+              <TableHead className="text-gray-800 font-bold py-4 px-6">Deuda Actual</TableHead>
+              <TableHead className="text-gray-800 font-bold py-4 px-6">Ruta</TableHead>
+              <TableHead className="text-gray-800 font-bold py-4 px-6">Estado de préstamo</TableHead>
+              <TableHead className="text-gray-800 font-bold py-4 px-6"></TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            {/* Puedes agregar un resumen aquí si lo necesitas */}
-          </TableRow>
-        </TableFooter>
-      </Table >
+          </TableHeader>
+          <TableBody>
+            {items.map((client) => (
+              <TableRow key={client.id} className="border-b">
+                <TableCell className="py-4 px-6 font-semibold">{client.name}</TableCell>
+                <TableCell className="py-4 px-6">{client.phone}</TableCell>
+                <TableCell className="py-4 px-6">{client.address}</TableCell>
+                <TableCell className="py-4 px-6">{formatPrice(client.currentDebt)}</TableCell>
+                <TableCell className="py-4 px-6">{client.route}</TableCell>
+                <TableCell
+                  className={`py-4 px-6 font-bold ${client.loanStatus === 'approved'
+                    ? 'text-green-500'
+                    : client.loanStatus === 'pending'
+                      ? 'text-yellow-500'
+                      : 'text-blue-500'
+                    }`}
+                >
+                  {client.loanStatus === 'approved'
+                    ? 'Aprobado'
+                    : client.loanStatus === 'pending'
+                      ? 'Pendiente'
+                      : 'Pagado'}
+                </TableCell>
+                <TableCell className="py-4 px-6">
+                  <Actions client={client} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              {/* Puedes agregar un resumen aquí si lo necesitas */}
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </div>
     </div>
   );
 }
