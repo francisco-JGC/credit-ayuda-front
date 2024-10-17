@@ -46,6 +46,9 @@ export const MobileNav = ({ open, onClose }: { open: boolean; onClose: () => voi
             <Link to="#" className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
               Solicitudes
             </Link>
+            <Link to="/routes" className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+              Rutas
+            </Link>
           </div>
           <div className="py-6">
             <UserMenu />

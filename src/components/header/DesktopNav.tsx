@@ -30,5 +30,6 @@ export const DesktopNav = () => (
     </Popover>
     <Link to="#" className="font-semibold leading-6 text-gray-900">Catálogos</Link>
     <Link to="#" className="font-semibold leading-6 text-gray-900">Solicitudes</Link>
+    <Link to="/routes" className="font-semibold leading-6 text-gray-900">Rutas</Link>
   </Popover>
 );
