@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import useForm from "@/hooks/useForm";
 import { useState } from "react";
-import { FilterRoute } from "@/components/filterRoute";
+import { FilterRoute } from "@/components/filterTables/filterRoute";
 
 const items: IClientTable[] = [
   {

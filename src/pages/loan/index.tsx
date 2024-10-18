@@ -16,10 +16,10 @@ import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import useForm from "@/hooks/useForm";
-import { FilterRoute } from "@/components/filterRoute";
+import { FilterRoute } from "@/components/filterTables/filterRoute";
 import { useState } from "react";
 import { formatFrequency } from "@/utils/format-frequency";
-import { FilterFrequency } from "@/components/filterFrequency";
+import { FilterFrequency } from "@/components/filterTables/filterFrequency";
 
 const items: ILoanTable[] = [
   {
