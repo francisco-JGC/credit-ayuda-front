@@ -1,4 +1,4 @@
-// import { getCookie } from 'cookies-next'
+import Cookies from "js-cookie";
 
 interface FetchDataParams<T> {
   url: string;
@@ -30,12 +30,12 @@ export async function fetchData<TData = any>({
   };
 
   if (useToken) {
-    // const token = getCookie("token");
-    // if (token) {
-    //   headers["Authorization"] = `Bearer ${token}`;
-    // } else {
-    //   throw new Error("Token no encontrado");
-    // }
+    const token = Cookies.get("token");
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    } else {
+      throw new Error("Token no encontrado");
+    }
   }
 
   const options: RequestInit = {
