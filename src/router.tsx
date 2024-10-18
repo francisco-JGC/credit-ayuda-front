@@ -6,6 +6,8 @@ import ProtectedRoute from './components/protectedRoute'
 import CreateClientPage from './pages/client/createClientPage'
 import RoutesPage from './pages/routes'
 import CreateRoutePage from './pages/routes/createRoutePage'
+import LoanPage from './pages/loan'
+import CreateLoanPage from './pages/loan/createLoanPage'
 
 export default function Router() {
 
@@ -38,6 +40,18 @@ export default function Router() {
       <Route path='/routes/create' element={
         <ProtectedRoute>
           <CreateRoutePage />
+        </ProtectedRoute>
+      } />
+
+      <Route path='/loans' element={
+        <ProtectedRoute>
+          <LoanPage />
+        </ProtectedRoute>
+      } />
+
+      <Route path='/loans/create' element={
+        <ProtectedRoute>
+          <CreateLoanPage />
         </ProtectedRoute>
       } />
 
