@@ -19,6 +19,7 @@ import useForm from "@/hooks/useForm";
 import { FilterRoute } from "@/components/filterRoute";
 import { useState } from "react";
 import { formatFrequency } from "@/utils/format-frequency";
+import { FilterFrequency } from "@/components/filterFrequency";
 
 const items: ILoanTable[] = [
   {
@@ -29,6 +30,7 @@ const items: ILoanTable[] = [
     remaining_debt: 100.50,
     frequency: 'monthly',
     route: 'Ruta 1',
+    status: 'active'
   },
   {
     id: 2,
@@ -38,6 +40,7 @@ const items: ILoanTable[] = [
     remaining_debt: 3250.80,
     frequency: 'weekly',
     route: 'Ruta 2',
+    status: 'active'
   },
   {
     id: 3,
@@ -47,6 +50,7 @@ const items: ILoanTable[] = [
     remaining_debt: 0.00,
     frequency: 'daily',
     route: 'Ruta 3',
+    status: 'paid'
   },
 ];
 
@@ -57,8 +61,10 @@ export default function LoanPage() {
     search_dni: ''
   })
   const [routeFilter, setRouteFilter] = useState<string>('')
+  const [frequencyFilter, setFrequencyFilter] = useState<string>('')
 
   const handleSetRouteFilter = (route: string) => setRouteFilter(route)
+  const handleSetFrequency = (route: string) => setRouteFilter(route)
 
   return (
     <div className="flex flex-col gap-8 p-4 md:p-6 lg:p-8">
@@ -79,7 +85,8 @@ export default function LoanPage() {
             />
           </div>
 
-          <div className="mt-2 md:mt-0">
+          <div className="mt-2 md:mt-0 flex gap-2">
+            <FilterFrequency handleSetFrequency={handleSetFrequency} />
             <FilterRoute handleSetRouteFilter={handleSetRouteFilter} />
           </div>
         </div>

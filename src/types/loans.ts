@@ -6,4 +6,5 @@ export interface ILoanTable {
   remaining_debt: number
   frequency: 'daily' | 'weekly' | 'biweekly' | 'monthly' | 'yearly'
   route: string
+  status: 'active' | 'paid' | 'pending'
 }
