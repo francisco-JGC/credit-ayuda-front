@@ -2,13 +2,16 @@ import { LayuotPage } from "@/components/layuotPage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import useForm from "@/hooks/useForm";
+import { createClient } from "@/services/client";
+import { getAllRoutes } from "@/services/route";
 import { ICreateClient } from "@/types/clients";
 import { IRoute } from "@/types/routes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function CreateClientPage() {
   const [routes, setRoutes] = useState<IRoute[]>([])
-  const { formValues, handleInputChange } = useForm<ICreateClient>({
+  const { formValues, handleInputChange, resetForm } = useForm<ICreateClient>({
     name: '',
     dni: '',
     primary_address: '',
@@ -18,9 +21,37 @@ export default function CreateClientPage() {
     business_type: '',
     route_name: ''
   })
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault()
+
+    toast.loading('Creando cliente...')
+
+    const response = await createClient(formValues)
+    toast.dismiss()
+
+    if (response.success) {
+      toast.success('Cliente creado con exito')
+      resetForm()
+    } else {
+      toast.error('Hubo un error al crear el cliente', {
+        description: response.message
+      })
+    }
+  }
+
+  useEffect(() => {
+    getAllRoutes()
+      .then(response => {
+        if (response.success) {
+          setRoutes(response.data as any)
+        }
+      })
+  }, [])
+
   return (
     <LayuotPage title="Crear nuevo cliente" description="Por favor llene todos los campos requeridos">
-      <form className="grid grid-cols-2 gap-8">
+      <form className="grid grid-cols-2 gap-8" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3">
           <label htmlFor="" className="font-semibold">Nombre del cliente *</label>
           <Input value={formValues.name} name="name" onChange={handleInputChange} placeholder="Julio Perez" required />
@@ -58,7 +89,9 @@ export default function CreateClientPage() {
 
         <div className="flex flex-col gap-3">
           <label htmlFor="" className="font-semibold">Seleccione una ruta *</label>
-          <select name="route_name" value={formValues.route_name} defaultValue={formValues.route_name} className="p-[6px] rounded-lg border" required>
+          <select name="route_name" value={formValues.route_name} defaultValue={formValues.route_name} className="p-[6px] rounded-lg border" required
+            onChange={handleInputChange}
+          >
             <option value="" disabled>Seleccione</option>
             {
               routes.map((route, index) => {
