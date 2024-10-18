@@ -5,6 +5,7 @@ import ClientPage from './pages/client'
 import ProtectedRoute from './components/protectedRoute'
 import CreateClientPage from './pages/client/createClientPage'
 import RoutesPage from './pages/routes'
+import CreateRoutePage from './pages/routes/createRoutePage'
 
 export default function Router() {
 
@@ -31,6 +32,12 @@ export default function Router() {
       <Route path='/routes' element={
         <ProtectedRoute>
           <RoutesPage />
+        </ProtectedRoute>
+      } />
+
+      <Route path='/routes/create' element={
+        <ProtectedRoute>
+          <CreateRoutePage />
         </ProtectedRoute>
       } />
 
