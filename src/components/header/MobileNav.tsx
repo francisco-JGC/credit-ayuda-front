@@ -21,7 +21,7 @@ export const MobileNav = ({ open, onClose }: { open: boolean; onClose: () => voi
             <Link to="/" className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
               Inicio
             </Link>
-            <Link to="#" className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+            <Link to="/loans" className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
               Préstamos
             </Link>
             <Link to="/clients" className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
