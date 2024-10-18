@@ -1,4 +1,4 @@
-import { Client } from '@/types/clients'
+import { IClientTable } from '@/types/clients'
 import {
   EllipsisVertical,
   HistoryIcon,
@@ -19,7 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 interface IProps {
-  client: Client
+  client: IClientTable
 }
 
 export const Actions = ({ client }: IProps) => {
