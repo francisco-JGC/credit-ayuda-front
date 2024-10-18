@@ -6,7 +6,11 @@ interface FormState {
 
 interface UseFormReturn<T> {
   formValues: T
-  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  handleInputChange: (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>,
+  ) => void
   resetForm: () => void
   setValues: (newValues: Partial<T>) => void
 }
@@ -14,7 +18,11 @@ interface UseFormReturn<T> {
 const useForm = <T extends FormState>(initialState: T): UseFormReturn<T> => {
   const [formValues, setFormValues] = useState<T>(initialState)
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     const { name, value } = event.target
 
     setFormValues((prevValues) => ({
