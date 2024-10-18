@@ -16,8 +16,8 @@ import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import useForm from "@/hooks/useForm";
-import { FilterRoute } from "./components/filterRoute";
 import { useState } from "react";
+import { FilterRoute } from "@/components/filterRoute";
 
 const items: IClientTable[] = [
   {
@@ -103,26 +103,6 @@ const items: IClientTable[] = [
   },
 ];
 
-const routes = [
-  {
-    value: "Ruta 1",
-    label: "Ruta 1",
-  },
-  {
-    value: "Ruta 2",
-    label: "Ruta 2",
-  },
-  {
-    value: "Ruta 3",
-    label: "Ruta 3",
-  },
-  {
-    value: "Ruta 4",
-    label: "Ruta 4",
-  },
-]
-
-
 export default function ClientPage() {
   const { formValues: search, handleInputChange } = useForm({
     search_dni: ''
@@ -151,7 +131,7 @@ export default function ClientPage() {
           </div>
 
           <div className="mt-2 md:mt-0">
-            <FilterRoute handleSetRouteFilter={handleSetRouteFilter} routes={routes} />
+            <FilterRoute handleSetRouteFilter={handleSetRouteFilter} />
           </div>
         </div>
       </div>
