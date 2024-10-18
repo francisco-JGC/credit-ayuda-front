@@ -11,3 +11,11 @@ export const createRoute = async (
     useToken: true,
   });
 };
+
+export const getAllRoutes = async (): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: "/route",
+    method: "GET",
+    useToken: true,
+  });
+};
