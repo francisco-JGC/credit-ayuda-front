@@ -18,7 +18,7 @@ import { useEffect, useState } from "react"
 import { formatFrequency } from "@/utils/format-frequency"
 
 interface IProps {
-  handleSetFrequency: (route: string) => void
+  handleSetFrequency: (name: string, value: string) => void
 }
 
 
@@ -28,7 +28,7 @@ export function FrequencyPayment({ handleSetFrequency }: IProps) {
   const [frequencies] = useState<string[]>(['daily', 'weekly', 'biweekly', 'monthly', 'yearly'])
 
   useEffect(() => {
-    handleSetFrequency(value)
+    handleSetFrequency('frequency', value)
   }, [value])
 
   return (

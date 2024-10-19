@@ -18,7 +18,7 @@ import { useEffect, useState } from "react"
 import { getPaymentTermByFrequency } from "@/utils/paymet-term"
 
 interface IProps {
-  handleSetFrequency: (route: string) => void
+  handleSetFrequency: (name: string, value: string) => void
   frequency: 'daily' | 'weekly' | 'biweekly' | 'monthly' | 'yearly'
 }
 
@@ -26,11 +26,16 @@ interface IProps {
 export function PaymentTerm({ handleSetFrequency, frequency }: IProps) {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState("")
-  const [paymentTerm] = useState<{ value: number, label: string }[]>(getPaymentTermByFrequency(frequency))
+  const [paymentTerm, setPaymentTerm] = useState<{ value: number, label: string }[]>(getPaymentTermByFrequency(frequency))
 
   useEffect(() => {
-    handleSetFrequency(value)
+    handleSetFrequency('total_payments', value)
   }, [value])
+
+  useEffect(() => {
+    setPaymentTerm(getPaymentTermByFrequency(frequency))
+    setValue('')
+  }, [frequency])
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
