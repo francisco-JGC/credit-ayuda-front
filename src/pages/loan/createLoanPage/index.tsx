@@ -7,6 +7,7 @@ import { PreviewClientInfo } from "./components/previewClientInfo";
 import { FormLoanDetails } from "./components/formLoanDetails";
 import { FormSearchClientByDni } from "./components/formSearchClientByDni";
 import { useState } from "react";
+import { getClienByDni } from "@/services/client";
 
 export default function CreateLoanPage() {
   const { formValues: search, handleInputChange: handleInputChangeDni } = useForm({
@@ -31,17 +32,20 @@ export default function CreateLoanPage() {
     toast.loading('Buscando cliente...')
     setIsLoading(true)
 
-    // const response = await createClient(formValues)
-    // toast.dismiss()
+    const response = await getClienByDni(search.dni)
+    toast.dismiss()
 
-    // if (response.success) {
-    //   toast.success('Cliente creado con exito')
-    //   resetForm()
-    // } else {
-    //   toast.error('Hubo un error al crear el cliente', {
-    //     description: response.message
-    //   })
-    // }
+    if (response.success) {
+      toast.success('Información del cliente cargada')
+      setClient(response.data as any)
+      handleInputChange({ target: { name: 'client_id', value: (response.data as any).id } } as any)
+    } else {
+      toast.error('Hubo un error al cargar la información cliente', {
+        description: response.message
+      })
+    }
+
+    setIsLoading(false)
   }
 
   return (
