@@ -10,6 +10,10 @@ interface IProps {
 }
 
 export const FormLoanDetails = ({ formValues, handleInputChange }: IProps) => {
+  const handleChangeValuePopover = (name: string, value: string) => {
+    handleInputChange({ target: { name, value } })
+  }
+
   return (
     <div>
       <div className="px-4 sm:px-0">
@@ -33,13 +37,13 @@ export const FormLoanDetails = ({ formValues, handleInputChange }: IProps) => {
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 text-gray-900">Frecuencia de pago</dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              <FrequencyPayment handleSetFrequency={() => { }} />
+              <FrequencyPayment handleSetFrequency={handleChangeValuePopover} />
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 text-gray-900">Plazo</dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              <PaymentTerm handleSetFrequency={() => { }} frequency="yearly" />
+              <PaymentTerm handleSetFrequency={handleChangeValuePopover} frequency={formValues.frequency} />
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
