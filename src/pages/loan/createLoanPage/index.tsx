@@ -43,6 +43,9 @@ export default function CreateLoanPage() {
       toast.error('Hubo un error al cargar la información cliente', {
         description: response.message
       })
+      setClient({} as any)
+      handleInputChange({ target: { name: 'client_id', value: -1 } } as any)
+
     }
 
     setIsLoading(false)
