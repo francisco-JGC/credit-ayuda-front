@@ -46,7 +46,7 @@ export default function CreateLoanPage() {
 
   return (
     <LayuotPage title="Nuevo Prestamo" description="Por favor llene todos los campos requeridos">
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-6">
         <FormSearchClientByDni search={search} handleInputChangeDni={handleInputChangeDni} handleSearchClientDni={handleSearchClientDni} />
         <PreviewClientInfo client={client} isLoading={isLoading} />
         <FormLoanDetails formValues={formValues} handleInputChange={handleInputChange} />
