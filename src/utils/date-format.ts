@@ -1,8 +1,15 @@
 export const formatDate = (date: string) => {
-  const dateObj = new Date(date);
+  const dateObj = new Date(date)
 
-  let month: any = dateObj.getMonth() + 1;
-  month = month < 10 ? `0${month}` : month;
+  if (isNaN(dateObj.getTime())) {
+    return 'Fecha no válida'
+  }
 
-  return `${dateObj.getFullYear()}-${month}-${dateObj.getDate()}`;
-};
+  const opciones: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }
+
+  return dateObj.toLocaleDateString('es-ES', opciones).replace('.', '')
+}
