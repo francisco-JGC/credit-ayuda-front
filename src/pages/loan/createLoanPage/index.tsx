@@ -65,7 +65,9 @@ export default function CreateLoanPage() {
         <PreviewClientInfo client={client} isLoading={isLoading} />
         <div className="flex justify-between gap-2">
           <FormLoanDetails formValues={formValues} handleInputChange={handleInputChange} />
-          <PreviewPaymentSchedule frequency={formValues.frequency} total_recovered={formValues.total_recovered} amount={formValues.amount} interest_rate={formValues.interest_rate} loan_date={formValues.loan_date} />
+          <PreviewPaymentSchedule frequency={formValues.frequency} total_recovered={formValues.total_recovered} amount={formValues.amount} interest_rate={formValues.interest_rate} loan_date={formValues.loan_date}
+            total_payments={Number(formValues.total_payments)}
+          />
         </div>
       </div>
     </LayuotPage>
