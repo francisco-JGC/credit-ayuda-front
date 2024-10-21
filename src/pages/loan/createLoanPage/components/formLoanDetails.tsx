@@ -49,7 +49,7 @@ export const FormLoanDetails = ({ formValues, handleInputChange }: IProps) => {
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 text-gray-900">Fecha de inicio</dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              <Input type="date" value={formValues.load_date} name="load_date" onChange={handleInputChange} />
+              <Input type="date" value={formValues.loan_date} name="loan_date" onChange={handleInputChange} />
             </dd>
           </div>
         </dl>

@@ -12,9 +12,10 @@ export interface ILoanTable {
 export interface ICreateLoan {
   client_id: number
   amount: number
-  load_date: string
+  loan_date: string
   interest_rate: number
   frequency: 'daily' | 'weekly' | 'biweekly' | 'monthly' | 'yearly'
   total_payments: number
   payment_amount: number
+  total_recovered: number
 }
