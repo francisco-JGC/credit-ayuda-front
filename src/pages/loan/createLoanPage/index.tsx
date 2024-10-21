@@ -6,8 +6,9 @@ import { toast } from "sonner";
 import { PreviewClientInfo } from "./components/previewClientInfo";
 import { FormLoanDetails } from "./components/formLoanDetails";
 import { FormSearchClientByDni } from "./components/formSearchClientByDni";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getClienByDni } from "@/services/client";
+import { PreviewPaymentSchedule } from "./components/previewPaymentSchedule";
 
 export default function CreateLoanPage() {
   const { formValues: search, handleInputChange: handleInputChangeDni } = useForm({
@@ -16,11 +17,12 @@ export default function CreateLoanPage() {
   const { formValues, handleInputChange } = useForm<ICreateLoan>({
     client_id: -1,
     amount: 0,
-    load_date: '',
+    loan_date: '',
     interest_rate: 0,
     frequency: 'daily',
     total_payments: 0,
     payment_amount: 0,
+    total_recovered: 0
   })
 
   const [client, setClient] = useState<ICreateClient>({} as any)
@@ -51,12 +53,20 @@ export default function CreateLoanPage() {
     setIsLoading(false)
   }
 
+  useEffect(() => {
+    const total_recovered = (Number(formValues.amount) * (Number(formValues.interest_rate) / 100)) + Number(formValues.amount)
+    handleInputChange({ target: { name: 'total_recovered', value: total_recovered } } as any)
+  }, [formValues.amount, formValues.interest_rate])
+
   return (
     <LayuotPage title="Nuevo Prestamo" description="Por favor llene todos los campos requeridos">
       <div className="flex flex-col gap-6">
         <FormSearchClientByDni search={search} handleInputChangeDni={handleInputChangeDni} handleSearchClientDni={handleSearchClientDni} />
         <PreviewClientInfo client={client} isLoading={isLoading} />
-        <FormLoanDetails formValues={formValues} handleInputChange={handleInputChange} />
+        <div className="flex justify-between gap-2">
+          <FormLoanDetails formValues={formValues} handleInputChange={handleInputChange} />
+          <PreviewPaymentSchedule frequency={formValues.frequency} total_recovered={formValues.total_recovered} amount={formValues.amount} interest_rate={formValues.interest_rate} loan_date={formValues.loan_date} />
+        </div>
       </div>
     </LayuotPage>
   )
