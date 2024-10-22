@@ -24,9 +24,6 @@ export const PreviewPaymentSchedule = ({ frequency, total_recovered, amount, int
   const [paymentSchedule, setPaymentSchedule] = useState<IPreviewPaymentSchedule[]>([])
 
   useEffect(() => {
-
-    // if (!frequency || !amount || !loan_date || !interest_rate) return
-
     const schedules: IPreviewPaymentSchedule[] = []
 
     const addDays = (date: Date, days: number): Date => {
@@ -41,32 +38,41 @@ export const PreviewPaymentSchedule = ({ frequency, total_recovered, amount, int
       return newDate
     }
 
+    const paymentWithoutDecimals = Math.floor(total_recovered / total_payments)
+
+    const totalCalculated = paymentWithoutDecimals * total_payments
+    const remainder = total_recovered - totalCalculated
+
     for (let i = 1; i <= total_payments; i++) {
       let nextDueDate: any
 
       switch (frequency) {
         case 'daily':
-          nextDueDate = addDays(loan_date as any, i)
+          nextDueDate = addDays(new Date(loan_date), i)
           break
         case 'weekly':
-          nextDueDate = addDays(loan_date as any, i * 7)
+          nextDueDate = addDays(new Date(loan_date), i * 7)
           break
         case 'biweekly':
-          nextDueDate = addDays(loan_date as any, i * 14)
+          nextDueDate = addDays(new Date(loan_date), i * 14)
           break
         case 'monthly':
-          nextDueDate = addMonths(loan_date as any, i)
+          nextDueDate = addMonths(new Date(loan_date), i)
           break
         case 'yearly':
-          nextDueDate = addMonths(loan_date as any, i * 12)
+          nextDueDate = addMonths(new Date(loan_date), i * 12)
           break
         default: nextDueDate = ''
       }
 
+      const payment = i === total_payments
+        ? paymentWithoutDecimals + remainder
+        : paymentWithoutDecimals
+
       schedules.push({
         number: i,
+        payment: payment,
         payment_date: nextDueDate,
-        payment: Number(Number(Number(total_recovered) / Number(total_payments)).toFixed(2)),
         status: 'pending'
       })
     }
@@ -76,7 +82,7 @@ export const PreviewPaymentSchedule = ({ frequency, total_recovered, amount, int
   }, [frequency, total_recovered, loan_date, interest_rate, total_payments])
 
   return (
-    <div className="w-2/4 p-4 rounded-lg bg-gray-50">
+    <div className="w-full md:w-2/4 p-4 rounded-lg bg-gray-50">
       <div className="flex flex-col gap-3">
         <div>
           <span className="font-bold">Plan de pago</span>
