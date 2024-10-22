@@ -26,8 +26,8 @@ export const getPaymentTermByFrequency = (
 ): { value: number; label: string }[] => {
   const termMap: Record<typeof frequency, { value: number; label: string }[]> =
     {
-      daily: generateDaysTerm([20, 22, 25, 30, 33, 40, 44, 50, 60, 80]),
-      weekly: generateWeeksTerm([4, 5, 6, 8, 10, 12, 16, 18]),
+      daily: generateDaysTerm([20, 25, 30, 35, 40, 50, 70, 80, 90]),
+      weekly: generateWeeksTerm([4, 6, 8, 10, 12, 16, 18]),
       biweekly: generateBiweeklyTerm([2, 4, 6, 8, 10, 12]),
       monthly: generateMonthsTerm([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
       yearly: generateYearsTerm([2, 3, 4, 5]),
