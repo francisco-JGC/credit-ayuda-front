@@ -6,6 +6,7 @@ export const formatDate = (date: string) => {
   }
 
   const opciones: Intl.DateTimeFormatOptions = {
+    weekday: 'short',
     day: 'numeric',
     month: 'short',
     year: 'numeric',
