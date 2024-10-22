@@ -40,7 +40,7 @@ export function FilterRoute({ handleSetRouteFilter }: IProps) {
           setRoutes(response.data as any)
         }
       })
-  })
+  }, [])
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
