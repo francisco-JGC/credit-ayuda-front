@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { createLoan } from "@/services/loan";
 
 export default function CreateLoanPage() {
-  const { formValues: search, handleInputChange: handleInputChangeDni } = useForm({
+  const { formValues: search, handleInputChange: handleInputChangeDni, resetForm: resetSearch } = useForm({
     dni: ''
   })
   const { formValues, handleInputChange, resetForm } = useForm<ICreateLoan>({
@@ -105,6 +105,7 @@ export default function CreateLoanPage() {
     if (response.success) {
       toast.success('Se ha enviado la solicitud del prestamo')
       resetForm()
+      resetSearch()
     } else {
       toast.error('Ocurrio un error', {
         description: response.message
