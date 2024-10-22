@@ -3,9 +3,9 @@ export interface IClientTable {
   name: string
   phone: string
   address: string
-  currentDebt: number
+  current_debt: number
   route: string
-  loanStatus: 'approved' | 'pending' | 'paid'
+  loan_status: 'approved' | 'pending' | 'paid'
 }
 
 export interface ICreateClient {
