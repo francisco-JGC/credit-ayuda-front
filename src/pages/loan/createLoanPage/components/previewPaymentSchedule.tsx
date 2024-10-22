@@ -24,62 +24,82 @@ export const PreviewPaymentSchedule = ({ frequency, total_recovered, amount, int
   const [paymentSchedule, setPaymentSchedule] = useState<IPreviewPaymentSchedule[]>([])
 
   useEffect(() => {
-    const schedules: IPreviewPaymentSchedule[] = []
+    const schedules: IPreviewPaymentSchedule[] = [];
 
-    const addDays = (date: Date, days: number): Date => {
-      const newDate = new Date(date)
-      newDate.setDate(newDate.getDate() + days)
-      return newDate
-    }
+    const addDaysSkippingWeekends = (date: Date, days: number): Date => {
+      let newDate = new Date(date);
+      let addedDays = 0;
 
-    const addMonths = (date: Date, months: number): Date => {
-      const newDate = new Date(date)
-      newDate.setMonth(newDate.getMonth() + months)
-      return newDate
-    }
+      while (addedDays < days) {
+        newDate.setDate(newDate.getDate() + 1);
 
-    const paymentWithoutDecimals = Math.floor(total_recovered / total_payments)
+        if (newDate.getDay() !== 0 && newDate.getDay() !== 6) {
+          addedDays++;
+        }
+      }
+      return newDate;
+    };
 
-    const totalCalculated = paymentWithoutDecimals * total_payments
-    const remainder = total_recovered - totalCalculated
+    const addMonthsSkippingWeekends = (date: Date, months: number): Date => {
+      let newDate = new Date(date);
+      newDate.setMonth(newDate.getMonth() + months);
+
+
+      if (newDate.getDay() === 6) {
+        newDate.setDate(newDate.getDate() + 2);
+      } else if (newDate.getDay() === 0) {
+        newDate.setDate(newDate.getDate() + 1);
+      }
+
+      return newDate;
+    };
+
+    const paymentWithoutDecimals = Math.floor(total_recovered / total_payments);
+    const totalCalculated = paymentWithoutDecimals * total_payments;
+    const remainder = total_recovered - totalCalculated;
+
+    let currentDueDate = new Date(loan_date);
+    let nextDueDate: any;
 
     for (let i = 1; i <= total_payments; i++) {
-      let nextDueDate: any
-
       switch (frequency) {
         case 'daily':
-          nextDueDate = addDays(new Date(loan_date), i)
-          break
+          nextDueDate = addDaysSkippingWeekends(new Date(currentDueDate), 1);
+          break;
         case 'weekly':
-          nextDueDate = addDays(new Date(loan_date), i * 7)
-          break
+          nextDueDate = addDaysSkippingWeekends(new Date(currentDueDate), 7);
+          break;
         case 'biweekly':
-          nextDueDate = addDays(new Date(loan_date), i * 14)
-          break
+          nextDueDate = addDaysSkippingWeekends(new Date(currentDueDate), 14);
+          break;
         case 'monthly':
-          nextDueDate = addMonths(new Date(loan_date), i)
-          break
+          nextDueDate = addMonthsSkippingWeekends(new Date(currentDueDate), 1);
+          break;
         case 'yearly':
-          nextDueDate = addMonths(new Date(loan_date), i * 12)
-          break
-        default: nextDueDate = ''
+          nextDueDate = addMonthsSkippingWeekends(new Date(currentDueDate), 12);
+          break;
+        default:
+          nextDueDate = '';
       }
 
       const payment = i === total_payments
         ? paymentWithoutDecimals + remainder
-        : paymentWithoutDecimals
+        : paymentWithoutDecimals;
 
       schedules.push({
         number: i,
         payment: payment,
         payment_date: nextDueDate,
         status: 'pending'
-      })
+      });
+
+      currentDueDate = nextDueDate;
     }
 
-    setPaymentSchedule(schedules)
+    setPaymentSchedule(schedules);
 
-  }, [frequency, total_recovered, loan_date, interest_rate, total_payments])
+  }, [frequency, total_recovered, loan_date, interest_rate, total_payments]);
+
 
   return (
     <div className="w-full md:w-2/4 p-4 rounded-lg bg-gray-50">
