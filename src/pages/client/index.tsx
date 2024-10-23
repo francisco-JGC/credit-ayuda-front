@@ -16,100 +16,30 @@ import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import useForm from "@/hooks/useForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FilterRoute } from "@/components/filterTables/filterRoute";
+import { getPaginationClient } from "@/services/client";
+import { IPaginationResponse } from "@/utils/fetch-data";
 
-const items: IClientTable[] = [
-  {
-    id: 1,
-    name: 'Juan Pérez',
-    phone: '555-1234',
-    address: 'Calle Falsa 123',
-    currentDebt: 100.50,
-    route: 'Ruta 1',
-    loanStatus: 'approved',
-  },
-  {
-    id: 2,
-    name: 'María Gómez',
-    phone: '555-5678',
-    address: 'Av. Siempre Viva 742',
-    currentDebt: 3250.80,
-    route: 'Ruta 2',
-    loanStatus: 'pending',
-  },
-  {
-    id: 3,
-    name: 'Carlos Sánchez',
-    phone: '555-9876',
-    address: 'Calle Luna 45',
-    currentDebt: 0.00,
-    route: 'Ruta 3',
-    loanStatus: 'paid',
-  },
-  {
-    id: 1,
-    name: 'Juan Pérez',
-    phone: '555-1234',
-    address: 'Calle Falsa 123',
-    currentDebt: 100.50,
-    route: 'Ruta 1',
-    loanStatus: 'approved',
-  },
-  {
-    id: 2,
-    name: 'María Gómez',
-    phone: '555-5678',
-    address: 'Av. Siempre Viva 742',
-    currentDebt: 3250.80,
-    route: 'Ruta 2',
-    loanStatus: 'pending',
-  },
-  {
-    id: 3,
-    name: 'Carlos Sánchez',
-    phone: '555-9876',
-    address: 'Calle Luna 45',
-    currentDebt: 0.00,
-    route: 'Ruta 3',
-    loanStatus: 'paid',
-  },
-  {
-    id: 1,
-    name: 'Juan Pérez',
-    phone: '555-1234',
-    address: 'Calle Falsa 123',
-    currentDebt: 100.50,
-    route: 'Ruta 1',
-    loanStatus: 'approved',
-  },
-  {
-    id: 2,
-    name: 'María Gómez',
-    phone: '555-5678',
-    address: 'Av. Siempre Viva 742',
-    currentDebt: 3250.80,
-    route: 'Ruta 2',
-    loanStatus: 'pending',
-  },
-  {
-    id: 3,
-    name: 'Carlos Sánchez',
-    phone: '555-9876',
-    address: 'Calle Luna 45',
-    currentDebt: 0.00,
-    route: 'Ruta 3',
-    loanStatus: 'paid',
-  },
-];
 
 export default function ClientPage() {
   const { formValues: search, handleInputChange } = useForm({
     search_dni: ''
   })
   const [routeFilter, setRouteFilter] = useState<string>('')
+  const [clients, setClients] = useState<IClientTable[]>([] as any)
 
   const handleSetRouteFilter = (route: string) => setRouteFilter(route)
+
+  useEffect(() => {
+    getPaginationClient({ page: 1, limit: 20, filter: '' })
+      .then((response) => {
+        if (response.success) {
+          const { data, total_data, total_page, page, limit } = response.data as IPaginationResponse
+          setClients(data as any)
+        }
+      })
+  }, [])
 
   return (
     <div className="flex flex-col gap-8 p-4 md:p-6 lg:p-8">
@@ -151,26 +81,26 @@ export default function ClientPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.map((client) => (
+            {clients && clients.map((client) => (
               <TableRow key={client.id} className="border-b">
                 <TableCell className="py-4 px-6 font-semibold">{client.name}</TableCell>
                 <TableCell className="py-4 px-6">{client.phone}</TableCell>
                 <TableCell className="py-4 px-6">{client.address}</TableCell>
-                <TableCell className="py-4 px-6">{formatPrice(client.currentDebt)}</TableCell>
+                <TableCell className="py-4 px-6">{formatPrice(client.current_debt)}</TableCell>
                 <TableCell className="py-4 px-6">{client.route}</TableCell>
                 <TableCell
-                  className={`py-4 px-6 font-bold ${client.loanStatus === 'approved'
+                  className={`py-4 px-6 font-bold ${client.loan_status === 'approved'
                     ? 'text-green-500'
-                    : client.loanStatus === 'pending'
+                    : client.loan_status === 'pending'
                       ? 'text-yellow-500'
-                      : 'text-blue-500'
+                      : client.loan_status === 'paid' ? 'text-indigo-500' : 'text-gray-500'}
                     }`}
                 >
-                  {client.loanStatus === 'approved'
+                  {client.loan_status === 'approved'
                     ? 'Aprobado'
-                    : client.loanStatus === 'pending'
+                    : client.loan_status === 'pending'
                       ? 'Pendiente'
-                      : 'Pagado'}
+                      : client.loan_status === 'paid' ? 'Pagado' : 'Sin prestamo'}
                 </TableCell>
                 <TableCell className="py-4 px-6">
                   <Actions client={client} />
