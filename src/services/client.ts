@@ -1,5 +1,10 @@
 import { ICreateClient } from '@/types/clients'
-import { fetchData, IHandleResponse, IPagination } from '@/utils/fetch-data'
+import {
+  fetchData,
+  IHandleResponse,
+  IPagination,
+  IPaginationResponse,
+} from '@/utils/fetch-data'
 
 export const createClient = async (
   product: ICreateClient,
@@ -12,12 +17,14 @@ export const createClient = async (
   })
 }
 
-export const getClienByDni = async (dni: string): Promise<IHandleResponse> => {
-  return await fetchData({
+export const getClienByDni = async (
+  dni: string,
+): Promise<IHandleResponse<IPaginationResponse>> => {
+  return (await fetchData({
     url: `/client/dni/${dni}`,
     method: 'GET',
     useToken: true,
-  })
+  })) as any
 }
 
 export const getPaginationClient = async ({
