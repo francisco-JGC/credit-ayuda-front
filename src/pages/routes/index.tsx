@@ -15,28 +15,26 @@ import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import useForm from "@/hooks/useForm";
-
-const items: IRoute[] = [
-  {
-    id: 1,
-    name: 'Ruta 1',
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it",
-  },
-  {
-    id: 2,
-    name: 'Ruta 2',
-  },
-  {
-    id: 3,
-    name: 'Ruta 3',
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it",
-  },
-];
+import { useEffect, useState } from "react";
+import { getPaginationRoutes } from "@/services/route";
+import { IPaginationResponse } from "@/utils/fetch-data";
 
 export default function RoutesPage() {
   const { formValues: search, handleInputChange } = useForm({
     route_name: ''
   })
+
+  const [routes, setRoutes] = useState<IRoute[]>([])
+
+  useEffect(() => {
+    getPaginationRoutes({ page: 1, limit: 20, filter: '' })
+      .then((response) => {
+        if (response.success) {
+          const { data, total_data, total_page, page, limit } = response.data as IPaginationResponse
+          setRoutes(data as any)
+        }
+      })
+  }, [])
 
   return (
     <div className="flex flex-col gap-8 p-4 md:p-6 lg:p-8">
@@ -70,7 +68,7 @@ export default function RoutesPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.map((route) => (
+            {routes.map((route) => (
               <TableRow key={route.id} className="border-b">
                 <TableCell className="py-4 px-6 font-semibold">{route.name}</TableCell>
                 <TableCell className="py-4 px-6">{route.description}</TableCell>
