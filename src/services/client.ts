@@ -38,3 +38,23 @@ export const getPaginationClient = async ({
     useToken: true,
   })
 }
+
+export const getClientById = async (id: number): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: `/client/${id}`,
+    method: 'GET',
+    useToken: true,
+  })
+}
+
+export const updateClientById = async (
+  id: number,
+  client: ICreateClient,
+): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: `/client/update/${id}`,
+    method: 'POST',
+    data: client,
+    useToken: true,
+  })
+}

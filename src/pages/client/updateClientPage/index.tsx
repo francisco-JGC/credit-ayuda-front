@@ -2,16 +2,17 @@ import { LayuotPage } from "@/components/layuotPage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import useForm from "@/hooks/useForm";
-import { createClient } from "@/services/client";
+import { createClient, getClienByDni, getClientById, updateClientById } from "@/services/client";
 import { getAllRoutes } from "@/services/route";
 import { ICreateClient } from "@/types/clients";
 import { IRoute } from "@/types/routes";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function UpdateClientPage() {
   const [routes, setRoutes] = useState<IRoute[]>([])
-  const { formValues, handleInputChange, resetForm } = useForm<ICreateClient>({
+  const { formValues, handleInputChange, setValues } = useForm<ICreateClient>({
     name: '',
     dni: '',
     primary_address: '',
@@ -22,19 +23,20 @@ export default function UpdateClientPage() {
     route_name: ''
   })
 
+  const params = useParams()
+
   const handleSubmit = async (e: any) => {
     e.preventDefault()
 
-    toast.loading('Creando cliente...')
+    toast.loading('Actualizando información...')
 
-    const response = await createClient(formValues)
+    const response = await updateClientById(Number(params.id), formValues)
     toast.dismiss()
 
     if (response.success) {
-      toast.success('Cliente creado con exito')
-      resetForm()
+      toast.success('Información actualizada con exito')
     } else {
-      toast.error('Hubo un error al crear el cliente', {
+      toast.error('Hubo un error', {
         description: response.message
       })
     }
@@ -47,10 +49,17 @@ export default function UpdateClientPage() {
           setRoutes(response.data as any)
         }
       })
-  }, [])
+
+    getClientById(Number(params.id))
+      .then((response) => {
+        if (response.success) {
+          setValues(response.data as any)
+        }
+      })
+  }, [params.id])
 
   return (
-    <LayuotPage title="Crear nuevo cliente" description="Por favor llene todos los campos requeridos">
+    <LayuotPage title="Actualizar informacion del cliente" description="Por favor llene todos los campos requeridos">
       <form className="grid grid-cols-2 gap-8" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3">
           <label htmlFor="" className="font-semibold">Nombre del cliente *</label>
@@ -104,7 +113,7 @@ export default function UpdateClientPage() {
         </div>
 
         <div>
-          <Button typeof='submit' className="bg-indigo-500">Crear cliente</Button>
+          <Button typeof='submit' className="bg-indigo-500">Actualizar cliente</Button>
         </div>
       </form>
     </LayuotPage>
