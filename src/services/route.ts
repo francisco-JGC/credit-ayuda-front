@@ -50,3 +50,11 @@ export const updateRouteById = async (
     useToken: true,
   })
 }
+
+export const deleteRouteById = async (id: number): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: `/route/delete/${id}`,
+    method: 'GET',
+    useToken: true,
+  })
+}

@@ -16,12 +16,14 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { IRoute } from "@/types/routes"
 import { Link } from "react-router-dom"
+import { AlertDialogModal } from "@/components/alertDialogModal"
 
 interface IProps {
   route: IRoute
+  onDeleteRouute: (id: number) => void
 }
 
-export const Actions = ({ route }: IProps) => {
+export const Actions = ({ route, onDeleteRouute }: IProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -40,11 +42,18 @@ export const Actions = ({ route }: IProps) => {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuSeparator />
-        <DropdownMenuItem className='text-red-500'>
-          <TrashIcon className="mr-2 h-4 w-4" />
-          <span>Eliminar Ruta</span>
-        </DropdownMenuItem>
+
+        <AlertDialogModal
+          title="Estas seguro de eliminar esta ruta?"
+          subtitle="Si eliminas esta ruta, los usuarios relacionados quedaran sin ruta hasta volver asignarles una."
+          onConfirm={() => onDeleteRouute(route.id)}
+        >
+          <div className="text-red-400 text-sm flex items-center rounded-sm px-2 py-1.5">
+            <TrashIcon className="mr-2 h-4 w-4" />
+            <span>Eliminar Ruta</span>
+          </div>
+        </AlertDialogModal>
       </DropdownMenuContent>
-    </DropdownMenu>
+    </DropdownMenu >
   )
 }

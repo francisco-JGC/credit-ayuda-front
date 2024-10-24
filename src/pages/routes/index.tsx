@@ -16,8 +16,9 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import useForm from "@/hooks/useForm";
 import { useEffect, useState } from "react";
-import { getPaginationRoutes } from "@/services/route";
+import { deleteRouteById, getPaginationRoutes } from "@/services/route";
 import { IPaginationResponse } from "@/utils/fetch-data";
+import { toast } from "sonner";
 
 export default function RoutesPage() {
   const { formValues: search, handleInputChange } = useForm({
@@ -25,6 +26,22 @@ export default function RoutesPage() {
   })
 
   const [routes, setRoutes] = useState<IRoute[]>([])
+
+  const handleDeleteRoute = async (id: number) => {
+    toast.loading('Eliminando ruta...')
+
+    const response = await deleteRouteById(id)
+    toast.dismiss()
+
+    if (response.success) {
+      toast.success('Ruta eliminada con exito')
+      setRoutes((prev) => prev.filter(route => route.id !== id))
+    } else {
+      toast.error('Hubo algun error', {
+        description: response.message
+      })
+    }
+  }
 
   useEffect(() => {
     getPaginationRoutes({ page: 1, limit: 20, filter: '' })
@@ -73,7 +90,7 @@ export default function RoutesPage() {
                 <TableCell className="py-4 px-6 font-semibold">{route.name}</TableCell>
                 <TableCell className="py-4 px-6">{route.description}</TableCell>
                 <TableCell className="py-4 px-6">
-                  <Actions route={route} />
+                  <Actions route={route} onDeleteRouute={handleDeleteRoute} />
                 </TableCell>
               </TableRow>
             ))}
