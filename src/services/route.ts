@@ -31,3 +31,11 @@ export const getPaginationRoutes = async ({
     useToken: true,
   })
 }
+
+export const getRouteById = async (id: number): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: `/route/${id}`,
+    method: 'GET',
+    useToken: true,
+  })
+}
