@@ -3,12 +3,14 @@ import { Input } from "@/components/ui/input";
 import useForm from "@/hooks/useForm";
 import { LayuotPage } from "@/components/layuotPage";
 import { toast } from "sonner";
-import { createRoute, getRouteById } from "@/services/route";
+import { getRouteById, updateRouteById } from "@/services/route";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { IRoute } from "@/types/routes";
 
 export default function UpdateRoutePage() {
-  const { formValues, handleInputChange, setValues } = useForm({
+  const { formValues, handleInputChange, setValues } = useForm<IRoute>({
+    id: 0,
     name: '',
     description: ''
   })
@@ -22,15 +24,15 @@ export default function UpdateRoutePage() {
       return toast.warning('Por favor ingrese el nombre de la ruta')
     }
 
-    toast.loading('Creando ruta...')
+    toast.loading('Actualizando información...')
 
-    const response = await createRoute(formValues)
+    const response = await updateRouteById(formValues)
     toast.dismiss()
 
     if (response.success) {
-      toast.success('Se ha creado una nueva ruta')
+      toast.success('Se ha actualizado la informacion de la ruta')
     } else {
-      toast.error('Sucedio un error al crear la ruta', {
+      toast.error('Sucedio un error', {
         description: response.message
       })
     }
@@ -55,7 +57,7 @@ export default function UpdateRoutePage() {
 
         <div className="flex flex-col gap-3">
           <label htmlFor="" className="font-semibold">Descripción <span className="text-gray-400">(opcional)</span></label>
-          <Input value={formValues.description} name="dni" onChange={handleInputChange} placeholder="..." />
+          <Input value={formValues.description} name="description" onChange={handleInputChange} placeholder="..." />
         </div>
 
         <div>

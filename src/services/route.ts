@@ -1,4 +1,4 @@
-import { ICreateRoute } from '@/types/routes'
+import { ICreateRoute, IRoute } from '@/types/routes'
 import { fetchData, IHandleResponse, IPagination } from '@/utils/fetch-data'
 
 export const createRoute = async (
@@ -36,6 +36,17 @@ export const getRouteById = async (id: number): Promise<IHandleResponse> => {
   return await fetchData({
     url: `/route/${id}`,
     method: 'GET',
+    useToken: true,
+  })
+}
+
+export const updateRouteById = async (
+  route: IRoute,
+): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: '/route/update',
+    method: 'POST',
+    data: route,
     useToken: true,
   })
 }
