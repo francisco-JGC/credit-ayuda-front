@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { IRoute } from "@/types/routes"
+import { Link } from "react-router-dom"
 
 interface IProps {
   route: IRoute
@@ -34,7 +35,7 @@ export const Actions = ({ route }: IProps) => {
         <DropdownMenuGroup>
           <DropdownMenuItem>
             <PenIcon className="mr-2 h-4 w-4" />
-            <span>Modificar Ruta</span>
+            <Link to={`/routes/update/${route.id}`}>Modificar Ruta</Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

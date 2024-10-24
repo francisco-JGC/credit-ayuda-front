@@ -8,6 +8,7 @@ import RoutesPage from './pages/routes'
 import CreateRoutePage from './pages/routes/createRoutePage'
 import LoanPage from './pages/loan'
 import CreateLoanPage from './pages/loan/createLoanPage'
+import UpdateRoutePage from './pages/routes/updateRoutePage'
 
 export default function Router() {
 
@@ -40,6 +41,12 @@ export default function Router() {
       <Route path='/routes/create' element={
         <ProtectedRoute>
           <CreateRoutePage />
+        </ProtectedRoute>
+      } />
+
+      <Route path='/routes/update/:id' element={
+        <ProtectedRoute>
+          <UpdateRoutePage />
         </ProtectedRoute>
       } />
 
