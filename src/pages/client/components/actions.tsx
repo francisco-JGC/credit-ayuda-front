@@ -18,6 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Link } from 'react-router-dom'
 interface IProps {
   client: IClientTable
 }
@@ -44,11 +45,11 @@ export const Actions = ({ client }: IProps) => {
           </DropdownMenuItem>
           <DropdownMenuItem>
             <PenIcon className="mr-2 h-4 w-4" />
-            <span>Editar Cliente</span>
+            <Link to={`/clients/update/${client.id}`}>Modificar Cliente</Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className={`${client.loanStatus !== 'paid' ? 'opacity-40' : ''}`}>
+        <DropdownMenuItem className={`${client.loan_status !== 'paid' ? 'opacity-40' : ''}`}>
           <Plus className="mr-2 h-4 w-4" />
           <span>Nuevo Prestamo</span>
         </DropdownMenuItem>

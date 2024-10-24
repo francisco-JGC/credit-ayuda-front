@@ -1,14 +1,19 @@
 import { Routes, Route } from 'react-router-dom'
+import ProtectedRoute from './components/protectedRoute'
+
 import HomePage from './pages/home'
 import LoginPage from './pages/login'
+
 import ClientPage from './pages/client'
-import ProtectedRoute from './components/protectedRoute'
 import CreateClientPage from './pages/client/createClientPage'
+import UpdateClientPage from './pages/client/updateClientPage'
+
 import RoutesPage from './pages/routes'
 import CreateRoutePage from './pages/routes/createRoutePage'
+import UpdateRoutePage from './pages/routes/updateRoutePage'
+
 import LoanPage from './pages/loan'
 import CreateLoanPage from './pages/loan/createLoanPage'
-import UpdateRoutePage from './pages/routes/updateRoutePage'
 
 export default function Router() {
 
@@ -29,6 +34,12 @@ export default function Router() {
       <Route path='/clients/create' element={
         <ProtectedRoute>
           <CreateClientPage />
+        </ProtectedRoute>
+      } />
+
+      <Route path='/clients/update/:id' element={
+        <ProtectedRoute>
+          <UpdateClientPage />
         </ProtectedRoute>
       } />
 
