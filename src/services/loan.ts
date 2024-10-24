@@ -1,5 +1,5 @@
 import { ICreateLoan } from '@/types/loans'
-import { fetchData, IHandleResponse } from '@/utils/fetch-data'
+import { fetchData, IHandleResponse, IPagination } from '@/utils/fetch-data'
 
 export const createLoan = async (
   loan: ICreateLoan,
@@ -8,6 +8,18 @@ export const createLoan = async (
     url: '/loan/create',
     method: 'POST',
     data: loan,
+    useToken: true,
+  })
+}
+
+export const getPaginationLoans = async ({
+  filter,
+  page,
+  limit,
+}: IPagination): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: `/loan/${page}/${limit}/${filter}`,
+    method: 'GET',
     useToken: true,
   })
 }

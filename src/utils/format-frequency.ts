@@ -9,5 +9,5 @@ export const formatFrequency = (
     yearly: 'Anual',
   }
 
-  return frequencyMap[frequency] || 'Frecuencia no reconocida'
+  return frequencyMap[frequency] || 'Sin frecuencia'
 }
