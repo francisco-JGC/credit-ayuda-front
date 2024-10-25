@@ -10,7 +10,7 @@ interface IProps {
 export const PaymentSchedule = ({ payment_plan }: IProps) => {
   return (
     <div>
-      <header className="grid grid-cols-4 bg-gray-100 p-2 rounded-md font-semibold">
+      <header className="grid grid-cols-4 bg-primary p-2 rounded-md font-semibold text-white">
         <span>Fecha de pago</span>
         <span>Abono</span>
         <span>Cantidad abonada</span>
@@ -24,7 +24,9 @@ export const PaymentSchedule = ({ payment_plan }: IProps) => {
                 <span>{formatDate(schedule.due_date)}</span>
                 <span>{formatPrice(Number(schedule.amount_due))}</span>
                 <span>{formatPrice(Number(schedule.amount_paid))}</span>
-                <span>{formatLoanStatus(schedule.status as any)}</span>
+                <span
+                  className={`${schedule.status === 'pending' ? 'text-yellow-600' : schedule.status === 'paid' ? 'text-green-600' : 'text-red-600'}`}
+                >{formatLoanStatus(schedule.status as any)}</span>
               </div>
             )
           })

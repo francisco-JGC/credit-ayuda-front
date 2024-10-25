@@ -15,7 +15,7 @@ export const LoanDetails = ({ frequency, amount, total_recovered, interest_rate,
   return (
     <div>
       <header>
-        <span className="font-semibold">Fecha de solicitud: <span className="font-normal">{formatDate(created_at)}</span></span>
+        <span className="font-semibold pb-4">Fecha de solicitud: <span className="font-normal">{formatDate(created_at)}</span></span>
       </header>
 
       <div>
