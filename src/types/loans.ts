@@ -1,3 +1,5 @@
+import { IClient } from './clients'
+
 export interface ILoanTable {
   id: number
   client_name: string
@@ -23,13 +25,15 @@ export interface ICreateLoan {
 export interface ILoan {
   id: number
   amount: number
-  loan_date: Date
+  loan_date: string
   interest_rate: number
   total_recovered: number
   total_pending: number
   status: 'active' | 'paid' | 'pending'
+  client: IClient
   payment_plan: IPaymentPlan
   penalty_plans: IPenaltyPlan[]
+  created_at: string
 }
 
 export interface IPaymentPlan {
@@ -43,7 +47,7 @@ export interface IPaymentPlan {
 
 export interface IPaymentSchedule {
   id: number
-  due_date: Date
+  due_date: string
   amount_due: number
   amount_paid: number
   status: string
