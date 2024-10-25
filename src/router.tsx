@@ -1,80 +1,41 @@
-import { Routes, Route } from 'react-router-dom'
-import ProtectedRoute from './components/protectedRoute'
+import { Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './components/protectedRoute';
+import { ReactNode } from 'react';
 
-import HomePage from './pages/home'
-import LoginPage from './pages/login'
+import HomePage from './pages/home';
+import LoginPage from './pages/login';
 
-import ClientPage from './pages/client'
-import CreateClientPage from './pages/client/createClientPage'
-import UpdateClientPage from './pages/client/updateClientPage'
+import ClientPage from './pages/client';
+import CreateClientPage from './pages/client/createClientPage';
+import UpdateClientPage from './pages/client/updateClientPage';
 
-import RoutesPage from './pages/routes'
-import CreateRoutePage from './pages/routes/createRoutePage'
-import UpdateRoutePage from './pages/routes/updateRoutePage'
+import RoutesPage from './pages/routes';
+import CreateRoutePage from './pages/routes/createRoutePage';
+import UpdateRoutePage from './pages/routes/updateRoutePage';
 
-import LoanPage from './pages/loan'
-import CreateLoanPage from './pages/loan/createLoanPage'
+import LoanPage from './pages/loan';
+import CreateLoanPage from './pages/loan/createLoanPage';
+import DetailsLoanPage from './pages/loan/detailsLoanPage';
+
+function ProtectedRouteElement({ element }: { element: ReactNode }) {
+  return <ProtectedRoute>{element}</ProtectedRoute>;
+}
 
 export default function Router() {
-
   return (
     <Routes>
-      <Route index path="/" element={
-        <ProtectedRoute>
-          <HomePage />
-        </ProtectedRoute>
-      } />
+      <Route path="/" element={<ProtectedRouteElement element={<HomePage />} />} />
+      <Route path="/clients" element={<ProtectedRouteElement element={<ClientPage />} />} />
+      <Route path="/clients/create" element={<ProtectedRouteElement element={<CreateClientPage />} />} />
+      <Route path="/clients/update/:id" element={<ProtectedRouteElement element={<UpdateClientPage />} />} />
+      <Route path="/routes" element={<ProtectedRouteElement element={<RoutesPage />} />} />
+      <Route path="/routes/create" element={<ProtectedRouteElement element={<CreateRoutePage />} />} />
+      <Route path="/routes/update/:id" element={<ProtectedRouteElement element={<UpdateRoutePage />} />} />
+      <Route path="/loans" element={<ProtectedRouteElement element={<LoanPage />} />} />
+      <Route path="/loans/create" element={<ProtectedRouteElement element={<CreateLoanPage />} />} />
+      <Route path="/loans/details/:id" element={<ProtectedRouteElement element={<DetailsLoanPage />} />} />
 
-      <Route index path="/clients" element={
-        <ProtectedRoute>
-          <ClientPage />
-        </ProtectedRoute>
-      } />
-
-      <Route path='/clients/create' element={
-        <ProtectedRoute>
-          <CreateClientPage />
-        </ProtectedRoute>
-      } />
-
-      <Route path='/clients/update/:id' element={
-        <ProtectedRoute>
-          <UpdateClientPage />
-        </ProtectedRoute>
-      } />
-
-      <Route path='/routes' element={
-        <ProtectedRoute>
-          <RoutesPage />
-        </ProtectedRoute>
-      } />
-
-      <Route path='/routes/create' element={
-        <ProtectedRoute>
-          <CreateRoutePage />
-        </ProtectedRoute>
-      } />
-
-      <Route path='/routes/update/:id' element={
-        <ProtectedRoute>
-          <UpdateRoutePage />
-        </ProtectedRoute>
-      } />
-
-      <Route path='/loans' element={
-        <ProtectedRoute>
-          <LoanPage />
-        </ProtectedRoute>
-      } />
-
-      <Route path='/loans/create' element={
-        <ProtectedRoute>
-          <CreateLoanPage />
-        </ProtectedRoute>
-      } />
-
-
-      <Route index path="/login" element={<LoginPage />} />
+      <Route path="/login" element={<LoginPage />} />
     </Routes>
-  )
+  );
 }
