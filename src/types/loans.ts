@@ -19,3 +19,47 @@ export interface ICreateLoan {
   payment_amount: number
   total_recovered: number
 }
+
+export interface ILoan {
+  id: number
+  amount: number
+  loan_date: Date
+  interest_rate: number
+  total_recovered: number
+  total_pending: number
+  status: 'active' | 'paid' | 'pending'
+  payment_plan: IPaymentPlan
+  penalty_plans: IPenaltyPlan[]
+}
+
+export interface IPaymentPlan {
+  id: number
+  total_payments: number
+  payments_remaining: number
+  frequency: 'daily' | 'weekly' | 'biweekly' | 'monthly' | 'yearly'
+  payment_amount: number
+  payment_schedules: IPaymentSchedule[]
+}
+
+export interface IPaymentSchedule {
+  id: number
+  due_date: Date
+  amount_due: number
+  amount_paid: number
+  status: string
+}
+
+export interface IPenaltyPlan {
+  id: number
+  total_penalty_amount: number
+  status: string
+  penalty_payment_schedules: IPenaltyPaymentSchedule[]
+}
+
+export interface IPenaltyPaymentSchedule {
+  id: number
+  dueDate: Date
+  amount_due: number
+  amount_paid: number
+  status: string
+}
