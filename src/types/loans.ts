@@ -29,7 +29,7 @@ export interface ILoan {
   interest_rate: number
   total_recovered: number
   total_pending: number
-  status: 'active' | 'paid' | 'pending'
+  status: 'active' | 'paid' | 'pending' | 'rejected'
   client: IClient
   payment_plan: IPaymentPlan
   penalty_plans: IPenaltyPlan[]
