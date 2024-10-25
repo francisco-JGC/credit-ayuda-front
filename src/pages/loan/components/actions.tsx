@@ -17,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ILoanTable } from '@/types/loans'
+import { Link } from "react-router-dom"
 interface IProps {
   loan: ILoanTable
 }
@@ -35,7 +36,7 @@ export const Actions = ({ loan }: IProps) => {
         <DropdownMenuGroup>
           <DropdownMenuItem>
             <BanknoteIcon className="mr-2 h-4 w-4" />
-            <span>Detalles del Prestamo</span>
+            <Link to={`/loans/details/${loan.id}`}>Detalles del Prestamo</Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <History className="mr-2 h-4 w-4" />
