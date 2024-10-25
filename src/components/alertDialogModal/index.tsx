@@ -13,7 +13,7 @@ import { ReactNode } from "react"
 
 interface IProps {
   title: string
-  subtitle: string
+  subtitle?: string
   onConfirm: () => void
   children: ReactNode
 }
