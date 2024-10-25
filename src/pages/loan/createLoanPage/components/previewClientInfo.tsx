@@ -29,10 +29,10 @@ export const PreviewClientInfo = ({ client, isLoading }: IProps) => {
                 <Input value={client.name} name="name" disabled className="bg-gray-200" />
               </div>
 
-              {/* <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3">
                 <label htmlFor="" className=" text-gray-500">Cedula de identidad</label>
                 <Input value={client.dni} name="dni" disabled className="bg-gray-200" />
-              </div> */}
+              </div>
 
               <div className="flex flex-col gap-3">
                 <label htmlFor="" className=" text-gray-500">Teléfono Principal</label>
