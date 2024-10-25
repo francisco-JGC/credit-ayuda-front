@@ -40,17 +40,9 @@ export const PreviewPaymentSchedule = ({ frequency, total_recovered, amount, int
       return newDate;
     };
 
-    const addMonthsSkippingWeekends = (date: Date, months: number): Date => {
+    const addMonths = (date: Date, months: number): Date => {
       let newDate = new Date(date);
       newDate.setMonth(newDate.getMonth() + months);
-
-
-      if (newDate.getDay() === 6) {
-        newDate.setDate(newDate.getDate() + 2);
-      } else if (newDate.getDay() === 0) {
-        newDate.setDate(newDate.getDate() + 1);
-      }
-
       return newDate;
     };
 
@@ -67,16 +59,18 @@ export const PreviewPaymentSchedule = ({ frequency, total_recovered, amount, int
           nextDueDate = addDaysSkippingWeekends(new Date(currentDueDate), 1);
           break;
         case 'weekly':
-          nextDueDate = addDaysSkippingWeekends(new Date(currentDueDate), 7);
+          nextDueDate = new Date(currentDueDate);
+          nextDueDate.setDate(nextDueDate.getDate() + 7);
           break;
         case 'biweekly':
-          nextDueDate = addDaysSkippingWeekends(new Date(currentDueDate), 14);
+          nextDueDate = new Date(currentDueDate);
+          nextDueDate.setDate(nextDueDate.getDate() + 14);
           break;
         case 'monthly':
-          nextDueDate = addMonthsSkippingWeekends(new Date(currentDueDate), 1);
+          nextDueDate = addMonths(new Date(currentDueDate), 1);
           break;
         case 'yearly':
-          nextDueDate = addMonthsSkippingWeekends(new Date(currentDueDate), 12);
+          nextDueDate = addMonths(new Date(currentDueDate), 12);
           break;
         default:
           nextDueDate = '';
@@ -99,6 +93,7 @@ export const PreviewPaymentSchedule = ({ frequency, total_recovered, amount, int
     setPaymentSchedule(schedules);
 
   }, [frequency, total_recovered, loan_date, interest_rate, total_payments]);
+
 
 
   return (
