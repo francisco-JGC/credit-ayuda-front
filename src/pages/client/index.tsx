@@ -72,6 +72,7 @@ export default function ClientPage() {
           <TableHeader className="bg-gray-100">
             <TableRow>
               <TableHead className="text-gray-800 font-bold py-4 px-6">Nombre del Cliente</TableHead>
+              <TableHead className="text-gray-800 font-bold py-4 px-6">Cédula</TableHead>
               <TableHead className="text-gray-800 font-bold py-4 px-6">Teléfono</TableHead>
               <TableHead className="text-gray-800 font-bold py-4 px-6">Dirección</TableHead>
               <TableHead className="text-gray-800 font-bold py-4 px-6">Deuda Actual</TableHead>
@@ -84,6 +85,7 @@ export default function ClientPage() {
             {clients && clients.map((client) => (
               <TableRow key={client.id} className="border-b">
                 <TableCell className="py-4 px-6 font-semibold">{client.name}</TableCell>
+                <TableCell className="py-4 px-6 font-semibold">{client.dni}</TableCell>
                 <TableCell className="py-4 px-6">{client.phone}</TableCell>
                 <TableCell className="py-4 px-6">{client.address}</TableCell>
                 <TableCell className="py-4 px-6">{formatPrice(client.current_debt)}</TableCell>

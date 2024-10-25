@@ -4,6 +4,7 @@ export interface IClientTable {
   phone: string
   address: string
   current_debt: number
+  dni: string
   route: string
   loan_status: 'approved' | 'pending' | 'paid'
 }
