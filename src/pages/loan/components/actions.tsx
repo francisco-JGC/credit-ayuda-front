@@ -34,17 +34,32 @@ export const Actions = ({ loan }: IProps) => {
         <DropdownMenuLabel>Acciones</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <BanknoteIcon className="mr-2 h-4 w-4" />
-            <Link to={`/loans/details/${loan.id}`}>Detalles del Prestamo</Link>
+          <DropdownMenuItem asChild>
+            <Link
+              to={`/loans/details/${loan.id}`}
+              className="flex gap-2 items-center w-full hover:cursor-pointer"
+            >
+              <BanknoteIcon className="h-4 w-4" />
+              Detalles del Prestamo
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link
+              to={`/loans/payments/${loan.id}`}
+              className="flex gap-2 items-center w-full hover:cursor-pointer"
+            >
+              <History className="h-4 w-4" />
+              Abonos
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <History className="mr-2 h-4 w-4" />
-            <span>Abonos</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <ClockArrowUp className="mr-2 h-4 w-4" />
-            <span>Generar Mora</span>
+            <Link
+              to={'/loangs/ff'}
+              className="flex gap-2 items-center w-full hover:cursor-pointer"
+            >
+              <ClockArrowUp className="h-4 w-4" />
+              Generar mora
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
