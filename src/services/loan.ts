@@ -18,7 +18,7 @@ export const getPaginationLoans = async ({
   limit,
 }: IPagination): Promise<IHandleResponse> => {
   return await fetchData({
-    url: `/loan/${page}/${limit}/${filter}`,
+    url: `/loan/full/${page}/${limit}/${filter}`,
     method: 'GET',
     useToken: true,
   })

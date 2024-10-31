@@ -1,3 +1,4 @@
+import { SkeletonTableRows } from '@/components/skeleton-table-rows'
 import {
   Table,
   TableBody,
@@ -8,15 +9,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { ILoanTable } from '@/types/loans'
+import { ILoan } from '@/types/loans'
 import { formatFrequency } from '@/utils/format-frequency'
 import { formatLoanStatus } from '@/utils/format-loanState'
 import { formatPrice } from '@/utils/price-format'
 import { Actions } from './actions'
-import { SkeletonTableRows } from '@/components/skeleton-table-rows'
 
 interface ILoanTableProps {
-  loans: ILoanTable[]
+  loans: ILoan[]
   isLoading: boolean
   error: Error | null
 }
@@ -32,6 +32,9 @@ export function LoansTable({ loans, isLoading, error }: ILoanTableProps) {
           </TableHead>
           <TableHead className="font-semibold text-gray-800 py-4 px-6">
             Cédula
+          </TableHead>
+          <TableHead className="font-semibold text-gray-800 py-4 px-6">
+            Fecha de préstamo
           </TableHead>
           <TableHead className="font-semibold text-gray-800 py-4 px-6">
             Monto solicitado
@@ -73,24 +76,29 @@ export function LoansTable({ loans, isLoading, error }: ILoanTableProps) {
             </TableCell>
           </TableRow>
         )}
-        {isLoading && <SkeletonTableRows columns={8} rows={4} />}
+        {isLoading && <SkeletonTableRows columns={8} rows={5} />}
         {!isLoading &&
           loans.map((loan) => (
             <TableRow key={loan.id} className="border-b">
               <TableCell className="py-4 px-6 font-semibold">
-                {loan.client_name}
+                {loan.client.name}
               </TableCell>
-              <TableCell className="py-4 px-6">{loan.dni}</TableCell>
+              <TableCell className="py-4 px-6">{loan.client.dni}</TableCell>
+              <TableCell className="py-4 px-6">
+                {new Date(loan.created_at).toDateString()}
+              </TableCell>
               <TableCell className="py-4 px-6">
                 {formatPrice(Number(loan.amount))}
               </TableCell>
               <TableCell className="py-4 px-6">
-                {formatPrice(Number(loan.remaining_debt))}
+                {formatPrice(Number(loan.total_pending))}
               </TableCell>
               <TableCell className="py-4 px-6">
-                {formatFrequency(loan.frequency)}
+                {formatFrequency(loan.payment_plan.frequency)}
               </TableCell>
-              <TableCell className="py-4 px-6">{loan.route}</TableCell>
+              <TableCell className="py-4 px-6">
+                {loan.client.route?.name ?? ''}
+              </TableCell>
               <TableCell
                 className={`py-4 px-6 font-bold ${
                   loan.status === 'paid'
