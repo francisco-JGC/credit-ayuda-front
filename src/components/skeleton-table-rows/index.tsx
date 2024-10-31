@@ -13,8 +13,8 @@ export function SkeletonTableRows({
   return (
     <>
       {Array.from({ length: rows }).map((_, i) => (
-        <TableRow key={i} className="border-b">
-          <TableCell colSpan={columns} className="py-4 px-6">
+        <TableRow key={i}>
+          <TableCell colSpan={columns}>
             <Skeleton
               className="h-7"
               style={{ width: `${((rows - i) * 100) / rows}%` }}
