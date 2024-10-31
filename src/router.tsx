@@ -16,25 +16,27 @@ import UpdateRoutePage from './pages/routes/updateRoutePage';
 import LoanPage from './pages/loan';
 import CreateLoanPage from './pages/loan/createLoanPage';
 import DetailsLoanPage from './pages/loan/detailsLoanPage';
+import { DashboardLayout } from './components/root-layout';
 
-function ProtectedRouteElement({ element }: { element: ReactNode }) {
-  return <ProtectedRoute>{element}</ProtectedRoute>;
+function ProtectedRouteElement({ children }: { children: ReactNode }) {
+  return <ProtectedRoute>{children}</ProtectedRoute>;
 }
 
 export default function Router() {
   return (
     <Routes>
-      <Route path="/" element={<ProtectedRouteElement element={<HomePage />} />} />
-      <Route path="/clients" element={<ProtectedRouteElement element={<ClientPage />} />} />
-      <Route path="/clients/create" element={<ProtectedRouteElement element={<CreateClientPage />} />} />
-      <Route path="/clients/update/:id" element={<ProtectedRouteElement element={<UpdateClientPage />} />} />
-      <Route path="/routes" element={<ProtectedRouteElement element={<RoutesPage />} />} />
-      <Route path="/routes/create" element={<ProtectedRouteElement element={<CreateRoutePage />} />} />
-      <Route path="/routes/update/:id" element={<ProtectedRouteElement element={<UpdateRoutePage />} />} />
-      <Route path="/loans" element={<ProtectedRouteElement element={<LoanPage />} />} />
-      <Route path="/loans/create" element={<ProtectedRouteElement element={<CreateLoanPage />} />} />
-      <Route path="/loans/details/:id" element={<ProtectedRouteElement element={<DetailsLoanPage />} />} />
-
+      <Route path="/" element={<ProtectedRouteElement><DashboardLayout /></ProtectedRouteElement>}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/clients" element={<ClientPage />} />
+        <Route path="/clients/create" element={<CreateClientPage />} />
+        <Route path="/clients/update/:id" element={<UpdateClientPage />} />
+        <Route path="/routes" element={<RoutesPage />} />
+        <Route path="/routes/create" element={<CreateRoutePage />} />
+        <Route path="/routes/update/:id" element={<UpdateRoutePage />} />
+        <Route path="/loans" element={<LoanPage />} />
+        <Route path="/loans/create" element={<CreateLoanPage />} />
+        <Route path="/loans/details/:id" element={<DetailsLoanPage />} />
+      </Route>
       <Route path="/login" element={<LoginPage />} />
     </Routes>
   );
