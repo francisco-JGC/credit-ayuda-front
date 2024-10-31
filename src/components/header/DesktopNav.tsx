@@ -9,8 +9,9 @@ export const DesktopNav = () => (
     <DashBoardLink to="/">Inicio</DashBoardLink>
     <DashBoardLink to="/loans">Préstamos</DashBoardLink>
     <DashBoardLink to="/clients">Clientes</DashBoardLink>
+    <DashBoardLink to="/routes">Rutas</DashBoardLink>
     <Popover className="relative">
-      <PopoverButton className="inline-flex items-center gap-1 py-2 px-3.5 hover:bg-gray-200 rounded transition-colors bg-white font-semibold text-gray-900">
+      <PopoverButton className="inline-flex items-center justify-between gap-1 py-2 px-3.5 hover:bg-gray-200 rounded transition-colors bg-white font-semibold text-gray-900">
         Informes
         <ChevronDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
       </PopoverButton>
@@ -37,6 +38,5 @@ export const DesktopNav = () => (
     </Popover>
     <DashBoardLink to="/catalog">Catálogos</DashBoardLink>
     <DashBoardLink to="/requests">Solicitudes</DashBoardLink>
-    <DashBoardLink to="/routes">Rutas</DashBoardLink>
   </Popover>
 )
