@@ -1,4 +1,4 @@
-import { LoanFrequency } from '@/hooks/use-loan-filters'
+import { LoanFrequency } from '@/pages/loan/hooks/use-loan-filters'
 
 export const frequencies: LoanFrequency[] = [
   'daily',
