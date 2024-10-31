@@ -1,14 +1,13 @@
-import { LoanFrequencyWithAll } from '@/hooks/use-loan-filters'
+import { LoanFrequencyWithAll } from '@/pages/loan/hooks/use-loan-filters'
+import { frequencies, frequencyMap } from '@/utils/contants'
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '../ui/select'
-import { frequencies, frequencyMap } from '@/utils/contants'
 
 interface FilterFrequencyProps {
   onChangeFrequency: (frequency: LoanFrequencyWithAll) => void
@@ -25,9 +24,12 @@ export function FilterFrequency({ onChangeFrequency }: FilterFrequencyProps) {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Frequencias</SelectLabel>
-          <SelectItem value="all" onClick={() => onChangeFrequency('all')}>
-            Todas las frequencias
+          <SelectItem
+            className="opacity-80"
+            value="all"
+            onClick={() => onChangeFrequency('all')}
+          >
+            Tipo de préstamo
           </SelectItem>
           {frequencies.map((frequency) => (
             <SelectItem
