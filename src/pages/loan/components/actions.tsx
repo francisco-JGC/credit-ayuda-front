@@ -52,7 +52,7 @@ export const Actions = ({ loan }: IProps) => {
               Abonos
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem asChild>
             <Link
               to={'/loangs/ff'}
               className="flex gap-2 items-center w-full hover:cursor-pointer"
@@ -63,9 +63,14 @@ export const Actions = ({ loan }: IProps) => {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-red-500">
-          <X className="mr-2 h-4 w-4" />
-          <span>Cancelar Solicitud</span>
+        <DropdownMenuItem asChild>
+          <Button
+            className="w-full justify-start text-red-500 hover:!text-red-500 hover:cursor-pointer"
+            variant="ghost"
+          >
+            <X className="mr-2 h-4 w-4" />
+            <span>Cancelar Solicitud</span>
+          </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
