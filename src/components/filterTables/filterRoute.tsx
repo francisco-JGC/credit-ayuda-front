@@ -1,6 +1,5 @@
 import { Check, ChevronsUpDown } from 'lucide-react'
 
-import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
   Command,
@@ -15,30 +14,30 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { useEffect, useState } from 'react'
-import { IRoute } from '@/types/routes'
-import { getAllRoutes } from '@/services/route'
+import { useLoanRoutes } from '@/hooks/use-loan-routes'
+import { cn } from '@/lib/utils'
+import { useState } from 'react'
+import { Skeleton } from '../ui/skeleton'
 
 interface IProps {
-  handleSetRouteFilter: (route: string) => void
+  onChangeRoute: (route: string) => void
 }
 
-export function FilterRoute({ handleSetRouteFilter }: IProps) {
+export function FilterRoute({ onChangeRoute }: IProps) {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('')
-  const [routes, setRoutes] = useState<IRoute[]>([])
+  const { data: routes = [], isLoading } = useLoanRoutes()
 
-  useEffect(() => {
-    handleSetRouteFilter(value)
-  }, [value])
+  const handleSelectRoute = (currentValue: string) => {
+    const newValue = currentValue === value ? '' : currentValue
+    setValue(newValue)
+    onChangeRoute(newValue)
+    setOpen(false)
+  }
 
-  useEffect(() => {
-    getAllRoutes().then((response) => {
-      if (response.success) {
-        setRoutes(response.data as any)
-      }
-    })
-  }, [])
+  if (isLoading) {
+    return <Skeleton className="min-w-[200px] h-full" />
+  }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -49,9 +48,7 @@ export function FilterRoute({ handleSetRouteFilter }: IProps) {
           aria-expanded={open}
           className="w-full min-w-[200px] font-normal justify-between"
         >
-          {value
-            ? routes.find((route) => route.name === value)?.name
-            : 'Filtrar ruta...'}
+          {value || 'Filtrar por ruta'}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -68,15 +65,12 @@ export function FilterRoute({ handleSetRouteFilter }: IProps) {
                 <CommandItem
                   key={route.name}
                   value={route.name}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? '' : currentValue)
-                    setOpen(false)
-                  }}
+                  onSelect={handleSelectRoute}
                 >
                   <Check
                     className={cn(
-                      'mr-2 h-4 w-4',
-                      value === route.name ? 'opacity-100' : 'opacity-0',
+                      'mr-2 h-4 w-4 invisible',
+                      value === route.name && 'visible',
                     )}
                   />
                   {route.name}
