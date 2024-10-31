@@ -23,107 +23,87 @@ interface ILoanTableProps {
 
 export function LoansTable({ loans, isLoading, error }: ILoanTableProps) {
   return (
-    <Table className="w-full table-fixed">
-      <TableCaption>Lista de préstamos</TableCaption>
-      <TableHeader className="bg-gray-100">
-        <TableRow>
-          <TableHead className="font-semibold text-gray-800 py-4 px-6">
-            Nombre del cliente
-          </TableHead>
-          <TableHead className="font-semibold text-gray-800 py-4 px-6">
-            Cédula
-          </TableHead>
-          <TableHead className="font-semibold text-gray-800 py-4 px-6">
-            Fecha de préstamo
-          </TableHead>
-          <TableHead className="font-semibold text-gray-800 py-4 px-6">
-            Monto solicitado
-          </TableHead>
-          <TableHead className="font-semibold text-gray-800 py-4 px-6">
-            Deuda Restante
-          </TableHead>
-          <TableHead className="font-semibold text-gray-800 py-4 px-6">
-            Tipo de Prestamo
-          </TableHead>
-          <TableHead className="font-semibold text-gray-800 py-4 px-6">
-            Ruta
-          </TableHead>
-          <TableHead className="font-semibold text-gray-800 py-4 px-6">
-            Estado
-          </TableHead>
-          <TableHead className="font-semibold text-gray-800 py-4 px-6"></TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {loans.length === 0 && !isLoading && !error && (
-          <TableRow>
-            <TableCell
-              colSpan={8}
-              className="py-4 px-6 text-gray-600 text-center"
-            >
-              No se encontraron préstamos
-            </TableCell>
+    <div className="border overflow-hidden rounded-lg">
+      <Table className="table-fixed">
+        <TableCaption className="my-2">Lista de préstamos</TableCaption>
+        <TableHeader className="bg-gray-100">
+          <TableRow className="[&>th]:px-4 [&>th]:text-xs">
+            <TableHead className="px-4 font-normal">Cliente</TableHead>
+            <TableHead className="px-4 font-normal">Cédula</TableHead>
+            <TableHead className="px-4 font-normal">
+              Fecha de préstamo
+            </TableHead>
+            <TableHead className="px-4 font-normal">Monto solicitado</TableHead>
+            <TableHead className="px-4 font-normal">Deuda Restante</TableHead>
+            <TableHead className="px-4 font-normal">Tipo de Prestamo</TableHead>
+            <TableHead className="px-4 font-normal">Ruta</TableHead>
+            <TableHead className="px-4 font-normal">Estado</TableHead>
+            <TableHead className="w-20"></TableHead>
           </TableRow>
-        )}
-        {error && (
-          <TableRow>
-            <TableCell
-              colSpan={8}
-              className="py-4 px-6 text-red-600 text-center"
-            >
-              Ocurrió un error al obtener los préstamos, por favor intenta de
-              nuevo.
-            </TableCell>
-          </TableRow>
-        )}
-        {isLoading && <SkeletonTableRows columns={8} rows={5} />}
-        {!isLoading &&
-          loans.map((loan) => (
-            <TableRow key={loan.id} className="border-b">
-              <TableCell className="py-4 px-6 font-semibold">
-                {loan.client.name}
-              </TableCell>
-              <TableCell className="py-4 px-6">{loan.client.dni}</TableCell>
-              <TableCell className="py-4 px-6">
-                {new Date(loan.created_at).toDateString()}
-              </TableCell>
-              <TableCell className="py-4 px-6">
-                {formatPrice(Number(loan.amount))}
-              </TableCell>
-              <TableCell className="py-4 px-6">
-                {formatPrice(Number(loan.total_pending))}
-              </TableCell>
-              <TableCell className="py-4 px-6">
-                {formatFrequency(loan.payment_plan.frequency)}
-              </TableCell>
-              <TableCell className="py-4 px-6">
-                {loan.client.route?.name ?? ''}
-              </TableCell>
-              <TableCell
-                className={`py-4 px-6 font-bold ${
-                  loan.status === 'paid'
-                    ? 'text-green-600'
-                    : loan.status === 'pending'
-                    ? 'text-gray-600'
-                    : loan.status === 'active'
-                    ? 'text-blue-600'
-                    : 'text-gray-900'
-                }`}
-              >
-                {formatLoanStatus(loan.status)}
-              </TableCell>
-
-              <TableCell className="py-4 px-6">
-                <Actions loan={loan} />
+        </TableHeader>
+        <TableBody>
+          {loans.length === 0 && !isLoading && !error && (
+            <TableRow>
+              <TableCell colSpan={9} className="text-gray-600 text-center">
+                No se encontraron préstamos
               </TableCell>
             </TableRow>
-          ))}
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          {/* Puedes agregar un resumen aquí si lo necesitas */}
-        </TableRow>
-      </TableFooter>
-    </Table>
+          )}
+          {error && (
+            <TableRow>
+              <TableCell colSpan={9} className="text-red-600 text-center">
+                Ocurrió un error al obtener los préstamos, por favor intenta de
+                nuevo.
+              </TableCell>
+            </TableRow>
+          )}
+          {isLoading && <SkeletonTableRows columns={9} rows={5} />}
+          {!isLoading &&
+            loans.map((loan) => (
+              <TableRow key={loan.id} className="[&>td]:px-4">
+                <TableCell className="">{loan.client.name}</TableCell>
+                <TableCell className="">{loan.client.dni}</TableCell>
+                <TableCell className="">
+                  {new Date(loan.created_at).toDateString()}
+                </TableCell>
+                <TableCell className="">
+                  {formatPrice(Number(loan.amount))}
+                </TableCell>
+                <TableCell className="">
+                  {formatPrice(Number(loan.total_pending))}
+                </TableCell>
+                <TableCell className="">
+                  {formatFrequency(loan.payment_plan.frequency)}
+                </TableCell>
+                <TableCell className="">
+                  {loan.client.route?.name ?? ''}
+                </TableCell>
+                <TableCell
+                  className={`${
+                    loan.status === 'paid'
+                      ? 'text-green-600'
+                      : loan.status === 'pending'
+                      ? 'text-gray-600'
+                      : loan.status === 'active'
+                      ? 'text-blue-600'
+                      : 'text-gray-900'
+                  }`}
+                >
+                  {formatLoanStatus(loan.status)}
+                </TableCell>
+
+                <TableCell>
+                  <Actions loan={loan} />
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            {/* Puedes agregar un resumen aquí si lo necesitas */}
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </div>
   )
 }
