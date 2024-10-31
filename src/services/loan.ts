@@ -1,4 +1,4 @@
-import { ICreateLoan, ILoan } from '@/types/loans'
+import { ICreateLoan } from '@/types/loans'
 import { fetchData, IHandleResponse, IPagination } from '@/utils/fetch-data'
 
 export const createLoan = async (
