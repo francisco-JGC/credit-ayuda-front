@@ -1,4 +1,4 @@
-import { ILoanTable } from '@/types/loans'
+import { ILoan } from '@/types/loans'
 import { useState } from 'react'
 
 export type LoanFrequency =
@@ -16,7 +16,7 @@ export type LoanFilters = {
 
 export type LoanFrequencyWithAll = LoanFrequency | 'all'
 
-export function useLoanFilters({ loans }: { loans: ILoanTable[] }) {
+export function useLoanFilters({ loans }: { loans: ILoan[] }) {
   const [dniQuery, setDniQuery] = useState('')
   const [frequencyFilter, setFrequencyFilter] =
     useState<LoanFrequencyWithAll>('all')
@@ -24,10 +24,13 @@ export function useLoanFilters({ loans }: { loans: ILoanTable[] }) {
 
   const filteredLoans = loans.filter((loan) => {
     const dniMatch =
-      loan.dni.toLowerCase().includes(dniQuery.toLowerCase()) || dniQuery === ''
+      loan.client.dni.toLowerCase().includes(dniQuery.toLowerCase()) ||
+      dniQuery === ''
     const frequencyMatch =
-      loan.frequency === frequencyFilter || frequencyFilter === 'all'
-    const routeMatch = loan.route === routeFilter || routeFilter === ''
+      loan.payment_plan.frequency === frequencyFilter ||
+      frequencyFilter === 'all'
+    const routeMatch =
+      loan.client.route?.name === routeFilter || routeFilter === ''
 
     return dniMatch && frequencyMatch && routeMatch
   })
