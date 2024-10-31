@@ -4,9 +4,9 @@ import {
   EllipsisVertical,
   History,
   X,
-} from "lucide-react"
+} from 'lucide-react'
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,11 +15,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { ILoanTable } from '@/types/loans'
-import { Link } from "react-router-dom"
+} from '@/components/ui/dropdown-menu'
+import { ILoan } from '@/types/loans'
+import { Link } from 'react-router-dom'
 interface IProps {
-  loan: ILoanTable
+  loan: ILoan
 }
 
 export const Actions = ({ loan }: IProps) => {
@@ -48,7 +48,7 @@ export const Actions = ({ loan }: IProps) => {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className='text-red-500'>
+        <DropdownMenuItem className="text-red-500">
           <X className="mr-2 h-4 w-4" />
           <span>Cancelar Solicitud</span>
         </DropdownMenuItem>
