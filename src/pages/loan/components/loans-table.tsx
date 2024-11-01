@@ -20,6 +20,8 @@ interface ILoanTableProps {
 }
 
 export function LoansTable({ loans, isLoading, error }: ILoanTableProps) {
+  const totalColumns = 11
+
   return (
     <div className="border rounded-lg h-full">
       <Table className="table-fixed">
@@ -27,11 +29,12 @@ export function LoansTable({ loans, isLoading, error }: ILoanTableProps) {
           <TableRow className="[&>th]:px-4 [&>th]:text-xs">
             <TableHead className="px-4 font-normal w-10">ID</TableHead>
             <TableHead className="px-4 font-normal w-40">Cliente</TableHead>
-            <TableHead className="px-4 font-normal">Cédula</TableHead>
+            <TableHead className="px-4 font-normal w-40">Cédula</TableHead>
             <TableHead className="px-4 font-normal">
               Fecha de préstamo
             </TableHead>
             <TableHead className="px-4 font-normal">Monto solicitado</TableHead>
+            <TableHead className="px-4 font-normal">Interés</TableHead>
             <TableHead className="px-4 font-normal">Deuda Restante</TableHead>
             <TableHead className="px-4 font-normal">Tipo de Prestamo</TableHead>
             <TableHead className="px-4 font-normal">Ruta</TableHead>
@@ -42,20 +45,26 @@ export function LoansTable({ loans, isLoading, error }: ILoanTableProps) {
         <TableBody>
           {loans.length === 0 && !isLoading && !error && (
             <TableRow>
-              <TableCell colSpan={9} className="text-gray-600 text-center">
+              <TableCell
+                colSpan={totalColumns}
+                className="text-gray-600 text-center"
+              >
                 No se encontraron préstamos
               </TableCell>
             </TableRow>
           )}
           {error && (
             <TableRow>
-              <TableCell colSpan={10} className="text-red-600 text-center">
+              <TableCell
+                colSpan={totalColumns}
+                className="text-red-600 text-center"
+              >
                 Ocurrió un error al obtener los préstamos, por favor intenta de
                 nuevo.
               </TableCell>
             </TableRow>
           )}
-          {isLoading && <SkeletonTableRows columns={9} rows={10} />}
+          {isLoading && <SkeletonTableRows columns={totalColumns} rows={10} />}
           {!isLoading &&
             loans.map((loan) => (
               <TableRow key={loan.id} className="[&>td]:px-4">
@@ -67,6 +76,11 @@ export function LoansTable({ loans, isLoading, error }: ILoanTableProps) {
                 </TableCell>
                 <TableCell className="">
                   {formatPrice(Number(loan.amount))}
+                </TableCell>
+                <TableCell className="">
+                  {formatPrice(
+                    Number(loan.amount) * Number(loan.interest_rate / 100),
+                  )}
                 </TableCell>
                 <TableCell className="">
                   {formatPrice(Number(loan.total_pending))}
