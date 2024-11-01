@@ -47,14 +47,17 @@ export function useLoans({ limit = 10 } = {}) {
 
   const filterByStatus = (status: LoanStatus | undefined) => {
     setLoanStatus(status)
+    setCurrentPage(1)
   }
 
   const filterByFrequency = (frequency: LoanFrequency | undefined) => {
     setFrequency(frequency)
+    setCurrentPage(1)
   }
 
   const filterByRoute = (route: string | undefined) => {
     setRoute(route)
+    setCurrentPage(1)
   }
 
   const resetFilters = () => {
