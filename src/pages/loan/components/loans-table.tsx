@@ -2,18 +2,16 @@ import { SkeletonTableRows } from '@/components/skeleton-table-rows'
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
 import { ILoan } from '@/types/loans'
 import { formatFrequency } from '@/utils/format-frequency'
-import { formatLoanStatus } from '@/utils/format-loanState'
 import { formatPrice } from '@/utils/price-format'
 import { Actions } from './actions'
+import { LoanStatusBadge } from './loan-status-badge'
 
 interface ILoanTableProps {
   loans: ILoan[]
@@ -23,9 +21,8 @@ interface ILoanTableProps {
 
 export function LoansTable({ loans, isLoading, error }: ILoanTableProps) {
   return (
-    <div className="border overflow-hidden rounded-lg">
+    <div className="border rounded-lg h-full">
       <Table className="table-fixed">
-        <TableCaption className="my-2">Lista de préstamos</TableCaption>
         <TableHeader className="bg-gray-100">
           <TableRow className="[&>th]:px-4 [&>th]:text-xs">
             <TableHead className="px-4 font-normal">Cliente</TableHead>
@@ -57,7 +54,7 @@ export function LoansTable({ loans, isLoading, error }: ILoanTableProps) {
               </TableCell>
             </TableRow>
           )}
-          {isLoading && <SkeletonTableRows columns={9} rows={5} />}
+          {isLoading && <SkeletonTableRows columns={9} rows={10} />}
           {!isLoading &&
             loans.map((loan) => (
               <TableRow key={loan.id} className="[&>td]:px-4">
@@ -78,31 +75,15 @@ export function LoansTable({ loans, isLoading, error }: ILoanTableProps) {
                 <TableCell className="">
                   {loan.client.route?.name ?? ''}
                 </TableCell>
-                <TableCell
-                  className={`${
-                    loan.status === 'paid'
-                      ? 'text-green-600'
-                      : loan.status === 'pending'
-                      ? 'text-gray-600'
-                      : loan.status === 'active'
-                      ? 'text-blue-600'
-                      : 'text-gray-900'
-                  }`}
-                >
-                  {formatLoanStatus(loan.status)}
+                <TableCell>
+                  <LoanStatusBadge status={loan.status} />
                 </TableCell>
-
                 <TableCell>
                   <Actions loan={loan} />
                 </TableCell>
               </TableRow>
             ))}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            {/* Puedes agregar un resumen aquí si lo necesitas */}
-          </TableRow>
-        </TableFooter>
       </Table>
     </div>
   )
