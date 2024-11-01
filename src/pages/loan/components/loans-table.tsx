@@ -25,7 +25,8 @@ export function LoansTable({ loans, isLoading, error }: ILoanTableProps) {
       <Table className="table-fixed">
         <TableHeader className="bg-gray-100">
           <TableRow className="[&>th]:px-4 [&>th]:text-xs">
-            <TableHead className="px-4 font-normal">Cliente</TableHead>
+            <TableHead className="px-4 font-normal w-10">ID</TableHead>
+            <TableHead className="px-4 font-normal w-40">Cliente</TableHead>
             <TableHead className="px-4 font-normal">Cédula</TableHead>
             <TableHead className="px-4 font-normal">
               Fecha de préstamo
@@ -48,7 +49,7 @@ export function LoansTable({ loans, isLoading, error }: ILoanTableProps) {
           )}
           {error && (
             <TableRow>
-              <TableCell colSpan={9} className="text-red-600 text-center">
+              <TableCell colSpan={10} className="text-red-600 text-center">
                 Ocurrió un error al obtener los préstamos, por favor intenta de
                 nuevo.
               </TableCell>
@@ -58,6 +59,7 @@ export function LoansTable({ loans, isLoading, error }: ILoanTableProps) {
           {!isLoading &&
             loans.map((loan) => (
               <TableRow key={loan.id} className="[&>td]:px-4">
+                <TableCell className="font-semibold">#{loan.id}</TableCell>
                 <TableCell className="">{loan.client.name}</TableCell>
                 <TableCell className="">{loan.client.dni}</TableCell>
                 <TableCell className="">
