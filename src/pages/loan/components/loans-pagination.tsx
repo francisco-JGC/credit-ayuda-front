@@ -2,7 +2,6 @@ import {
   Pagination,
   PaginationContent,
   PaginationItem,
-  PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
@@ -18,43 +17,44 @@ export function LoansPagination({
   currentPage,
   totalPages,
 }: LoansPaginationProps) {
-  const pagesAsNumbers = Array.from({ length: totalPages }, (_, i) => i + 1)
-  const goToPreviousPage = () => goToPage(currentPage - 1)
-  const goToNextPage = () => goToPage(currentPage + 1)
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      goToPage(currentPage - 1)
+    }
+  }
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      goToPage(currentPage + 1)
+    }
+  }
   const hasPreviousPage = currentPage > 1
   const hasNextPage = currentPage < totalPages
 
   return (
-    <Pagination>
-      <PaginationContent>
-        {hasPreviousPage && (
+    <div className="flex flex-col items-center">
+      <Pagination>
+        <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
-              className="hover:cursor-pointer"
+              className={`hover:cursor-pointer ${
+                !hasPreviousPage && 'opacity-50 hover:cursor-not-allowed'
+              }`}
               onClick={goToPreviousPage}
             />
           </PaginationItem>
-        )}
-        {pagesAsNumbers.map((pageNumber) => (
-          <PaginationItem key={pageNumber}>
-            <PaginationLink
-              className="hover:cursor-pointer"
-              isActive={pageNumber === currentPage}
-              onClick={() => goToPage(pageNumber)}
-            >
-              {pageNumber}
-            </PaginationLink>
-          </PaginationItem>
-        ))}
-        {hasNextPage && (
           <PaginationItem>
             <PaginationNext
               onClick={goToNextPage}
-              className="hover:cursor-pointer"
+              className={`hover:cursor-pointer ${
+                !hasNextPage && 'opacity-50 hover:cursor-not-allowed'
+              }`}
             />
           </PaginationItem>
-        )}
-      </PaginationContent>
-    </Pagination>
+        </PaginationContent>
+      </Pagination>
+      <span className="text-xs text-muted-foreground">
+        Página {currentPage} / {totalPages}
+      </span>
+    </div>
   )
 }

@@ -6,7 +6,7 @@ export const frequencies: LoanFrequency[] = [
   'biweekly',
   'monthly',
   'yearly',
-]
+] as const
 
 export const frequencyMap: Record<LoanFrequency, string> = {
   daily: 'Diario',
@@ -14,4 +14,12 @@ export const frequencyMap: Record<LoanFrequency, string> = {
   biweekly: 'Quincenal',
   monthly: 'Mensual',
   yearly: 'Anual',
+}
+
+export const loanStatus = ['active', 'pending', 'paid'] as const
+
+export const statusMap: Record<string, string> = {
+  active: 'Activo',
+  pending: 'Pendiente',
+  paid: 'Pagado',
 }

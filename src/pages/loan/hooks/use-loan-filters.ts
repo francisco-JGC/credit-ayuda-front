@@ -14,21 +14,21 @@ export type LoanFilters = {
   route: string
 }
 
-export type LoanFrequencyWithAll = LoanFrequency | 'all'
+export type LoanFrequencyWithAll = LoanFrequency | ''
 
 export function useLoanFilters({ loans }: { loans: ILoan[] }) {
   const [dniQuery, setDniQuery] = useState('')
   const [frequencyFilter, setFrequencyFilter] =
-    useState<LoanFrequencyWithAll>('all')
+    useState<LoanFrequencyWithAll>('')
   const [routeFilter, setRouteFilter] = useState('')
+  const [statusFilter, setStatusFilter] = useState('')
 
   const filteredLoans = loans.filter((loan) => {
     const dniMatch =
       loan.client.dni.toLowerCase().includes(dniQuery.toLowerCase()) ||
       dniQuery === ''
     const frequencyMatch =
-      loan.payment_plan.frequency === frequencyFilter ||
-      frequencyFilter === 'all'
+      loan.payment_plan.frequency === frequencyFilter || frequencyFilter === ''
     const routeMatch =
       loan.client.route?.name === routeFilter || routeFilter === ''
 
@@ -47,6 +47,12 @@ export function useLoanFilters({ loans }: { loans: ILoan[] }) {
     setRouteFilter(route)
   }
 
+  const cleanFilters = () => {
+    setDniQuery('')
+    setFrequencyFilter('')
+    setRouteFilter('')
+  }
+
   return {
     dniQuery,
     frequencyFilter,
@@ -55,5 +61,6 @@ export function useLoanFilters({ loans }: { loans: ILoan[] }) {
     searchByDni,
     filterByFrequency,
     filterByRoute,
+    cleanFilters,
   }
 }
