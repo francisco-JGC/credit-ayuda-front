@@ -30,7 +30,7 @@ export function LoanStatusFilter({ onChangeStatus }: StatusFilterProps) {
   return (
     <Select value={value} onValueChange={handleValueChange}>
       <SelectTrigger className="min-w-[180px]">
-        <SelectValue placeholder="Estado del préstamos" />
+        <SelectValue placeholder="Estado de préstamo" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
