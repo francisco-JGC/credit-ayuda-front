@@ -61,7 +61,7 @@ export function LoansTable({ loans, isLoading, error }: ILoanTableProps) {
                 <TableCell className="">{loan.client.name}</TableCell>
                 <TableCell className="">{loan.client.dni}</TableCell>
                 <TableCell className="">
-                  {new Date(loan.created_at).toDateString()}
+                  {new Date(loan.created_at).toLocaleDateString()}
                 </TableCell>
                 <TableCell className="">
                   {formatPrice(Number(loan.amount))}
