@@ -11,6 +11,15 @@ export interface ILoanTable {
   status: 'active' | 'paid' | 'pending'
 }
 
+export type LoanFreuqency =
+  | 'daily'
+  | 'weekly'
+  | 'biweekly'
+  | 'monthly'
+  | 'yearly'
+
+export type LoanStatus = 'active' | 'paid' | 'pending' | 'rejected'
+
 export interface ICreateLoan {
   client_id: number
   amount: number
