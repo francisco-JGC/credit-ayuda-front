@@ -72,8 +72,10 @@ export async function getLoans({
   return data
 }
 
-export const getLoanById = async (id: number): Promise<IHandleResponse> => {
-  return await fetchData({
+export const getLoanById = async (
+  id: number,
+): Promise<IHandleResponse<ILoan>> => {
+  return await fetchData<ILoan>({
     url: `/loan/${id}`,
     method: 'GET',
     useToken: true,
