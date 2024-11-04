@@ -25,7 +25,7 @@ export default function LoanPage() {
   } = useLoans({ limit: 10 })
 
   return (
-    <div className="flex flex-col gap-4 p-4 md:p-6 lg:p-8">
+    <div className="flex flex-col gap-4">
       <div className="flex justify-between">
         <div>
           <h2 className="text-2xl font-medium">Préstamos</h2>
