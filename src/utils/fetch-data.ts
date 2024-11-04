@@ -27,12 +27,12 @@ export interface IPaginationResponse<T = unknown> {
   total_page: number
 }
 
-export async function fetchData<TData = any>({
+export async function fetchData<TData>({
   url,
   method,
   data,
   useToken = false,
-}: FetchDataParams<TData>): Promise<IHandleResponse> {
+}: FetchDataParams<TData>): Promise<IHandleResponse<TData>> {
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
   }
