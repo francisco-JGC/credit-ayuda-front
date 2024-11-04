@@ -7,12 +7,7 @@ import { Button } from '@/components/ui/button'
 
 export function PaymentsPage() {
   const { id } = useParams()
-  const { loan } = useLoanDetails({ id: Number(id) })
-
-  if (loan == null) {
-    return null
-  }
-
+  const { loan, isLoading } = useLoanDetails({ id: Number(id) })
   return (
     <div className="">
       <div className="flex justify-between">
@@ -26,13 +21,13 @@ export function PaymentsPage() {
       </div>
       <div className="grid grid-cols-3 gap-4 mt-4">
         <div className="">
-          <ClientDetails loan={loan} />
+          <ClientDetails loan={loan} isLoading={isLoading} />
         </div>
         <div className="col-span-2 row-span-2">
-          <PaymentsTable loan={loan} />
+          <PaymentsTable loan={loan} isLoading={isLoading} />
         </div>
         <div className="">
-          <LoanDetails loan={loan} />
+          <LoanDetails loan={loan} isLoading={isLoading} />
         </div>
       </div>
     </div>
