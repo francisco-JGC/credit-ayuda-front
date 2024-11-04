@@ -1,8 +1,14 @@
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 import { ILoan } from '@/types/loans'
 
-export function LoanDetails({ loan }: { loan: ILoan }) {
-  const recover =
+interface LoanDetailsProps {
+  loan?: ILoan
+  isLoading: boolean
+}
+
+export function LoanDetails({ loan, isLoading }: LoanDetailsProps) {
+  const getRecover = (loan: ILoan) =>
     Number(loan.amount) * (Number(loan.interest_rate) / 100) +
     Number(loan.amount)
 
@@ -15,27 +21,44 @@ export function LoanDetails({ loan }: { loan: ILoan }) {
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
             <p className="text-muted-foreground">Creación del crédito:</p>
-            <p>{new Date(loan.created_at ?? '').toLocaleDateString()}</p>
+            {isLoading && <Skeleton className="h-4" />}
+            {loan != null && !isLoading && (
+              <p>{new Date(loan.created_at ?? '').toLocaleDateString()}</p>
+            )}
           </div>
           <div>
             <p className="text-muted-foreground">Inicio:</p>
-            <p>{new Date(loan.loan_date ?? '').toLocaleDateString()}</p>
+            {isLoading && <Skeleton className="h-4" />}
+
+            {loan != null && !isLoading && (
+              <p>{new Date(loan.loan_date ?? '').toLocaleDateString()}</p>
+            )}
           </div>
           <div>
             <p className="text-muted-foreground">Monto:</p>
-            <p>C${loan.amount}</p>
+            {isLoading && <Skeleton className="h-4" />}
+
+            {loan != null && !isLoading && <p>C${loan.amount}</p>}
           </div>
           <div>
             <p className="text-muted-foreground">Interés:</p>
-            <p>{loan.interest_rate}%</p>
+            {isLoading && <Skeleton className="h-4" />}
+
+            {loan != null && !isLoading && <p>{loan.interest_rate}%</p>}
           </div>
           <div>
             <p className="text-muted-foreground">Cuota:</p>
-            <p>C${loan.payment_plan.payment_amount}</p>
+            {isLoading && <Skeleton className="h-4" />}
+
+            {loan != null && !isLoading && (
+              <p>C${loan.payment_plan.payment_amount}</p>
+            )}
           </div>
           <div>
             <p className="text-muted-foreground">Recuperación:</p>
-            <p>C${recover}</p>
+            {isLoading && <Skeleton className="h-4" />}
+
+            {loan != null && !isLoading && <p>C${getRecover(loan)}</p>}
           </div>
         </div>
       </CardContent>
