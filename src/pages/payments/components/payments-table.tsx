@@ -1,3 +1,4 @@
+import { SkeletonTableRows } from '@/components/skeleton-table-rows'
 import {
   Card,
   CardContent,
@@ -5,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
   TableBody,
@@ -17,8 +19,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ILoan } from '@/types/loans'
 import { frequencyMap } from '@/utils/contants'
 
-export function PaymentsTable({ loan }: { loan: ILoan }) {
-  const payments = loan.payment_plan.payment_schedules
+interface PaymentsTableProps {
+  loan?: ILoan
+  isLoading: boolean
+}
+
+export function PaymentsTable({ loan, isLoading }: PaymentsTableProps) {
+  const payments = loan?.payment_plan.payment_schedules ?? []
   const totalPaid = payments.reduce(
     (acc, payment) => acc + Number(payment.amount_paid),
     0,
@@ -40,9 +47,12 @@ export function PaymentsTable({ loan }: { loan: ILoan }) {
           <div className="flex justify-between">
             <div>
               <CardTitle>Pagos</CardTitle>
-              <CardDescription>
-                {frequencyMap[loan.payment_plan.frequency]}.
-              </CardDescription>
+              {isLoading && <Skeleton className="h-4 w-20" />}
+              {loan != null && !isLoading && (
+                <CardDescription>
+                  {frequencyMap[loan.payment_plan.frequency]}
+                </CardDescription>
+              )}
             </div>
             <div>
               <TabsList>
@@ -67,19 +77,22 @@ export function PaymentsTable({ loan }: { loan: ILoan }) {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {payments.map((payment) => (
-                      <TableRow key={payment.id}>
-                        <TableCell className="font-semibold">
-                          #{payment.id}
-                        </TableCell>
-                        <TableCell>
-                          {new Date(payment.due_date).toLocaleDateString()}
-                        </TableCell>
-                        <TableCell>C${payment.amount_paid ?? 0}</TableCell>
-                        <TableCell>C${payment.amount_due ?? 0}</TableCell>
-                        <TableCell>{payment.status}</TableCell>
-                      </TableRow>
-                    ))}
+                    {isLoading && <SkeletonTableRows columns={5} rows={6} />}
+                    {loan != null &&
+                      !isLoading &&
+                      payments.map((payment) => (
+                        <TableRow key={payment.id}>
+                          <TableCell className="font-semibold">
+                            #{payment.id}
+                          </TableCell>
+                          <TableCell>
+                            {new Date(payment.due_date).toLocaleDateString()}
+                          </TableCell>
+                          <TableCell>C${payment.amount_paid ?? 0}</TableCell>
+                          <TableCell>C${payment.amount_due ?? 0}</TableCell>
+                          <TableCell>{payment.status}</TableCell>
+                        </TableRow>
+                      ))}
                   </TableBody>
                 </Table>
               </div>
@@ -97,43 +110,62 @@ export function PaymentsTable({ loan }: { loan: ILoan }) {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {payments.map((payment) => (
-                      <TableRow key={payment.id}>
-                        <TableCell className="font-semibold">
-                          #{payment.id}
-                        </TableCell>
-                        <TableCell>C${payment.amount_paid ?? 0}</TableCell>
-                        <TableCell>
-                          {new Date(payment.due_date).toLocaleDateString()}
-                        </TableCell>
-                        <TableCell>{loan.client.name}</TableCell>
-                      </TableRow>
-                    ))}
+                    {isLoading && <SkeletonTableRows columns={5} rows={6} />}
+                    {loan != null &&
+                      !isLoading &&
+                      payments.map((payment) => (
+                        <TableRow key={payment.id}>
+                          <TableCell className="font-semibold">
+                            #{payment.id}
+                          </TableCell>
+                          <TableCell>C${payment.amount_paid ?? 0}</TableCell>
+                          <TableCell>
+                            {new Date(payment.due_date).toLocaleDateString()}
+                          </TableCell>
+                          <TableCell>{loan.client.name}</TableCell>
+                        </TableRow>
+                      ))}
                   </TableBody>
                 </Table>
               </div>
             </TabsContent>
             <div className="mt-auto grid grid-cols-3 gap-2 pt-4 text-sm">
               <div className="flex gap-1">
-                <p>Total abonado: C${totalPaid.toFixed(2)}</p>
+                {loan != null && !isLoading && (
+                  <p>Total abonado: C${totalPaid.toFixed(2)}</p>
+                )}
+                {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
               <div className="flex gap-1 place-self-center">
-                <p>
-                  Saldo pendiente: C$
-                  {(Number(loan.amount) - totalPaid).toFixed(2)}
-                </p>
+                {loan != null && !isLoading && (
+                  <p>
+                    Saldo pendiente: C$
+                    {(Number(loan.amount) - totalPaid).toFixed(2)}
+                  </p>
+                )}
+                {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
               <div className="flex gap-1 place-self-end">
-                <p>Monto atrasado: C${totalLatePayment.toFixed(2)}</p>
+                {loan != null && !isLoading && (
+                  <p>Monto atrasado: C${totalLatePayment.toFixed(2)}</p>
+                )}
+                {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
               <div className="flex gap-1">
-                <p>Abonos: {payments.length}</p>
+                {loan != null && !isLoading && <p>Abonos: {payments.length}</p>}
+                {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
               <div className="place-self-center">
-                <p>Abonos pendientes: {totalPendingPayments}</p>
+                {loan != null && !isLoading && (
+                  <p>Abonos pendientes: {totalPendingPayments}</p>
+                )}
+                {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
               <div className="place-self-end">
-                <p>Abonos atrasados: {totalLatePayments}</p>
+                {loan != null && !isLoading && (
+                  <p>Abonos atrasados: {totalLatePayments}</p>
+                )}
+                {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
             </div>
           </div>
