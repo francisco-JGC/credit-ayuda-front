@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -10,6 +11,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { ILoan } from '@/types/loans'
+import { useRef } from 'react'
 import { toast } from 'sonner'
 import { useUpdatePayment } from '../hook/use-update-payment'
 
@@ -18,7 +20,8 @@ interface AddNewPaymentProps {
 }
 
 export function AddNewPayment({ loan }: AddNewPaymentProps) {
-  const { update, isPending, error, isSuccess } = useUpdatePayment()
+  const { update, isPending } = useUpdatePayment({ loanId: loan.id })
+  const closeModalRef = useRef<HTMLButtonElement>(null)
 
   const payment = [...loan.payment_plan.payment_schedules]
     .sort(
@@ -40,15 +43,32 @@ export function AddNewPayment({ loan }: AddNewPaymentProps) {
       return
     }
 
-    if (amount > Number(payment?.amount_due ?? 0)) {
+    if (amount > Number(payment.amount_due ?? 0)) {
       toast.warning('El monto no puede ser mayor al monto pendiente')
       return
     }
+
+    let status = payment.status
+    if (amount === Number(payment.amount_due)) {
+      status = 'paid'
+    }
+
     const updatedPayment = {
       ...payment,
       amount_paid: (Number(payment.amount_paid) + amount).toFixed(2),
+      amount_due: (Number(payment.amount_due) - amount).toFixed(2),
+      status,
     }
     update(updatedPayment)
+      .then(() => {
+        toast.success('Abono guardado correctamente')
+      })
+      .catch(() => {
+        toast.error('Ocurrió un error al guardar el abono')
+      })
+      .finally(() => {
+        closeModalRef.current?.click()
+      })
   }
 
   return (
@@ -64,21 +84,24 @@ export function AddNewPayment({ loan }: AddNewPaymentProps) {
         <form onSubmit={handleSubmit}>
           <div>
             <Label htmlFor="amount">Monto:</Label>
-            <Input
-              max={payment?.amount_due}
-              min={1}
-              type="number"
-              name="amount"
-              id="amount"
-            />
+            <Input type="number" name="amount" id="amount" />
           </div>
-          <div>
-            <p></p>
+          <div className="mt-2">
+            <p className="text-sm">
+              El monto se agregará al pago con la fecha{' '}
+              {new Date(payment?.due_date ?? '').toLocaleDateString()}.
+            </p>
+            <p className="text-sm">
+              Monto pendiente: C${Number(payment?.amount_due).toFixed(2)}.
+            </p>
           </div>
           <div className="flex justify-end mt-6">
-            <Button type="submit">Agregar {isPending && 'Guardando'}</Button>
+            <Button type="submit" disabled={isPending}>
+              Agregar {isPending && 'Guardando...'}
+            </Button>
           </div>
         </form>
+        <DialogClose ref={closeModalRef} className="hidden" />
       </DialogContent>
     </Dialog>
   )
