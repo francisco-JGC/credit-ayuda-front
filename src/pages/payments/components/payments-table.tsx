@@ -130,6 +130,15 @@ export function PaymentsTable({ loan, isLoading }: PaymentsTableProps) {
                     {isLoading && <SkeletonTableRows columns={5} rows={6} />}
                     {loan != null &&
                       !isLoading &&
+                      generalPayments.length === 0 && (
+                        <TableRow>
+                          <TableCell colSpan={5} className="text-center">
+                            No hay pagos realizados
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    {loan != null &&
+                      !isLoading &&
                       generalPayments.map((payment) => (
                         <TableRow key={payment.id}>
                           <TableCell className="font-semibold">
