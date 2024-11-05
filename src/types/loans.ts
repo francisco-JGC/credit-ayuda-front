@@ -54,12 +54,14 @@ export interface IPaymentPlan {
   payment_schedules: IPaymentSchedule[]
 }
 
+export type PaymentStatus = 'paid' | 'pending' | 'late'
+
 export interface IPaymentSchedule {
   id: number
   due_date: string
   amount_due: string
   amount_paid: string
-  status: 'paid' | 'pending' | 'late'
+  status: PaymentStatus
 }
 
 export interface IPenaltyPlan {
