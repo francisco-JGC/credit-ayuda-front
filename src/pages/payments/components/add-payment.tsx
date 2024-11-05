@@ -14,6 +14,7 @@ import { ILoan } from '@/types/loans'
 import { useRef } from 'react'
 import { toast } from 'sonner'
 import { useUpdatePayment } from '../hook/use-update-payment'
+import { StatusBadge } from './payment-statos'
 
 interface AddNewPaymentProps {
   loan: ILoan
@@ -27,7 +28,9 @@ export function AddNewPayment({ loan }: AddNewPaymentProps) {
     .sort(
       (a, b) => new Date(a.due_date).getTime() - new Date(b.due_date).getTime(),
     )
-    .find((payment) => payment.status === 'pending')
+    .find(
+      (payment) => payment.status === 'pending' || payment.status === 'late',
+    )
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -92,7 +95,10 @@ export function AddNewPayment({ loan }: AddNewPaymentProps) {
               {new Date(payment?.due_date ?? '').toLocaleDateString()}.
             </p>
             <p className="text-sm">
-              Monto pendiente: C${Number(payment?.amount_due).toFixed(2)}.
+              Monto pendiente:{' '}
+              <StatusBadge status="pending">
+                C${Number(payment?.amount_due).toFixed(2)}
+              </StatusBadge>
             </p>
           </div>
           <div className="flex justify-end mt-6">
