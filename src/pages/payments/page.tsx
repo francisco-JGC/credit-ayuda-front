@@ -15,9 +15,7 @@ export function PaymentsPage() {
           <h2 className="text-2xl font-medium">Abonos</h2>
           <p className="text-sm text-muted-foreground">Préstamo #{id}</p>
         </div>
-        <div>
-          <AddNewPayment loan={loan} />
-        </div>
+        <div>{loan != null && !isLoading && <AddNewPayment loan={loan} />}</div>
       </div>
       <div className="grid grid-cols-3 gap-4 mt-4">
         <div className="">

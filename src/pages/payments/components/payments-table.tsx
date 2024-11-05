@@ -90,7 +90,9 @@ export function PaymentsTable({ loan, isLoading }: PaymentsTableProps) {
                           </TableCell>
                           <TableCell>C${payment.amount_paid ?? 0}</TableCell>
                           <TableCell>C${payment.amount_due ?? 0}</TableCell>
-                          <TableCell>{payment.status}</TableCell>
+                          <TableCell>
+                            {paymentStatusMap[payment.status]}
+                          </TableCell>
                         </TableRow>
                       ))}
                   </TableBody>
