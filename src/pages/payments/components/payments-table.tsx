@@ -25,7 +25,9 @@ interface PaymentsTableProps {
 }
 
 export function PaymentsTable({ loan, isLoading }: PaymentsTableProps) {
-  const payments = loan?.payment_plan.payment_schedules ?? []
+  const payments = [...(loan?.payment_plan.payment_schedules ?? [])].sort(
+    (a, b) => new Date(a.due_date).getTime() - new Date(b.due_date).getTime(),
+  )
   const totalPaid = payments.reduce(
     (acc, payment) => acc + Number(payment.amount_paid),
     0,
