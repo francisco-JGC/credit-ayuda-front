@@ -10,16 +10,21 @@ import {
 import { ILoan } from '@/types/loans'
 import { formatFrequency } from '@/utils/format-frequency'
 import { formatPrice } from '@/utils/price-format'
-import { Actions } from './actions'
 import { LoanStatusBadge } from './loan-status-badge'
 
 interface ILoanTableProps {
   loans: ILoan[]
   isLoading: boolean
   error: Error | null
+  renderActions: (loan: ILoan) => JSX.Element
 }
 
-export function LoansTable({ loans, isLoading, error }: ILoanTableProps) {
+export function LoansTable({
+  loans,
+  isLoading,
+  error,
+  renderActions,
+}: ILoanTableProps) {
   const totalColumns = 11
 
   return (
@@ -94,9 +99,7 @@ export function LoansTable({ loans, isLoading, error }: ILoanTableProps) {
                 <TableCell>
                   <LoanStatusBadge status={loan.status} />
                 </TableCell>
-                <TableCell>
-                  <Actions loan={loan} />
-                </TableCell>
+                <TableCell>{renderActions(loan)}</TableCell>
               </TableRow>
             ))}
         </TableBody>
