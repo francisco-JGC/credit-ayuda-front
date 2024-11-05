@@ -57,9 +57,9 @@ export interface IPaymentPlan {
 export interface IPaymentSchedule {
   id: number
   due_date: string
-  amount_due: number
-  amount_paid: number
-  status: string
+  amount_due: string
+  amount_paid: string
+  status: 'paid' | 'pending' | 'late'
 }
 
 export interface IPenaltyPlan {
