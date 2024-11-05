@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ILoan } from '@/types/loans'
-import { frequencyMap } from '@/utils/contants'
+import { frequencyMap, paymentStatusMap } from '@/utils/contants'
 
 interface PaymentsTableProps {
   loan?: ILoan
