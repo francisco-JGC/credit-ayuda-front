@@ -17,7 +17,8 @@ import {
 } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ILoan } from '@/types/loans'
-import { frequencyMap, paymentStatusMap } from '@/utils/contants'
+import { frequencyMap } from '@/utils/contants'
+import { PaymentStatus } from './payment-statos'
 
 interface PaymentsTableProps {
   loan?: ILoan
@@ -93,7 +94,7 @@ export function PaymentsTable({ loan, isLoading }: PaymentsTableProps) {
                           <TableCell>C${payment.amount_paid ?? 0}</TableCell>
                           <TableCell>C${payment.amount_due ?? 0}</TableCell>
                           <TableCell>
-                            {paymentStatusMap[payment.status]}
+                            <PaymentStatus status={payment.status} />
                           </TableCell>
                         </TableRow>
                       ))}
