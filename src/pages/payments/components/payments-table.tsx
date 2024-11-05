@@ -15,10 +15,12 @@ import {
 } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ILoan } from '@/types/loans'
-import { frequencyMap } from '@/utils/contants'
+import { frequencyMap, paymentStatusMap } from '@/utils/contants'
 
 export function PaymentsTable({ loan }: { loan: ILoan }) {
-  const payments = loan.payment_plan.payment_schedules
+  const payments = [...loan.payment_plan.payment_schedules].sort(
+    (a, b) => new Date(a.due_date).getTime() - new Date(b.due_date).getTime(),
+  )
   const totalPaid = payments.reduce(
     (acc, payment) => acc + Number(payment.amount_paid),
     0,
@@ -77,7 +79,9 @@ export function PaymentsTable({ loan }: { loan: ILoan }) {
                         </TableCell>
                         <TableCell>C${payment.amount_paid ?? 0}</TableCell>
                         <TableCell>C${payment.amount_due ?? 0}</TableCell>
-                        <TableCell>{payment.status}</TableCell>
+                        <TableCell>
+                          {paymentStatusMap[payment.status]}
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
