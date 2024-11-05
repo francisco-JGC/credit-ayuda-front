@@ -38,7 +38,9 @@ export function LoanDetails({ loan, isLoading }: LoanDetailsProps) {
             <p className="text-muted-foreground">Monto:</p>
             {isLoading && <Skeleton className="h-4" />}
 
-            {loan != null && !isLoading && <p>C${loan.amount}</p>}
+            {loan != null && !isLoading && (
+              <p>C${Number(loan.amount).toFixed(2)}</p>
+            )}
           </div>
           <div>
             <p className="text-muted-foreground">Interés:</p>
@@ -51,7 +53,7 @@ export function LoanDetails({ loan, isLoading }: LoanDetailsProps) {
             {isLoading && <Skeleton className="h-4" />}
 
             {loan != null && !isLoading && (
-              <p>C${loan.payment_plan.payment_amount}</p>
+              <p>C${Number(loan.payment_plan.payment_amount).toFixed(2)}</p>
             )}
           </div>
           <div>
