@@ -18,7 +18,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ILoan } from '@/types/loans'
 import { frequencyMap } from '@/utils/contants'
-import { PaymentStatus, StatusBadge } from './payment-statos'
+import { PaymentStatus, StatusBadge } from './payment-status'
 
 interface PaymentsTableProps {
   loan?: ILoan

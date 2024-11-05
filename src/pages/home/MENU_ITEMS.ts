@@ -5,37 +5,37 @@ import {
   BanknotesIcon,
   UsersIcon,
   UserGroupIcon,
-} from "@heroicons/react/24/solid";
+} from '@heroicons/react/24/solid'
 
 export const MENU_ITEMS = [
   {
-    path: "#",
-    label: "Mi Ruta",
+    path: '#',
+    label: 'Mi Ruta',
     icon: MapPinIcon,
   },
   {
-    path: "#",
-    label: "Préstamos",
+    path: '/loans',
+    label: 'Préstamos',
     icon: BanknotesIcon,
   },
   {
-    path: "#",
-    label: "Solicitudes",
+    path: '#',
+    label: 'Solicitudes',
     icon: UserPlusIcon,
   },
   {
-    path: "#",
-    label: "Clientes",
+    path: '/clients',
+    label: 'Clientes',
     icon: UserGroupIcon,
   },
   {
-    path: "#",
-    label: "Rutas",
+    path: '/routes',
+    label: 'Rutas',
     icon: ArrowTrendingUpIcon,
   },
   {
-    path: "#",
-    label: "Usuarios",
+    path: '#',
+    label: 'Usuarios',
     icon: UsersIcon,
   },
-];
+]

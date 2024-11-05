@@ -14,7 +14,7 @@ import { ILoan } from '@/types/loans'
 import { useRef } from 'react'
 import { toast } from 'sonner'
 import { useUpdatePayment } from '../hook/use-update-payment'
-import { StatusBadge } from './payment-statos'
+import { StatusBadge } from './payment-status'
 
 interface AddNewPaymentProps {
   loan: ILoan
@@ -90,16 +90,18 @@ export function AddNewPayment({ loan }: AddNewPaymentProps) {
             <Input type="number" name="amount" id="amount" />
           </div>
           <div className="mt-2">
-            <p className="text-sm">
-              El monto se agregará al pago con la fecha{' '}
-              {new Date(payment?.due_date ?? '').toLocaleDateString()}.
-            </p>
-            <p className="text-sm">
+            <div className="text-sm">
+              <p>
+                El monto se agregará al pago con la fecha{' '}
+                {new Date(payment?.due_date ?? '').toLocaleDateString()}.
+              </p>
+            </div>
+            <div className="text-sm">
               Monto pendiente:{' '}
               <StatusBadge status="pending">
                 C${Number(payment?.amount_due).toFixed(2)}
               </StatusBadge>
-            </p>
+            </div>
           </div>
           <div className="flex justify-end mt-6">
             <Button type="submit" disabled={isPending}>
