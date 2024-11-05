@@ -8,6 +8,7 @@ import { LoanStatusFilter } from './components/loan-status-filter'
 import { LoansPagination } from './components/loans-pagination'
 import { LoansTable } from './components/loans-table'
 import { useLoans } from './hooks/use-loans'
+import { Actions } from './components/actions'
 
 export default function LoanPage() {
   const {
@@ -80,7 +81,12 @@ export default function LoanPage() {
             </div>
           </div>
         </div>
-        <LoansTable isLoading={isLoading} loans={loans} error={error} />
+        <LoansTable
+          isLoading={isLoading}
+          loans={loans}
+          error={error}
+          renderActions={(loan) => <Actions loan={loan} />}
+        />
       </div>
     </div>
   )
