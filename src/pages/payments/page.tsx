@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom'
+import { AddNewPayment } from './components/add-payment'
 import { ClientDetails } from './components/client-details'
 import { LoanDetails } from './components/loan-details'
-import { useLoanDetails } from './hook/use-loan-details'
 import { PaymentsTable } from './components/payments-table'
-import { Button } from '@/components/ui/button'
+import { useLoanDetails } from './hook/use-loan-details'
 
 export function PaymentsPage() {
   const { id } = useParams()
@@ -21,7 +21,7 @@ export function PaymentsPage() {
           <p className="text-sm text-muted-foreground">Préstamo #{id}</p>
         </div>
         <div>
-          <Button>Agregar abono</Button>
+          <AddNewPayment loan={loan} />
         </div>
       </div>
       <div className="grid grid-cols-3 gap-4 mt-4">
