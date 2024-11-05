@@ -18,6 +18,7 @@ import CreateLoanPage from './pages/loan/createLoanPage'
 import DetailsLoanPage from './pages/loan/detailsLoanPage'
 import { DashboardLayout } from './components/root-layout'
 import { PaymentsPage } from './pages/payments/page'
+import { RequestsPage } from './pages/requests/pages'
 
 function ProtectedRouteElement({ children }: { children: ReactNode }) {
   return <ProtectedRoute>{children}</ProtectedRoute>
@@ -45,6 +46,7 @@ export default function Router() {
         <Route path="/loans/create" element={<CreateLoanPage />} />
         <Route path="/loans/details/:id" element={<DetailsLoanPage />} />
         <Route path="/loans/payments/:id" element={<PaymentsPage />} />
+        <Route path="/requests" element={<RequestsPage />} />
       </Route>
       <Route path="/login" element={<LoginPage />} />
     </Routes>
