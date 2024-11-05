@@ -18,7 +18,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ILoan } from '@/types/loans'
 import { frequencyMap } from '@/utils/contants'
-import { PaymentStatus } from './payment-statos'
+import { PaymentStatus, StatusBadge } from './payment-statos'
 
 interface PaymentsTableProps {
   loan?: ILoan
@@ -29,16 +29,24 @@ export function PaymentsTable({ loan, isLoading }: PaymentsTableProps) {
   const payments = [...(loan?.payment_plan.payment_schedules ?? [])].sort(
     (a, b) => new Date(a.due_date).getTime() - new Date(b.due_date).getTime(),
   )
+
+  const generalPayments = payments.filter(
+    (payment) => payment.status === 'paid',
+  )
+
   const totalPaid = payments.reduce(
     (acc, payment) => acc + Number(payment.amount_paid),
     0,
   )
+
   const totalPendingPayments = payments.filter(
     (payment) => payment.status === 'pending',
   ).length
+
   const totalLatePayments = payments.filter(
     (payment) => payment.status === 'late',
   ).length
+
   const totalLatePayment = payments
     .filter((payment) => payment.status === 'late')
     .reduce((acc, payment) => acc + Number(payment.amount_due), 0)
@@ -91,7 +99,11 @@ export function PaymentsTable({ loan, isLoading }: PaymentsTableProps) {
                           <TableCell>
                             {new Date(payment.due_date).toLocaleDateString()}
                           </TableCell>
-                          <TableCell>C${payment.amount_paid ?? 0}</TableCell>
+                          <TableCell>
+                            <StatusBadge status="paid">
+                              C${payment.amount_paid ?? 0}
+                            </StatusBadge>
+                          </TableCell>
                           <TableCell>C${payment.amount_due ?? 0}</TableCell>
                           <TableCell>
                             <PaymentStatus status={payment.status} />
@@ -118,12 +130,16 @@ export function PaymentsTable({ loan, isLoading }: PaymentsTableProps) {
                     {isLoading && <SkeletonTableRows columns={5} rows={6} />}
                     {loan != null &&
                       !isLoading &&
-                      payments.map((payment) => (
+                      generalPayments.map((payment) => (
                         <TableRow key={payment.id}>
                           <TableCell className="font-semibold">
                             #{payment.id}
                           </TableCell>
-                          <TableCell>C${payment.amount_paid ?? 0}</TableCell>
+                          <TableCell>
+                            <StatusBadge status="paid">
+                              C${payment.amount_paid ?? 0}
+                            </StatusBadge>
+                          </TableCell>
                           <TableCell>
                             {new Date(payment.due_date).toLocaleDateString()}
                           </TableCell>
