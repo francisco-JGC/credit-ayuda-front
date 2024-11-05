@@ -10,6 +10,7 @@ export async function updatePayment(paymentSchedule: IPaymentSchedule) {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(paymentSchedule),
   })
@@ -19,5 +20,10 @@ export async function updatePayment(paymentSchedule: IPaymentSchedule) {
   }
 
   const data = (await response.json()) as IHandleResponse<IPaymentSchedule>
+
+  if (!data.success) {
+    throw new Error(data.message)
+  }
+
   return data.data
 }
