@@ -19,7 +19,7 @@ export const MENU_ITEMS = [
     icon: BanknotesIcon,
   },
   {
-    path: '#',
+    path: '/requests',
     label: 'Solicitudes',
     icon: UserPlusIcon,
   },
