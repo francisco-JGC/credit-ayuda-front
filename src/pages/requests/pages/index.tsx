@@ -1,5 +1,6 @@
 import { LoansTable } from '@/pages/loan/components/loans-table'
 import { useLoans } from '@/pages/loan/hooks/use-loans'
+import { RequestsActions } from '../components/requests-actions'
 
 export function RequestsPage() {
   const { loans, error, isLoading } = useLoans()
@@ -16,7 +17,7 @@ export function RequestsPage() {
           error={error}
           isLoading={isLoading}
           loans={requests}
-          renderActions={() => <></>}
+          renderActions={(request) => <RequestsActions request={request} />}
         />
       </div>
     </div>
