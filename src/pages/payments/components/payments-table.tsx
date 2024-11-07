@@ -63,7 +63,7 @@ export function PaymentsTable({
     .reduce((acc, payment) => acc + Number(payment.amount_due), 0)
 
   const canAddPaymentAmount = (paymentStatus: PaymentStatusType) => {
-    const allowedStatuses = ['pending', 'late']
+    const allowedStatuses = ['pending']
 
     return allowedStatuses.includes(paymentStatus)
   }
