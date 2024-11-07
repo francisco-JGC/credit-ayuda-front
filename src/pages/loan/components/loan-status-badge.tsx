@@ -8,12 +8,15 @@ export function LoanStatusBadge({ status }: { status: string }) {
       'text-yellow-500 border border-yellow-400 hover:bg-yellow-500 hover:text-white',
     active:
       'text-blue-500 border border-blue-500 hover:bg-blue-500 hover:text-white',
+    rejected:
+      'text-red-500 border border-red-500 hover:bg-red-500 hover:text-white',
   }
 
   const statusText: Record<string, string> = {
     paid: 'Pagado',
     pending: 'Pendiente',
     active: 'Activo',
+    rejected: 'Rechazado',
   }
 
   return (
