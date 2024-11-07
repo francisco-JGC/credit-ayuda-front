@@ -65,11 +65,11 @@ export const Actions = ({ loan }: IProps) => {
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Button
-            className="w-full justify-start text-red-500 hover:!text-red-500 hover:cursor-pointer"
+            className="w-full gap-2 justify-start text-red-500 hover:!text-red-500 hover:cursor-pointer"
             variant="ghost"
           >
-            <X className="mr-2 h-4 w-4" />
-            <span>Cancelar Solicitud</span>
+            <X className="h-4 w-4" />
+            <span>Cancelar solicitud</span>
           </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>
