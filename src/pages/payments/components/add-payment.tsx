@@ -3,34 +3,32 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { ILoan } from '@/types/loans'
+import { IPaymentSchedule } from '@/types/loans'
 import { useRef } from 'react'
 import { toast } from 'sonner'
 import { useUpdatePayment } from '../hook/use-update-payment'
 import { StatusBadge } from './payment-status'
 
 interface AddNewPaymentProps {
-  loan: ILoan
+  loanId: number
+  payment: IPaymentSchedule | null
+  opened: boolean
+  onOpenChange: (open: boolean) => void
 }
 
-export function AddNewPayment({ loan }: AddNewPaymentProps) {
-  const { update, isPending } = useUpdatePayment({ loanId: loan.id })
+export function AddNewPayment({
+  loanId,
+  payment,
+  opened,
+  onOpenChange,
+}: AddNewPaymentProps) {
+  const { update, isPending } = useUpdatePayment({ loanId })
   const closeModalRef = useRef<HTMLButtonElement>(null)
-
-  const payment = [...loan.payment_plan.payment_schedules]
-    .sort(
-      (a, b) => new Date(a.due_date).getTime() - new Date(b.due_date).getTime(),
-    )
-    .find(
-      (payment) => payment.status === 'pending' || payment.status === 'late',
-    )
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -74,21 +72,38 @@ export function AddNewPayment({ loan }: AddNewPaymentProps) {
       })
   }
 
+  const handleNoPayment = () => {
+    if (payment == null || payment?.status === 'late') {
+      return
+    }
+
+    update({
+      ...payment,
+      status: 'late',
+    })
+      .then(() => {
+        toast.success('Se actualizó el estado del pago correctamente')
+      })
+      .catch(() => {
+        toast.error('Ocurrió al actualizar el estado del pago')
+      })
+      .finally(() => {
+        closeModalRef.current?.click()
+      })
+  }
+
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>Agregar abono</Button>
-      </DialogTrigger>
+    <Dialog open={opened} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Nuevo abono</DialogTitle>
-          <DialogDescription>Ingrese los datos del abono</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div>
             <Label htmlFor="amount">Monto:</Label>
             <Input type="number" name="amount" id="amount" />
           </div>
+
           <div className="mt-2">
             <div className="text-sm">
               <p>
@@ -103,9 +118,18 @@ export function AddNewPayment({ loan }: AddNewPaymentProps) {
               </StatusBadge>
             </div>
           </div>
-          <div className="flex justify-end mt-6">
+          <div className="flex justify-between mt-6">
+            <div className="place-self-end">
+              <Button
+                type="button"
+                onClick={() => handleNoPayment()}
+                variant="destructive"
+              >
+                No pagó
+              </Button>
+            </div>
             <Button type="submit" disabled={isPending}>
-              Agregar {isPending && 'Guardando...'}
+              Guardar monto {isPending && 'Guardando...'}
             </Button>
           </div>
         </form>
