@@ -81,3 +81,14 @@ export const getLoanById = async (
     useToken: true,
   })
 }
+
+export const updateLoan = async (
+  loan: ILoan,
+): Promise<IHandleResponse<ILoan>> => {
+  return await fetchData<ILoan>({
+    url: `/loan/update`,
+    method: 'PUT',
+    data: loan,
+    useToken: true,
+  })
+}
