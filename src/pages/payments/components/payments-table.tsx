@@ -16,16 +16,27 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ILoan } from '@/types/loans'
+import {
+  ILoan,
+  IPaymentSchedule,
+  PaymentStatus as PaymentStatusType,
+} from '@/types/loans'
 import { frequencyMap } from '@/utils/contants'
 import { PaymentStatus, StatusBadge } from './payment-status'
+import { PrinterIcon } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 interface PaymentsTableProps {
   loan?: ILoan
   isLoading: boolean
+  onAddPayment: (payment: IPaymentSchedule) => void
 }
 
-export function PaymentsTable({ loan, isLoading }: PaymentsTableProps) {
+export function PaymentsTable({
+  loan,
+  isLoading,
+  onAddPayment,
+}: PaymentsTableProps) {
   const payments = [...(loan?.payment_plan.payment_schedules ?? [])].sort(
     (a, b) => new Date(a.due_date).getTime() - new Date(b.due_date).getTime(),
   )
@@ -50,6 +61,12 @@ export function PaymentsTable({ loan, isLoading }: PaymentsTableProps) {
   const totalLatePayment = payments
     .filter((payment) => payment.status === 'late')
     .reduce((acc, payment) => acc + Number(payment.amount_due), 0)
+
+  const canAddPaymentAmount = (paymentStatus: PaymentStatusType) => {
+    const allowedStatuses = ['pending']
+
+    return allowedStatuses.includes(paymentStatus)
+  }
 
   return (
     <Tabs defaultValue="calendar">
@@ -85,6 +102,8 @@ export function PaymentsTable({ loan, isLoading }: PaymentsTableProps) {
                       <TableHead>Monto abonado</TableHead>
                       <TableHead>Monto restante</TableHead>
                       <TableHead>Estado</TableHead>
+                      <TableHead></TableHead>
+                      <TableHead></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -92,7 +111,7 @@ export function PaymentsTable({ loan, isLoading }: PaymentsTableProps) {
                     {loan != null &&
                       !isLoading &&
                       payments.map((payment) => (
-                        <TableRow key={payment.id}>
+                        <TableRow key={payment.id} className="hover:bg-inherit">
                           <TableCell className="font-semibold">
                             #{payment.id}
                           </TableCell>
@@ -107,6 +126,29 @@ export function PaymentsTable({ loan, isLoading }: PaymentsTableProps) {
                           <TableCell>C${payment.amount_due ?? 0}</TableCell>
                           <TableCell>
                             <PaymentStatus status={payment.status} />
+                          </TableCell>
+                          <TableCell className="">
+                            <div>
+                              {canAddPaymentAmount(payment.status) && (
+                                <Button
+                                  onClick={() => onAddPayment(payment)}
+                                  variant="secondary"
+                                  size="sm"
+                                >
+                                  Agregar abono
+                                </Button>
+                              )}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex justify-center">
+                              <Button variant="outline" size="sm">
+                                <PrinterIcon
+                                  strokeWidth={1}
+                                  className="size-6"
+                                />
+                              </Button>
+                            </div>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -123,7 +165,7 @@ export function PaymentsTable({ loan, isLoading }: PaymentsTableProps) {
                       <TableHead>Recibido</TableHead>
                       <TableHead>Fecha</TableHead>
                       <TableHead>Usuario</TableHead>
-                      <TableHead className="w-14"></TableHead>
+                      <TableHead></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -153,6 +195,16 @@ export function PaymentsTable({ loan, isLoading }: PaymentsTableProps) {
                             {new Date(payment.due_date).toLocaleDateString()}
                           </TableCell>
                           <TableCell>{loan.client.name}</TableCell>
+                          <TableCell>
+                            <div className="flex justify-center">
+                              <Button variant="outline" size="sm">
+                                <PrinterIcon
+                                  strokeWidth={1}
+                                  className="size-6"
+                                />
+                              </Button>
+                            </div>
+                          </TableCell>
                         </TableRow>
                       ))}
                   </TableBody>
@@ -166,7 +218,7 @@ export function PaymentsTable({ loan, isLoading }: PaymentsTableProps) {
                 )}
                 {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
-              <div className="flex gap-1 place-self-center">
+              <div className="flex gap-1">
                 {loan != null && !isLoading && (
                   <p>
                     Saldo pendiente: C$
@@ -185,7 +237,7 @@ export function PaymentsTable({ loan, isLoading }: PaymentsTableProps) {
                 {loan != null && !isLoading && <p>Abonos: {payments.length}</p>}
                 {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
-              <div className="place-self-center">
+              <div className="">
                 {loan != null && !isLoading && (
                   <p>Abonos pendientes: {totalPendingPayments}</p>
                 )}

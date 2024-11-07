@@ -17,9 +17,9 @@ export function StatusBadge({
   return (
     <Badge
       className={cn('hover:bg-transparent text-sm', {
-        'bg-green-100 text-green-800': status === 'paid',
-        'bg-yellow-100 text-yellow-800': status === 'pending',
-        'bg-red-100 text-red-800 animate-bounce': status === 'late',
+        'bg-inherit shadow-none text-green-700': status === 'paid',
+        'bg-inherit shadow-none text-yellow-700': status === 'pending',
+        'bg-inherit shadow-none text-red-700 animate-bounce': status === 'late',
       })}
     >
       {children}
