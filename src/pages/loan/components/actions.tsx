@@ -3,7 +3,6 @@ import {
   ClockArrowUp,
   EllipsisVertical,
   History,
-  X,
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -62,16 +61,6 @@ export const Actions = ({ loan }: IProps) => {
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Button
-            className="w-full gap-2 justify-start text-red-500 hover:!text-red-500 hover:cursor-pointer"
-            variant="ghost"
-          >
-            <X className="h-4 w-4" />
-            <span>Cancelar solicitud</span>
-          </Button>
-        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

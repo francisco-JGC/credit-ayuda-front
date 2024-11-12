@@ -72,6 +72,37 @@ export async function getLoans({
   return data
 }
 
+export async function getRequests({
+  page,
+  limit,
+  dni = '',
+  frequency,
+  route,
+}: IGetLoans) {
+  const token = Cookies.get('token')
+  const url = new URL(import.meta.env.VITE_BASE_URL)
+  url.pathname += `/loan/requests/${page}/${limit}/${dni}`
+  if (frequency) url.searchParams.append('frequency', frequency)
+  if (route) url.searchParams.append('route', route)
+
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  if (!response.ok) {
+    throw new Error('Error al obtener los préstamos')
+  }
+
+  const { success, data, message } = (await response.json()) as IHandleResponse<
+    IPaginationResponse<ILoan[]>
+  >
+  if (!success) {
+    throw new Error(message)
+  }
+  return data
+}
+
 export const getLoanById = async (
   id: number,
 ): Promise<IHandleResponse<ILoan>> => {

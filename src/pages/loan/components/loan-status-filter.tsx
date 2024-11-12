@@ -27,6 +27,8 @@ export function LoanStatusFilter({ onChangeStatus }: StatusFilterProps) {
     onChangeStatus(newValue as LoanStatus)
   }
 
+  const allowedStatuses = loanStatus.filter((status) => status !== 'pending')
+
   return (
     <Select value={value} onValueChange={handleValueChange}>
       <SelectTrigger className="min-w-[180px]">
@@ -37,7 +39,7 @@ export function LoanStatusFilter({ onChangeStatus }: StatusFilterProps) {
           <SelectItem className="opacity-80" value="default">
             Todos
           </SelectItem>
-          {loanStatus.map((status) => (
+          {allowedStatuses.map((status) => (
             <SelectItem key={status} value={status}>
               {statusMap[status]}
             </SelectItem>
