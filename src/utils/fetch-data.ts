@@ -61,6 +61,10 @@ export async function fetchData<TData>({
       options,
     )
 
+    if (!response.ok) {
+      throw new Error('Error en la solicitud')
+    }
+
     return await response.json()
   } catch (error: any) {
     console.error('Error en la solicitud:', error.message)
