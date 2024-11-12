@@ -1,10 +1,9 @@
 import { LoansTable } from '@/pages/loan/components/loans-table'
-import { useLoans } from '@/pages/loan/hooks/use-loans'
 import { RequestsActions } from '../components/requests-actions'
+import { useRequests } from '../hooks/use-requests'
 
 export function RequestsPage() {
-  const { loans, error, isLoading } = useLoans()
-  const requests = loans.filter((loan) => loan.status === 'pending')
+  const { requests, error, isLoading } = useRequests()
 
   return (
     <div>
