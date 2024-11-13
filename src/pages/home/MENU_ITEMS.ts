@@ -34,7 +34,7 @@ export const MENU_ITEMS = [
     icon: ArrowTrendingUpIcon,
   },
   {
-    path: '#',
+    path: '/users',
     label: 'Usuarios',
     icon: UsersIcon,
   },

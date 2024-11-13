@@ -46,3 +46,18 @@ export async function updateUser(user: User) {
 
   return response.data as User
 }
+
+export async function getUsers() {
+  const pathname = '/users'
+  const response = await fetchData({
+    url: pathname,
+    method: 'GET',
+    useToken: true,
+  })
+
+  if (!response.success) {
+    throw new Error(response.message)
+  }
+
+  return response.data as User[]
+}

@@ -3,7 +3,7 @@ import { useUserInfo } from '../hooks/use-user-info'
 
 export function ProfilePage() {
   const { userInfo, refetch } = useUserInfo()
-  const rolesNames = userInfo?.roles.map((role) => role.name).join(', ')
+  const rolesNames = userInfo?.roles.map((role) => role.label).join(', ')
 
   return (
     <div>
@@ -18,15 +18,25 @@ export function ProfilePage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3">
-        <div>
-          <p>Usuario: @{userInfo?.username}.</p>
-        </div>
-        <div>
-          <p>Roles: {rolesNames}.</p>
-        </div>
-        <div>
-          <p>Ruta: {userInfo?.route?.name ?? 'No seleccionada'}.</p>
+      <div className="border rounded p-6">
+        <div className="flex flex-col gap-y-8">
+          <div className="bg-neutral-100 px-3 py-2 rounded-lg">
+            <p className="inline-flex flex-col">
+              Usuario: <strong>@{userInfo?.username}</strong>
+            </p>
+          </div>
+          <div className="bg-neutral-100 px-3 py-2 rounded-lg">
+            <p className="inline-flex flex-col">
+              Roles: <strong>{rolesNames}</strong>
+            </p>
+          </div>
+
+          <div className="bg-neutral-100 px-3 py-2 rounded-lg">
+            <p className="inline-flex flex-col">
+              Ruta:{' '}
+              <strong>{userInfo?.route?.name ?? 'No seleccionada'}</strong>
+            </p>
+          </div>
         </div>
       </div>
     </div>
