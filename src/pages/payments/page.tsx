@@ -19,13 +19,13 @@ export function PaymentsPage() {
   }
 
   return (
-    <div className="">
-      <div className="flex justify-between">
-        <div className="">
+    <div className="p-4">
+      <div className="flex flex-col md:flex-row md:justify-between">
+        <div>
           <h2 className="text-2xl font-medium">Abonos</h2>
           <p className="text-sm text-muted-foreground">Préstamo #{id}</p>
         </div>
-        <div>
+        <div className="mt-4 md:mt-0">
           {loan != null && !isLoading && (
             <AddNewPayment
               loanId={loan.id}
@@ -36,18 +36,18 @@ export function PaymentsPage() {
           )}
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-4 mt-4">
-        <div className="">
+      <div className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 lg:grid-cols-1">
+        <div>
           <ClientDetails loan={loan} isLoading={isLoading} />
         </div>
-        <div className="col-span-2 row-span-2">
+        <div className="sm:col-span-2 lg:col-span-2">
           <PaymentsTable
             loan={loan}
             isLoading={isLoading}
             onAddPayment={handleShowNewPaymentModal}
           />
         </div>
-        <div className="">
+        <div>
           <LoanDetails loan={loan} isLoading={isLoading} />
         </div>
       </div>

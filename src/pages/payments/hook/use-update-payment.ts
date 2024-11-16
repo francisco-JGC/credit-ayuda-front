@@ -6,7 +6,7 @@ export function useUpdatePayment({ loanId }: { loanId: number }) {
   const queryClient = useQueryClient()
   const { mutateAsync, isPending, error, isSuccess } = useMutation({
     mutationFn: async (newPaymentSchedule: IPaymentSchedule) => {
-      return await updatePayment(newPaymentSchedule)
+      return await updatePayment({ ...newPaymentSchedule, loan_id: loanId })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['loan', loanId] })

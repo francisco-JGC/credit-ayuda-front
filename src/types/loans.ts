@@ -62,6 +62,7 @@ export interface IPaymentSchedule {
   amount_due: string
   amount_paid: string
   status: PaymentStatus
+  loan_id: number
 }
 
 export interface IPenaltyPlan {
