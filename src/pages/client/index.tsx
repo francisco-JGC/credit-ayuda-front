@@ -26,7 +26,7 @@ export default function ClientPage() {
   const { formValues: search, handleInputChange } = useForm({
     search_dni: ''
   })
-  const [routeFilter, setRouteFilter] = useState<string>('')
+  const [, setRouteFilter] = useState<string>('')
   const [clients, setClients] = useState<IClientTable[]>([] as any)
 
   const handleSetRouteFilter = (route: string) => setRouteFilter(route)
@@ -35,7 +35,7 @@ export default function ClientPage() {
     getPaginationClient({ page: 1, limit: 20, filter: '' })
       .then((response) => {
         if (response.success) {
-          const { data, total_data, total_page, page, limit } = response.data as IPaginationResponse
+          const { data } = response.data as IPaginationResponse
           setClients(data as any)
         }
       })
@@ -61,7 +61,7 @@ export default function ClientPage() {
           </div>
 
           <div className="mt-2 md:mt-0">
-            <FilterRoute handleSetRouteFilter={handleSetRouteFilter} />
+            <FilterRoute onChangeRoute={handleSetRouteFilter} />
           </div>
         </div>
       </div>

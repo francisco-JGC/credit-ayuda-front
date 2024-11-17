@@ -2,7 +2,7 @@ import { LayuotPage } from "@/components/layuotPage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import useForm from "@/hooks/useForm";
-import { createClient, getClienByDni, getClientById, updateClientById } from "@/services/client";
+import { getClientById, updateClientById } from "@/services/client";
 import { getAllRoutes } from "@/services/route";
 import { ICreateClient } from "@/types/clients";
 import { IRoute } from "@/types/routes";

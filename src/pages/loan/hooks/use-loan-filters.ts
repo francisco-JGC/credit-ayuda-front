@@ -21,7 +21,7 @@ export function useLoanFilters({ loans }: { loans: ILoan[] }) {
   const [frequencyFilter, setFrequencyFilter] =
     useState<LoanFrequencyWithAll>('')
   const [routeFilter, setRouteFilter] = useState('')
-  const [statusFilter, setStatusFilter] = useState('')
+  // const [statusFilter, setStatusFilter] = useState('')
 
   const filteredLoans = loans.filter((loan) => {
     const dniMatch =

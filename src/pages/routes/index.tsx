@@ -47,7 +47,7 @@ export default function RoutesPage() {
     getPaginationRoutes({ page: 1, limit: 20, filter: '' })
       .then((response) => {
         if (response.success) {
-          const { data, total_data, total_page, page, limit } = response.data as IPaginationResponse
+          const { data } = response.data as IPaginationResponse
           setRoutes(data as any)
         }
       })
