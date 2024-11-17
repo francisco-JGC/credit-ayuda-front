@@ -123,3 +123,36 @@ export const updateLoan = async (
     useToken: true,
   })
 }
+
+export async function getLoansByRouteUser({
+  page,
+  limit,
+  dni = '',
+  status,
+  frequency,
+  route,
+}: IGetLoans) {
+  const token = Cookies.get('token')
+  const url = new URL(import.meta.env.VITE_BASE_URL)
+  url.pathname += `/loan/my-route/full/${page}/${limit}/${dni}`
+  if (status) url.searchParams.append('status', status)
+  if (frequency) url.searchParams.append('frequency', frequency)
+  if (route) url.searchParams.append('route', route)
+
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  if (!response.ok) {
+    throw new Error('Error al obtener los préstamos')
+  }
+
+  const { success, data, message } = (await response.json()) as IHandleResponse<
+    IPaginationResponse<ILoan[]>
+  >
+  if (!success) {
+    throw new Error(message)
+  }
+  return data
+}
