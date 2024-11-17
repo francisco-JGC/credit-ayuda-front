@@ -9,7 +9,7 @@ import {
 
 export const MENU_ITEMS = [
   {
-    path: '#',
+    path: '/routes/my-route',
     label: 'Mi Ruta',
     icon: MapPinIcon,
   },

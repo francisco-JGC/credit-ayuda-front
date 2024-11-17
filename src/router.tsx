@@ -22,6 +22,7 @@ import { RequestsPage } from './pages/requests/pages'
 import { CreateArrearPage } from './pages/arrears/pages/create-arrear'
 import { ProfilePage } from './pages/profile/pages/profile-page'
 import { UsersPage } from './pages/users/pages/users-page'
+import MyRoutePage from './pages/routes/myRoutePage'
 
 function ProtectedRouteElement({ children }: { children: ReactNode }) {
   return <ProtectedRoute>{children}</ProtectedRoute>
@@ -45,6 +46,7 @@ export default function Router() {
         <Route path="/routes" element={<RoutesPage />} />
         <Route path="/routes/create" element={<CreateRoutePage />} />
         <Route path="/routes/update/:id" element={<UpdateRoutePage />} />
+        <Route path="/routes/my-route/" element={<MyRoutePage />} />
         <Route path="/loans" element={<LoanPage />} />
         <Route path="/loans/create" element={<CreateLoanPage />} />
         <Route path="/loans/details/:id" element={<DetailsLoanPage />} />
