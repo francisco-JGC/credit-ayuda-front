@@ -67,11 +67,10 @@ export default function LoanPage() {
           </span>
           <div>
             <div
-              className={`${
-                !isLoading && error == null && loans.length > 0
+              className={`${!isLoading && error == null && loans.length > 0
                   ? 'visible'
                   : 'invisible'
-              }`}
+                }`}
             >
               <LoansPagination
                 currentPage={currentPage}
