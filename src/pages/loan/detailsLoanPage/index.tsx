@@ -29,6 +29,19 @@ export default function DetailsLoanPage() {
       })
   }
 
+  const handleRejectRequest = async () => {
+    update({
+      ...loan,
+      status: 'rejected',
+    })
+      .then(() => {
+        toast.success('Solicitud rechazada correctamente')
+      })
+      .catch(() => {
+        toast.error('Ocurrió un error al rechazar la solicitud')
+      })
+  }
+
   useEffect(() => {
     getLoanById(Number(params.id))
       .then((response) => {
@@ -82,7 +95,7 @@ export default function DetailsLoanPage() {
               <div>
                 <AlertDialogModal
                   title="Al eliminar esta solicitud se borraran todos los registros previo de esta misma"
-                  onConfirm={() => { }}
+                  onConfirm={handleRejectRequest}
                 >
                   <Button className="bg-red-400">
                     Rechazar solicitud
