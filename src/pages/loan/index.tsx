@@ -46,7 +46,7 @@ export default function LoanPage() {
               width={19}
             />
             <Input
-              placeholder="Cédula del cliente..."
+              placeholder="Nombre del cliente..."
               className="pl-10 w-full"
               name="search_dni"
               onChange={(e) => searchByDni(e.target.value)}
@@ -68,8 +68,8 @@ export default function LoanPage() {
           <div>
             <div
               className={`${!isLoading && error == null && loans.length > 0
-                  ? 'visible'
-                  : 'invisible'
+                ? 'visible'
+                : 'invisible'
                 }`}
             >
               <LoansPagination
