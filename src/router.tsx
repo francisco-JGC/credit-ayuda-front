@@ -24,6 +24,9 @@ import { ProfilePage } from './pages/profile/pages/profile-page'
 import { UsersPage } from './pages/users/pages/users-page'
 import MyRoutePage from './pages/routes/myRoutePage'
 
+import ReportMontlyPage from './pages/reports/pages/report-montly-page'
+import ReportDailyRPage from './pages/reports/pages/report-daily-page'
+
 function ProtectedRouteElement({ children }: { children: ReactNode }) {
   return <ProtectedRoute>{children}</ProtectedRoute>
 }
@@ -55,6 +58,8 @@ export default function Router() {
         <Route path="/arrears/create/:loanId" element={<CreateArrearPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/users" element={<UsersPage />} />
+        <Route path="/report/montly" element={<ReportMontlyPage />} />
+        <Route path="/report/daily" element={<ReportDailyRPage />} />
       </Route>
       <Route path="/login" element={<LoginPage />} />
     </Routes>
