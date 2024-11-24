@@ -13,7 +13,7 @@ export function useUpdateLoan() {
       return response.data
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['loans'] })
+      queryClient.invalidateQueries({ queryKey: ['requests'] })
     },
   })
 
