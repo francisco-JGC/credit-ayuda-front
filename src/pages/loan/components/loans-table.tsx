@@ -11,6 +11,7 @@ import { ILoan } from '@/types/loans'
 import { formatFrequency } from '@/utils/format-frequency'
 import { formatPrice } from '@/utils/price-format'
 import { LoanStatusBadge } from './loan-status-badge'
+import { formatDate } from '@/utils/date-format'
 
 interface ILoanTableProps {
   loans: ILoan[]
@@ -68,7 +69,7 @@ export function LoansTable({
                 <TableCell>{loan.client.name}</TableCell>
                 <TableCell>{loan.client.dni}</TableCell>
                 <TableCell>
-                  {new Date(loan.created_at).toLocaleDateString()}
+                  {formatDate(loan.created_at)}
                 </TableCell>
                 <TableCell>{formatPrice(Number(loan.amount))}</TableCell>
                 <TableCell>

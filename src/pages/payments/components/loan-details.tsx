@@ -1,6 +1,7 @@
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ILoan } from '@/types/loans'
+import { formatDate } from '@/utils/date-format'
 
 interface LoanDetailsProps {
   loan?: ILoan
@@ -23,7 +24,7 @@ export function LoanDetails({ loan, isLoading }: LoanDetailsProps) {
             <p className="text-muted-foreground">Creación del crédito:</p>
             {isLoading && <Skeleton className="h-4" />}
             {loan != null && !isLoading && (
-              <p>{new Date(loan.created_at ?? '').toLocaleDateString()}</p>
+              <p>{formatDate(loan.created_at)}</p>
             )}
           </div>
           <div>
@@ -31,7 +32,7 @@ export function LoanDetails({ loan, isLoading }: LoanDetailsProps) {
             {isLoading && <Skeleton className="h-4" />}
 
             {loan != null && !isLoading && (
-              <p>{new Date(loan.loan_date ?? '').toLocaleDateString()}</p>
+              <p>{formatDate(loan.loan_date)}</p>
             )}
           </div>
           <div>

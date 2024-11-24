@@ -156,3 +156,17 @@ export async function getLoansByRouteUser({
   }
   return data
 }
+
+export const getFilteredDatesLoans = async ({
+  filter_type,
+  date,
+}: {
+  filter_type: 'daily' | 'monthly'
+  date: string
+}): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: `/loan/filter-type/${filter_type}/date/${date}/`,
+    method: 'GET',
+    useToken: true,
+  })
+}

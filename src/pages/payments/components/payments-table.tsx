@@ -25,6 +25,7 @@ import { frequencyMap } from '@/utils/contants'
 import { PaymentStatus, StatusBadge } from './payment-status'
 import { PrinterIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { formatDate } from '@/utils/date-format'
 
 interface PaymentsTableProps {
   loan?: ILoan
@@ -116,7 +117,7 @@ export function PaymentsTable({
                             #{payment.id}
                           </TableCell>
                           <TableCell>
-                            {new Date(payment.due_date).toLocaleDateString()}
+                            {formatDate(payment.due_date)}
                           </TableCell>
                           <TableCell>
                             <StatusBadge status="paid">
