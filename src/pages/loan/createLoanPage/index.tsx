@@ -1,7 +1,7 @@
 import { LayuotPage } from "@/components/layuotPage";
 import useForm from "@/hooks/useForm";
 import { ICreateClient } from "@/types/clients";
-import { ICreateLoan } from "@/types/loans";
+import { ICreateLoan, ICreatePaymentSchedule } from "@/types/loans";
 import { toast } from "sonner";
 import { PreviewClientInfo } from "./components/previewClientInfo";
 import { FormLoanDetails } from "./components/formLoanDetails";
@@ -16,7 +16,7 @@ export default function CreateLoanPage() {
   const { formValues: search, handleInputChange: handleInputChangeDni, resetForm: resetSearch } = useForm({
     dni: ''
   })
-  const { formValues, handleInputChange, resetForm } = useForm<ICreateLoan>({
+  const { formValues, handleInputChange, resetForm, setValues } = useForm<ICreateLoan>({
     client_id: -1,
     amount: 0,
     loan_date: '',
@@ -24,7 +24,8 @@ export default function CreateLoanPage() {
     frequency: 'daily',
     total_payments: 0,
     payment_amount: 0,
-    total_recovered: 0
+    total_recovered: 0,
+    payment_schedule: []
   })
 
   const [client, setClient] = useState<ICreateClient>({} as any)
@@ -53,6 +54,13 @@ export default function CreateLoanPage() {
     }
 
     setIsLoading(false)
+  }
+
+  const handleSetPaymentSchedule = (schedule: ICreatePaymentSchedule[]) => {
+    setValues({
+      ...formValues,
+      payment_schedule: schedule
+    })
   }
 
   const validateForm = (formValues: ICreateLoan): string[] => {
@@ -125,7 +133,7 @@ export default function CreateLoanPage() {
         <PreviewClientInfo client={client} isLoading={isLoading} />
         <div className="flex gap-2 flex-col md:justify-between md:flex-row">
           <FormLoanDetails formValues={formValues} handleInputChange={handleInputChange} />
-          <PreviewPaymentSchedule frequency={formValues.frequency} total_recovered={formValues.total_recovered} amount={formValues.amount} interest_rate={formValues.interest_rate} loan_date={formValues.loan_date}
+          <PreviewPaymentSchedule handleSetPaymentSchedule={handleSetPaymentSchedule} frequency={formValues.frequency} total_recovered={formValues.total_recovered} amount={formValues.amount} interest_rate={formValues.interest_rate} loan_date={formValues.loan_date}
             total_payments={Number(formValues.total_payments)} />
         </div>
       </div>

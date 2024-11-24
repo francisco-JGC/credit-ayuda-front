@@ -1,3 +1,4 @@
+import { ICreatePaymentSchedule } from "@/types/loans"
 import { formatDate } from "@/utils/date-format"
 import { formatFrequency } from "@/utils/format-frequency"
 import { formatPrice } from "@/utils/price-format"
@@ -10,6 +11,7 @@ interface IProps {
   total_recovered: number
   interest_rate: number
   total_payments: number
+  handleSetPaymentSchedule: (schedule: ICreatePaymentSchedule[]) => void
 }
 
 interface IPreviewPaymentSchedule {
@@ -19,7 +21,7 @@ interface IPreviewPaymentSchedule {
   status: 'pending'
 }
 
-export const PreviewPaymentSchedule = ({ frequency, total_recovered, amount, interest_rate, loan_date, total_payments
+export const PreviewPaymentSchedule = ({ handleSetPaymentSchedule, frequency, total_recovered, amount, interest_rate, loan_date, total_payments
 }: IProps) => {
   const [paymentSchedule, setPaymentSchedule] = useState<IPreviewPaymentSchedule[]>([])
 
@@ -91,6 +93,16 @@ export const PreviewPaymentSchedule = ({ frequency, total_recovered, amount, int
     }
 
     setPaymentSchedule(schedules);
+    handleSetPaymentSchedule(
+      schedules.map((item) => {
+        return {
+          due_date: item.payment_date,
+          amount_due: item.payment,
+          amount_paid: 0,
+          status: item.status
+        }
+      })
+    )
 
   }, [frequency, total_recovered, loan_date, interest_rate, total_payments]);
 

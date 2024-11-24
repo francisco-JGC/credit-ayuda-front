@@ -29,6 +29,8 @@ export interface ICreateLoan {
   total_payments: number
   payment_amount: number
   total_recovered: number
+
+  payment_schedule?: ICreatePaymentSchedule[]
 }
 
 export interface ILoan {
@@ -63,6 +65,13 @@ export interface IPaymentSchedule {
   amount_paid: string
   status: PaymentStatus
   loan_id: number
+}
+
+export interface ICreatePaymentSchedule {
+  due_date: string
+  amount_due: number
+  amount_paid: number
+  status: PaymentStatus
 }
 
 export interface IPenaltyPlan {
