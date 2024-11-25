@@ -38,10 +38,11 @@ export function UpdateUserModal({ user }: { user: User }) {
   )
   const { data: routes, isLoading } = useLoanRoutes()
   const [selectedRoute, setSelectedRoute] = useState(user.route?.id.toString())
-  const defaultOptions = user.roles.map((role) => ({
-    label: role.label,
-    value: role.id.toString(),
-  }))
+  const defaultOptions =
+    roles?.map((role) => ({
+      label: role.label,
+      value: role.id.toString(),
+    })) ?? []
 
   useEffect(() => {
     if (!isModalOpen) {
