@@ -17,6 +17,7 @@ export interface Roles {
 export type User = {
   id: number
   username: string
+  password?: string
   roles: Roles[]
   route?: IRoute
   created_at: string

@@ -34,6 +34,8 @@ export function UpdateProfileModal({
   onUpdate,
 }: UpdateProfileModalProps) {
   const { updateUser: updateUserContext, user: userContext } = useAuth()
+  const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { roles } = useUserRoles()
   const { data: routes, isLoading } = useLoanRoutes()
@@ -70,6 +72,14 @@ export function UpdateProfileModal({
       return
     }
 
+    const wantChangePassword =
+      password.trim() !== '' || passwordConfirm.trim() !== ''
+
+    if (wantChangePassword && password.trim() !== passwordConfirm.trim()) {
+      toast.error('Las contraseñas no coinciden')
+      return
+    }
+
     const newRoles = options
       .map((option) => {
         return roles?.find((role) => role.id === +option.value)
@@ -86,6 +96,11 @@ export function UpdateProfileModal({
       roles: newRoles,
       route: newRoute,
     }
+
+    if (wantChangePassword) {
+      updatedUser.password = password
+    }
+
     updateUser(updatedUser)
       .then(() => {
         updateUserContext(userContext && { ...userContext, username })
@@ -144,6 +159,25 @@ export function UpdateProfileModal({
               </Select>
             )}
           </div>
+          <div>
+            <Label htmlFor="password">Contraseña</Label>
+            <Input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div>
+            <Label htmlFor="password-confirm">Confirmar contraseña</Label>
+            <Input
+              type="password"
+              id="password-confirm"
+              value={passwordConfirm}
+              onChange={(e) => setPasswordConfirm(e.target.value)}
+            />
+          </div>
+
           <div className="flex justify-end mt-4">
             <Button onClick={handleUpdateUser}>
               {isPending ? 'Guardando...' : 'Guardar cambios'}
