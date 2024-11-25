@@ -12,7 +12,7 @@ import { useEffect } from "react";
 
 export default function ReportDailyPage() {
   const { formValues, handleInputChange } = useForm({ filterDate: new Date().toISOString().split('T')[0] })
-  const { credits, isLoading, error, refetch } = useCredit({ filter_type: 'daily', date: formValues.filterDate })
+  const { credits, isLoading, error, refetch, summary } = useCredit({ filter_type: 'daily', date: formValues.filterDate })
 
   useEffect(() => { refetch() }, [formValues.filterDate])
 
@@ -35,12 +35,11 @@ export default function ReportDailyPage() {
           <h3 className="font-bold text-lg">Abonos por ruta</h3>
 
           <div className="grid grid-cols-3 gap-4">
-            <Subject title="Total de Abonos:" value="30" />
-            <Subject title="Pendientes:" value="15" />
-            <Subject title="Monto Total a Cobrado:" value={formatPrice(3502).toString()} />
-            <Subject title="Monto Total Cobrado:" value={formatPrice(1502).toString()} />
-            <Subject title="Monto Pendiente:" value={formatPrice(2502).toString()} />
-            <Subject title="Monto Pendiente:" value={formatPrice(2502).toString()} />
+            <Subject title="Total de Abonos:" value={summary?.totalPayments.toString() || ''} />
+            <Subject title="Pendientes:" value={summary?.totalPendingPayments.toString() || ''} />
+            <Subject title="Monto Total a Cobrar:" value={formatPrice(summary?.totalAmountToCollect || 0).toString()} />
+            <Subject title="Monto Total Cobrado:" value={formatPrice(summary?.totalAmountCollected || 0).toString()} />
+            <Subject title="Monto Pendiente:" value={formatPrice(summary?.totalPendingAmount || 0).toString()} />
           </div>
         </div>
 
