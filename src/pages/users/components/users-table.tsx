@@ -7,12 +7,19 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { User } from '@/types/user'
+import { UpdateUserModal } from './update-user-modal'
+import { useAuth } from '@/components/protectedRoute/authProvider'
 
 interface UsersTableProps {
   users: User[]
 }
 
 export function UsersTable({ users }: UsersTableProps) {
+  const { user: currentUser } = useAuth()
+  const usersWithouthCurrentUser = users.filter(
+    (user) => user.username !== currentUser?.username,
+  )
+
   return (
     <Table>
       <TableHeader>
@@ -22,10 +29,11 @@ export function UsersTable({ users }: UsersTableProps) {
           <TableHead>Roles</TableHead>
           <TableHead>Ruta</TableHead>
           <TableHead>Fecha de creación</TableHead>
+          <TableHead></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {users.map((user) => (
+        {usersWithouthCurrentUser.map((user) => (
           <TableRow key={user.id}>
             <TableCell>{user.id}</TableCell>
             <TableCell>{user.username}</TableCell>
@@ -36,8 +44,20 @@ export function UsersTable({ users }: UsersTableProps) {
             <TableCell>
               {new Date(user.created_at).toLocaleDateString()}
             </TableCell>
+            <TableCell>
+              <div className="flex justify-end">
+                <UpdateUserModal user={user} />
+              </div>
+            </TableCell>
           </TableRow>
         ))}
+        {usersWithouthCurrentUser.length === 0 && (
+          <TableRow>
+            <TableCell colSpan={6} className="text-center">
+              No hay usuarios registrados.
+            </TableCell>
+          </TableRow>
+        )}
       </TableBody>
     </Table>
   )
