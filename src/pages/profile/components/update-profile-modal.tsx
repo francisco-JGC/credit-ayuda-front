@@ -116,7 +116,21 @@ export function UpdateProfileModal({
   }
 
   return (
-    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+    <Dialog
+      open={isModalOpen}
+      onOpenChange={(open) => {
+        if (open) {
+          setIsModalOpen(open)
+          return
+        }
+
+        setUsername(user.username)
+        setIsModalOpen(open)
+        setSelectedRoute(user.route?.id.toString())
+        setPassword('')
+        setPasswordConfirm('')
+      }}
+    >
       <DialogTrigger asChild>
         <Button>Editar perfil</Button>
       </DialogTrigger>
