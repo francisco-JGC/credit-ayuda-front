@@ -91,18 +91,22 @@ export default function ClientPage() {
                 <TableCell className="py-4 px-6">{formatPrice(client.current_debt)}</TableCell>
                 <TableCell className="py-4 px-6">{client.route}</TableCell>
                 <TableCell
-                  className={`py-4 px-6 font-bold ${client.loan_status === 'approved'
+                  className={`py-4 px-6 font-bold ${client.loan_status === 'active'
                     ? 'text-green-500'
                     : client.loan_status === 'pending'
                       ? 'text-yellow-500'
-                      : client.loan_status === 'paid' ? 'text-indigo-500' : 'text-gray-500'}
+                      : client.loan_status === 'paid' ? 'text-indigo-500'
+                        : client.loan_status === 'rejected' ? 'text-red-500'
+                          : 'text-gray-500'}
                     }`}
                 >
-                  {client.loan_status === 'approved'
-                    ? 'Aprobado'
+                  {client.loan_status === 'active'
+                    ? 'Activo'
                     : client.loan_status === 'pending'
                       ? 'Pendiente'
-                      : client.loan_status === 'paid' ? 'Pagado' : 'Sin prestamo'}
+                      : client.loan_status === 'paid' ? 'Pagado'
+                        : client.loan_status === 'rejected' ? 'Rechazado'
+                          : 'Sin prestamo'}
                 </TableCell>
                 <TableCell className="py-4 px-6">
                   <Actions client={client} />

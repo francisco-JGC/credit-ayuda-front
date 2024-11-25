@@ -8,7 +8,7 @@ export interface IClientTable {
   current_debt: number
   dni: string
   route: string
-  loan_status: 'approved' | 'pending' | 'paid'
+  loan_status: 'active' | 'paid' | 'pending' | 'rejected'
 }
 
 export interface ICreateClient {
