@@ -86,6 +86,11 @@ export function UpdateProfileModal({
       })
       .filter((role) => role != null)
 
+    if (newRoles.length === 0) {
+      toast.error('Debes seleccionar al menos un rol')
+      return
+    }
+
     const newRoute = routes?.find(
       (route) => route.id.toString() === selectedRoute,
     )
