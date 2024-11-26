@@ -26,6 +26,7 @@ import MyRoutePage from './pages/routes/myRoutePage'
 
 import ReportMontlyPage from './pages/reports/pages/report-montly-page'
 import ReportDailyRPage from './pages/reports/pages/report-daily-page'
+import { ClientHistoryPage } from './pages/client/pages/history'
 
 function ProtectedRouteElement({ children }: { children: ReactNode }) {
   return <ProtectedRoute>{children}</ProtectedRoute>
@@ -46,6 +47,7 @@ export default function Router() {
         <Route path="/clients" element={<ClientPage />} />
         <Route path="/clients/create" element={<CreateClientPage />} />
         <Route path="/clients/update/:id" element={<UpdateClientPage />} />
+        <Route path="/clients/history/:id" element={<ClientHistoryPage />} />
         <Route path="/routes" element={<RoutesPage />} />
         <Route path="/routes/create" element={<CreateRoutePage />} />
         <Route path="/routes/update/:id" element={<UpdateRoutePage />} />
