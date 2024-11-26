@@ -1,4 +1,4 @@
-import { getLoans } from '@/services/loan'
+import { getLoans, getLoansByClientId } from '@/services/loan'
 import { LoanStatus } from '@/types/loans'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
@@ -82,5 +82,24 @@ export function useLoans({ limit = 10 } = {}) {
     searchByDni: handleSearchByDni,
     goToPage,
     resetFilters,
+  }
+}
+
+export function useLoansByClient({ clientId }: { clientId: number }) {
+  const { data, isFetching, error } = useQuery({
+    queryKey: ['loans', 'client', clientId],
+    queryFn: async () => {
+      const response = await getLoansByClientId(clientId)
+      if (!response.success) {
+        throw new Error(response.message)
+      }
+      return response.data
+    },
+  })
+
+  return {
+    loans: data,
+    isLoading: isFetching,
+    error,
   }
 }
