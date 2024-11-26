@@ -34,7 +34,7 @@ export function UsersTable({ users }: UsersTableProps) {
       </TableHeader>
       <TableBody>
         {usersWithouthCurrentUser.map((user) => (
-          <TableRow key={user.id}>
+          <TableRow key={user.id} className="[&>td]:px-4">
             <TableCell>{user.id}</TableCell>
             <TableCell>{user.username}</TableCell>
             <TableCell>
