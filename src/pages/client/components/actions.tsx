@@ -6,9 +6,9 @@ import {
   Plus,
   TrashIcon,
   User,
-} from "lucide-react"
+} from 'lucide-react'
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +17,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu'
 import { Link } from 'react-router-dom'
 interface IProps {
   client: IClientTable
@@ -35,13 +35,11 @@ export const Actions = ({ client }: IProps) => {
         <DropdownMenuLabel>Acciones</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
-            <span>Detalles</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <HistoryIcon className="mr-2 h-4 w-4" />
-            <span>Historial Crediticio</span>
+          <DropdownMenuItem asChild>
+            <Link to={`/clients/history/${client.id}`}>
+              <HistoryIcon className="mr-2 h-4 w-4" />
+              <span>Historial Crediticio</span>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <PenIcon className="mr-2 h-4 w-4" />
@@ -49,12 +47,14 @@ export const Actions = ({ client }: IProps) => {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className={`${client.loan_status !== 'paid' ? 'opacity-40' : ''}`}>
+        <DropdownMenuItem
+          className={`${client.loan_status !== 'paid' ? 'opacity-40' : ''}`}
+        >
           <Plus className="mr-2 h-4 w-4" />
           <span>Nuevo Prestamo</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className='text-red-500'>
+        <DropdownMenuItem className="text-red-500">
           <TrashIcon className="mr-2 h-4 w-4" />
           <span>Eliminar Cliente</span>
         </DropdownMenuItem>
