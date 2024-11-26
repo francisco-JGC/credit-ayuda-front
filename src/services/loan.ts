@@ -170,3 +170,13 @@ export const getFilteredDatesLoans = async ({
     useToken: true,
   })
 }
+
+export const getLoansByClientId = async (
+  id: number,
+): Promise<IHandleResponse<ILoan[]>> => {
+  return await fetchData({
+    url: `/loan/client/${id}`,
+    method: 'GET',
+    useToken: true,
+  })
+}
