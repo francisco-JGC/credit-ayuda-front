@@ -1,4 +1,4 @@
-import { ICreateClient } from '@/types/clients'
+import { IClientTable, ICreateClient } from '@/types/clients'
 import {
   fetchData,
   IHandleResponse,
@@ -39,7 +39,9 @@ export const getPaginationClient = async ({
   })
 }
 
-export const getClientById = async (id: number): Promise<IHandleResponse> => {
+export const getClientById = async (
+  id: number,
+): Promise<IHandleResponse<IClientTable>> => {
   return await fetchData({
     url: `/client/${id}`,
     method: 'GET',
