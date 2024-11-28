@@ -26,6 +26,7 @@ import { PaymentStatus, StatusBadge } from './payment-status'
 import { PrinterIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { formatDate } from '@/utils/date-format'
+import { Link } from 'react-router-dom'
 
 interface PaymentsTableProps {
   loan?: ILoan
@@ -116,9 +117,7 @@ export function PaymentsTable({
                           <TableCell className="font-semibold">
                             #{payment.id}
                           </TableCell>
-                          <TableCell>
-                            {formatDate(payment.due_date)}
-                          </TableCell>
+                          <TableCell>{formatDate(payment.due_date)}</TableCell>
                           <TableCell>
                             <StatusBadge status="paid">
                               C${payment.amount_paid ?? 0}
@@ -143,11 +142,16 @@ export function PaymentsTable({
                           </TableCell>
                           <TableCell>
                             <div className="flex justify-center">
-                              <Button variant="outline" size="sm">
-                                <PrinterIcon
-                                  strokeWidth={1}
-                                  className="size-6"
-                                />
+                              <Button variant="outline" size="sm" asChild>
+                                <Link
+                                  to={`/prints/payments/${payment.id}`}
+                                  target="_blank"
+                                >
+                                  <PrinterIcon
+                                    strokeWidth={1}
+                                    className="size-6"
+                                  />
+                                </Link>
                               </Button>
                             </div>
                           </TableCell>
