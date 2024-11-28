@@ -2,11 +2,21 @@ import { useLoanDetails } from '@/pages/payments/hook/use-loan-details'
 import { frequencyMap, paymentStatusMap } from '@/utils/contants'
 import { formatDateLong } from '@/utils/date-format'
 import { formatPrice } from '@/utils/price-format'
+import { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 
 export function LoansPrint() {
   const { loanId } = useParams()
   const { loan, isLoading } = useLoanDetails({ id: Number(loanId) })
+  const firstRender = useRef(true)
+
+  useEffect(() => {
+    if (!firstRender.current || loan == null) {
+      return
+    }
+    firstRender.current = false
+    window.print()
+  }, [loan])
 
   if (loan == null || isLoading) {
     return (
@@ -16,7 +26,7 @@ export function LoansPrint() {
     )
   }
 
-  const client = loan?.client
+  const { client } = loan
 
   return (
     <div className="container mx-auto mt-4">
