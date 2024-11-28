@@ -1,6 +1,8 @@
 import { usePaymentDetails } from '@/pages/payments/hook/use-payment-details'
-import { frequencyMap } from '@/utils/contants'
+import { frequencyMap, paymentStatusMap } from '@/utils/contants'
 import { formatDateLong } from '@/utils/date-format'
+import { formatPrice } from '@/utils/price-format'
+import { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 
 export function PaymentsPrintPage() {
@@ -8,9 +10,15 @@ export function PaymentsPrintPage() {
   const { isLoading, payment } = usePaymentDetails({
     id: Number(paymentId),
   })
-  // useEffect(() => {
-  //   window.print()
-  // }, [])
+  const firstRender = useRef(true)
+
+  useEffect(() => {
+    if (!firstRender.current || payment == null) {
+      return
+    }
+    firstRender.current = false
+    window.print()
+  }, [payment])
 
   if (isLoading || payment == null) {
     return (
@@ -29,9 +37,11 @@ export function PaymentsPrintPage() {
         <div>
           <h3 className="text-lg font-semibold">Cliente: {client.name}</h3>
         </div>
-        <div>{formatDateLong(paymentPlan.loan.created_at ?? '')}</div>
+        <div className="text-sm">
+          {formatDateLong(paymentPlan.loan.created_at ?? '')}
+        </div>
       </div>
-      <section className="mt-2">
+      <section className="mt-2 text-sm">
         <div className="flex flex-col">
           <p>Cédula: {client.dni}</p>
           <p>Teléfono: {client.primary_phone}</p>
@@ -40,43 +50,105 @@ export function PaymentsPrintPage() {
         </div>
       </section>
       <hr className="text-muted-foreground my-6" />
-      <section>
-        <h3 className="text-lg font-semibold">
-          Préstamo #{payment.payment_plan.loan.id}
-        </h3>
-        <div className="mt-2  grid grid-cols-2">
-          <p>
-            <strong>Creación del crédito: </strong>
-            {formatDateLong(payment.payment_plan.loan.created_at)}
+      <section className="flex flex-col gap-y-4 justify-between">
+        <div className="flex-1">
+          <h3 className="text-lg font-bold">Detalles del abono</h3>
+          <p className="text-muted-foreground">#{payment.id}</p>
+          <div className="mt-6">
+            <table className="w-full text-sm table-fixed">
+              <tbody>
+                <tr className="even:bg-slate-200 odd:bg-white">
+                  <td className="font-bold">Fecha de abono: </td>
+                  <td className="">{formatDateLong(payment.due_date)}</td>
+                </tr>
+                <tr className="even:bg-slate-200 odd:bg-white">
+                  <td className="font-bold">Estado: </td>
+                  <td className="">{paymentStatusMap[payment.status]}</td>
+                </tr>
+                <tr className="even:bg-slate-200 odd:bg-white">
+                  <td className="font-bold">Abonado: </td>
+                  <td className="">C${formatPrice(payment.amount_paid)}</td>
+                </tr>
+                <tr className="even:bg-slate-200 odd:bg-white">
+                  <td className="font-bold">Restante: </td>
+                  <td className="">C${formatPrice(payment.amount_due)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <h3 className="text-lg font-bold">Detalles del préstamo</h3>
+          <p className="text-muted-foreground">
+            #{payment.payment_plan.loan.id}
           </p>
-          <p>
-            <strong>Inicio: </strong>
-            {formatDateLong(payment.payment_plan.loan.loan_date)}
-          </p>
-          <p>
-            <strong>Tipo: </strong>
-            {frequencyMap[payment.payment_plan.frequency]}
-          </p>
-          <p>
-            <strong>Última cuota: </strong>
-            {formatDateLong(payment.due_date)}
-          </p>
-          <p>
-            <strong>Monto: </strong>
-            C${payment.payment_plan.loan.amount}
-          </p>
-          <p>
-            <strong>Interés: </strong>
-            {payment.payment_plan.loan.interest_rate}%
-          </p>
-          <p>
-            <strong>Recuperación: </strong>
-            C${payment.payment_plan.loan.total_recovered}
-          </p>
-          <p>
-            <strong>Cuota: </strong>
-            C${payment.payment_plan.payment_amount}
-          </p>
+          <div className="mt-6">
+            <table className="text-sm w-full table-fixed">
+              <tbody>
+                <tr className="even:bg-slate-500 odd:bg-white">
+                  <td className="font-bold">Fecha del crédito:</td>
+                  <td className="">
+                    {formatDateLong(payment.payment_plan.loan.loan_date)}
+                  </td>
+                  <td className="font-bold">Inicio:</td>
+                  <td className="">
+                    {formatDateLong(payment.payment_plan.loan.created_at)}
+                  </td>
+                </tr>
+                <tr className="even:bg-slate-200 odd:bg-white">
+                  <td className="font-bold">Tipo:</td>
+                  <td className="">
+                    {frequencyMap[payment.payment_plan.frequency]}
+                  </td>
+                  <td className="font-bold">Última cuota:</td>
+                  <td className="">{formatDateLong(payment.due_date)}</td>
+                </tr>
+                <tr className="even:bg-slate-200 odd:bg-white">
+                  <td className="font-bold">Monto:</td>
+                  <td className="">
+                    C${formatPrice(payment.payment_plan.loan.amount)}
+                  </td>
+                  <td className="font-bold">Interés:</td>
+                  <td className="">
+                    {payment.payment_plan.loan.interest_rate}%
+                  </td>
+                </tr>
+                <tr className="even:bg-slate-200 odd:bg-white">
+                  <td className="font-bold">Recuperación:</td>
+                  <td className="">
+                    C${formatPrice(payment.payment_plan.loan.total_recovered)}
+                  </td>
+                  <td className="font-bold">Cuota:</td>
+                  <td className="">
+                    C${formatPrice(payment.payment_plan.payment_amount)}
+                  </td>
+                </tr>
+                <tr className="even:bg-slate-200 odd:bg-white">
+                  <td className="font-bold">Monto abonado:</td>
+                  <td className="">
+                    C$
+                    {formatPrice(
+                      payment.payment_plan.loan.total_recovered -
+                        payment.payment_plan.loan.total_pending,
+                    )}
+                  </td>
+                  <td className="font-bold">Total Abonos:</td>
+                  <td className="">{payment.payment_plan.total_payments}</td>
+                </tr>
+                <tr className="even:bg-slate-200 odd:bg-white">
+                  <td className="font-bold">Monto pendiente:</td>
+                  <td className="">
+                    C$
+                    {formatPrice(payment.payment_plan.loan.total_pending)}
+                  </td>
+                  <td className="font-bold">Total Abonos pendientes:</td>
+                  <td className="">
+                    {payment.payment_plan.payments_remaining}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
     </div>
