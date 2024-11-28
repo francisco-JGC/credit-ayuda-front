@@ -53,6 +53,7 @@ export interface IPaymentPlan {
   payments_remaining: number
   frequency: 'daily' | 'weekly' | 'biweekly' | 'monthly' | 'yearly'
   payment_amount: number
+  loan: ILoan
   payment_schedules: IPaymentSchedule[]
 }
 
@@ -87,4 +88,13 @@ export interface IPenaltyPaymentSchedule {
   amount_due: number
   amount_paid: number
   status: string
+}
+
+export interface IPaymentScheduleDetails {
+  id: number
+  due_date: string
+  amount_due: number
+  amount_paid: number
+  status: PaymentStatus
+  payment_plan: IPaymentPlan
 }
