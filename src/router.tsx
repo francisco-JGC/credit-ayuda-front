@@ -28,6 +28,7 @@ import ReportMontlyPage from './pages/reports/pages/report-montly-page'
 import ReportDailyRPage from './pages/reports/pages/report-daily-page'
 import { ClientHistoryPage } from './pages/client/pages/history'
 import { PaymentsPrintPage } from './pages/prints/pages/payments'
+import { LoansPrint } from './pages/prints/pages/loans'
 
 function ProtectedRouteElement({ children }: { children: ReactNode }) {
   return <ProtectedRoute>{children}</ProtectedRoute>
@@ -74,6 +75,7 @@ export default function Router() {
         }
       >
         <Route path="payments/:paymentId" element={<PaymentsPrintPage />} />
+        <Route path="loans/:loanId" element={<LoansPrint />} />
       </Route>
     </Routes>
   )
