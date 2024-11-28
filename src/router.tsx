@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Outlet } from 'react-router-dom'
 import ProtectedRoute from './components/protectedRoute'
 import { ReactNode } from 'react'
 
@@ -27,6 +27,7 @@ import MyRoutePage from './pages/routes/myRoutePage'
 import ReportMontlyPage from './pages/reports/pages/report-montly-page'
 import ReportDailyRPage from './pages/reports/pages/report-daily-page'
 import { ClientHistoryPage } from './pages/client/pages/history'
+import { PaymentsPrintPage } from './pages/prints/pages/payments'
 
 function ProtectedRouteElement({ children }: { children: ReactNode }) {
   return <ProtectedRoute>{children}</ProtectedRoute>
@@ -64,6 +65,16 @@ export default function Router() {
         <Route path="/report/daily" element={<ReportDailyRPage />} />
       </Route>
       <Route path="/login" element={<LoginPage />} />
+      <Route
+        path="/prints"
+        element={
+          <ProtectedRouteElement>
+            <Outlet />
+          </ProtectedRouteElement>
+        }
+      >
+        <Route path="payments/:paymentId" element={<PaymentsPrintPage />} />
+      </Route>
     </Routes>
   )
 }
