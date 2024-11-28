@@ -30,10 +30,10 @@ export function PaymentsPage() {
           </div>
           <div>
             <Button asChild>
-              <Link to={`/prints/loans/${loan?.id}`}>
+              <Link to={`/prints/loans/${loan?.id}`} target="_blank">
                 <div className="flex gap-2 justify-between items-center">
                   Imprimir detalles{' '}
-                  <PrinterIcon strokeWidth={1} className="size-6" />
+                  <PrinterIcon strokeWidth={1} className="size-4" />
                 </div>
               </Link>
             </Button>
