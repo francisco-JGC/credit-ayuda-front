@@ -60,3 +60,13 @@ export const updateClientById = async (
     useToken: true,
   })
 }
+
+export const deleteClientById = async (
+  id: number,
+): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: `/client/delete/${id}`,
+    method: 'DELETE',
+    useToken: true,
+  })
+}
