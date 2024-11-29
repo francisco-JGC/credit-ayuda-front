@@ -1,4 +1,5 @@
 import { SkeletonTableRows } from '@/components/skeleton-table-rows'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -22,11 +23,11 @@ import {
   PaymentStatus as PaymentStatusType,
 } from '@/types/loans'
 import { frequencyMap } from '@/utils/contants'
-import { PaymentStatus, StatusBadge } from './payment-status'
+import { formatDateLong } from '@/utils/date-format'
+import { formatPrice } from '@/utils/price-format'
 import { PrinterIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { formatDate } from '@/utils/date-format'
 import { Link } from 'react-router-dom'
+import { PaymentStatus, StatusBadge } from './payment-status'
 
 interface PaymentsTableProps {
   loan?: ILoan
@@ -51,6 +52,8 @@ export function PaymentsTable({
     (acc, payment) => acc + Number(payment.amount_paid),
     0,
   )
+
+  const totalDebt = (loan?.total_recovered ?? 0) - totalPaid
 
   const totalPendingPayments = payments.filter(
     (payment) => payment.status === 'pending',
@@ -101,6 +104,7 @@ export function PaymentsTable({
                     <TableRow className="[&>th]:px-4 [&>th]:text-xs [&>th]:sticky [&>th]:z-10 [&>th]:top-0">
                       <TableHead>ID</TableHead>
                       <TableHead>Fecha de pago</TableHead>
+                      <TableHead>Fecha de abono</TableHead>
                       <TableHead>Monto abonado</TableHead>
                       <TableHead>Monto restante</TableHead>
                       <TableHead>Estado</TableHead>
@@ -117,13 +121,21 @@ export function PaymentsTable({
                           <TableCell className="font-semibold">
                             #{payment.id}
                           </TableCell>
-                          <TableCell>{formatDate(payment.due_date)}</TableCell>
+                          <TableCell>
+                            {formatDateLong(payment.due_date)}
+                          </TableCell>
+                          <TableCell>
+                            {payment.paid_date &&
+                              formatDateLong(payment.paid_date)}
+                          </TableCell>
                           <TableCell>
                             <StatusBadge status="paid">
-                              C${payment.amount_paid ?? 0}
+                              {formatPrice(Number(payment.amount_paid))}
                             </StatusBadge>
                           </TableCell>
-                          <TableCell>C${payment.amount_due ?? 0}</TableCell>
+                          <TableCell>
+                            {formatPrice(Number(payment.amount_due))}
+                          </TableCell>
                           <TableCell>
                             <PaymentStatus status={payment.status} />
                           </TableCell>
@@ -193,11 +205,11 @@ export function PaymentsTable({
                           </TableCell>
                           <TableCell>
                             <StatusBadge status="paid">
-                              C${payment.amount_paid ?? 0}
+                              {formatPrice(Number(payment.amount_paid))}
                             </StatusBadge>
                           </TableCell>
                           <TableCell>
-                            {new Date(payment.due_date).toLocaleDateString()}
+                            {formatDateLong(payment.due_date)}
                           </TableCell>
                           <TableCell>{loan.client.name}</TableCell>
                           <TableCell>
@@ -219,22 +231,19 @@ export function PaymentsTable({
             <div className="mt-auto grid grid-cols-3 gap-2 pt-4 text-sm">
               <div className="flex gap-1">
                 {loan != null && !isLoading && (
-                  <p>Total abonado: C${totalPaid.toFixed(2)}</p>
+                  <p>Total abonado: {formatPrice(totalPaid)}</p>
                 )}
                 {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
               <div className="flex gap-1">
                 {loan != null && !isLoading && (
-                  <p>
-                    Saldo pendiente: C$
-                    {(Number(loan.amount) - totalPaid).toFixed(2)}
-                  </p>
+                  <p>Saldo pendiente: {formatPrice(totalDebt)}</p>
                 )}
                 {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
               <div className="flex gap-1 place-self-end">
                 {loan != null && !isLoading && (
-                  <p>Monto atrasado: C${totalLatePayment.toFixed(2)}</p>
+                  <p>Monto atrasado: {formatPrice(totalLatePayment)}</p>
                 )}
                 {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
