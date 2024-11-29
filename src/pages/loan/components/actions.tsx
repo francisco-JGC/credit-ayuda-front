@@ -54,7 +54,7 @@ export const Actions = ({ loan }: IProps) => {
             </DropdownMenuItem>
           )}
           <DropdownMenuItem asChild>
-            {loan.status !== 'rejected' && (
+            {loan.status !== 'rejected' && loan.status !== 'paid' && (
               <Link
                 to={`/arrears/${loan.id}`}
                 className="flex gap-2 items-center w-full hover:cursor-pointer"
