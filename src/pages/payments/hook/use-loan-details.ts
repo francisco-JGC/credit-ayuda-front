@@ -11,6 +11,7 @@ export function useLoanDetails({ id }: { id: number }) {
       }
       return response.data
     },
+    refetchOnWindowFocus: false,
   })
 
   return {
