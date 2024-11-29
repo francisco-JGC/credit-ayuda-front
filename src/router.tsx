@@ -46,6 +46,7 @@ export default function Router() {
         }
       >
         <Route path="/" element={<HomePage />} />
+        <Route path="/arrears/:id" element={<CreateArrearPage />} />
         <Route path="/clients" element={<ClientPage />} />
         <Route path="/clients/create" element={<CreateClientPage />} />
         <Route path="/clients/update/:id" element={<UpdateClientPage />} />
