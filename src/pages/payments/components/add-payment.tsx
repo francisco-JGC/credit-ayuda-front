@@ -8,29 +8,31 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { IPaymentSchedule } from '@/types/loans'
+import { ILoan, IPaymentSchedule } from '@/types/loans'
 import { useRef } from 'react'
 import { toast } from 'sonner'
 import { useUpdatePayment } from '../hook/use-update-payment'
 import { StatusBadge } from './payment-status'
+import { useUpdateLoan } from '@/pages/requests/hooks/use-update-loan'
 
 interface AddNewPaymentProps {
-  loanId: number
+  loan: ILoan
   payment: IPaymentSchedule | null
   opened: boolean
   onOpenChange: (open: boolean) => void
 }
 
 export function AddNewPayment({
-  loanId,
+  loan,
   payment,
   opened,
   onOpenChange,
 }: AddNewPaymentProps) {
-  const { update, isPending } = useUpdatePayment({ loanId })
+  const { update, isPending } = useUpdatePayment({ loanId: loan.id })
+  const { update: updateLoan } = useUpdateLoan()
   const closeModalRef = useRef<HTMLButtonElement>(null)
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (payment == null) {
       toast.warning('No hay pagos pendientes')
@@ -52,10 +54,28 @@ export function AddNewPayment({
     let status = payment.status
     if (amount === Number(payment.amount_due)) {
       status = 'paid'
+      const tempPayments = loan.payment_plan.payment_schedules.map((p) => {
+        if (p.id === payment.id) {
+          return {
+            ...p,
+            status: 'paid',
+          }
+        }
+        return p
+      })
+
+      const hasBeenPaid = tempPayments.every((p) => p.status === 'paid')
+      if (hasBeenPaid) {
+        await updateLoan({
+          ...loan,
+          status: 'paid',
+        })
+      }
     }
 
-    const updatedPayment = {
+    const updatedPayment: IPaymentSchedule = {
       ...payment,
+      paid_date: new Date().toISOString(),
       amount_paid: (Number(payment.amount_paid) + amount).toFixed(2),
       amount_due: (Number(payment.amount_due) - amount).toFixed(2),
       status,
@@ -101,7 +121,7 @@ export function AddNewPayment({
         <form onSubmit={handleSubmit}>
           <div>
             <Label htmlFor="amount">Monto:</Label>
-            <Input type="number" name="amount" id="amount" />
+            <Input type="number" step={0.01} name="amount" id="amount" />
           </div>
 
           <div className="mt-2">
