@@ -1,7 +1,8 @@
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ILoan } from '@/types/loans'
-import { formatDate } from '@/utils/date-format'
+import { formatDateLong } from '@/utils/date-format'
+import { formatPrice } from '@/utils/price-format'
 
 interface LoanDetailsProps {
   loan?: ILoan
@@ -24,7 +25,7 @@ export function LoanDetails({ loan, isLoading }: LoanDetailsProps) {
             <p className="text-muted-foreground">Creación del crédito:</p>
             {isLoading && <Skeleton className="h-4" />}
             {loan != null && !isLoading && (
-              <p>{formatDate(loan.created_at)}</p>
+              <p>{formatDateLong(loan.created_at)}</p>
             )}
           </div>
           <div>
@@ -32,7 +33,7 @@ export function LoanDetails({ loan, isLoading }: LoanDetailsProps) {
             {isLoading && <Skeleton className="h-4" />}
 
             {loan != null && !isLoading && (
-              <p>{formatDate(loan.loan_date)}</p>
+              <p>{formatDateLong(loan.loan_date)}</p>
             )}
           </div>
           <div>
@@ -40,7 +41,7 @@ export function LoanDetails({ loan, isLoading }: LoanDetailsProps) {
             {isLoading && <Skeleton className="h-4" />}
 
             {loan != null && !isLoading && (
-              <p>C${Number(loan.amount).toFixed(2)}</p>
+              <p>{formatPrice(Number(loan.amount))}</p>
             )}
           </div>
           <div>
@@ -54,14 +55,16 @@ export function LoanDetails({ loan, isLoading }: LoanDetailsProps) {
             {isLoading && <Skeleton className="h-4" />}
 
             {loan != null && !isLoading && (
-              <p>C${Number(loan.payment_plan.payment_amount).toFixed(2)}</p>
+              <p>{formatPrice(Number(loan.payment_plan.payment_amount))}</p>
             )}
           </div>
           <div>
             <p className="text-muted-foreground">Recuperación:</p>
             {isLoading && <Skeleton className="h-4" />}
 
-            {loan != null && !isLoading && <p>C${getRecover(loan)}</p>}
+            {loan != null && !isLoading && (
+              <p>{formatPrice(getRecover(loan))}</p>
+            )}
           </div>
         </div>
       </CardContent>
