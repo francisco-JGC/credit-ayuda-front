@@ -19,11 +19,25 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Link } from 'react-router-dom'
+import { useDeleteClient } from '../hooks/use-client'
+import { toast } from 'sonner'
 interface IProps {
   client: IClientTable
 }
 
 export const Actions = ({ client }: IProps) => {
+  const { deleteClient, isLoading } = useDeleteClient()
+
+  const handleDeleteClient = (id: number) => {
+    deleteClient(id)
+      .then(() => {
+        toast.success('Cliente eliminado correctamente')
+      })
+      .catch(() => {
+        toast.error('Ocurrio un error al eliminar el cliente')
+      })
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -54,9 +68,12 @@ export const Actions = ({ client }: IProps) => {
           <span>Nuevo Prestamo</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-red-500">
+        <DropdownMenuItem
+          onClick={() => handleDeleteClient(client.id)}
+          className="text-red-500"
+        >
           <TrashIcon className="mr-2 h-4 w-4" />
-          <span>Eliminar Cliente</span>
+          <span>{isLoading ? 'Eliminando...' : 'Eliminar Cliente'}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
