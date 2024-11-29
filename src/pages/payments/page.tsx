@@ -42,7 +42,7 @@ export function PaymentsPage() {
         <div className="mt-4 md:mt-0">
           {loan != null && !isLoading && (
             <AddNewPayment
-              loanId={loan.id}
+              loan={loan}
               opened={modalOpen}
               payment={payment}
               onOpenChange={setModalOpen}
