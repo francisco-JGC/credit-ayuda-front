@@ -2,21 +2,19 @@ import { useLoanDetails } from '@/pages/payments/hook/use-loan-details'
 import { frequencyMap, paymentStatusMap } from '@/utils/contants'
 import { formatDateLong } from '@/utils/date-format'
 import { formatPrice } from '@/utils/price-format'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 export function LoansPrint() {
   const { loanId } = useParams()
   const { loan, isLoading } = useLoanDetails({ id: Number(loanId) })
-  const firstRender = useRef(true)
 
   useEffect(() => {
-    if (!firstRender.current || loan == null) {
+    if (isLoading || loan == null) {
       return
     }
-    firstRender.current = false
     window.print()
-  }, [loan])
+  }, [loan, isLoading])
 
   if (loan == null || isLoading) {
     return (
@@ -27,6 +25,11 @@ export function LoansPrint() {
   }
 
   const { client } = loan
+  const lastPayment = loan.payment_plan.payment_schedules
+    .sort(
+      (a, b) => new Date(b.due_date).getTime() - new Date(a.due_date).getTime(),
+    )
+    .filter((payment) => payment.status === 'paid')[0]
 
   return (
     <div className="container mx-auto mt-4">
@@ -63,7 +66,10 @@ export function LoansPrint() {
                     {frequencyMap[loan.payment_plan.frequency]}
                   </td>
                   <td className="font-bold">Última cuota:</td>
-                  <td className="">{}</td>
+                  <td className="">
+                    {lastPayment != null &&
+                      formatDateLong(lastPayment.due_date)}
+                  </td>
                 </tr>
                 <tr className="even:bg-slate-200 odd:bg-white">
                   <td className="font-bold">Monto:</td>
@@ -123,7 +129,10 @@ export function LoansPrint() {
                 <td>{formatPrice(Number(payment.amount_paid))}</td>
                 <td>{formatPrice(Number(payment.amount_due))}</td>
                 <td>{formatDateLong(payment.due_date)}</td>
-                <td></td>
+                <td>
+                  {payment.paid_date != null &&
+                    formatDateLong(payment.paid_date.toString())}
+                </td>
                 <td>{paymentStatusMap[payment.status]}</td>
               </tr>
             ))}
