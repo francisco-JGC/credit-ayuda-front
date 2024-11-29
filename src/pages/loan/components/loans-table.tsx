@@ -27,6 +27,15 @@ export function LoansTable({
   renderActions,
 }: ILoanTableProps) {
   const totalColumns = 11
+  const getLoanDebtAmount = (loan: ILoan) => {
+    const totalPaid = loan.payment_plan.payment_schedules.reduce(
+      (acc, payment) => {
+        return acc + Number(payment.amount_paid)
+      },
+      0,
+    )
+    return loan.total_recovered - totalPaid
+  }
 
   return (
     <div className="border rounded-lg h-full overflow-x-auto">
@@ -82,7 +91,7 @@ export function LoansTable({
                     Number(loan.amount) * (Number(loan.interest_rate) / 100),
                   )}
                 </TableCell>
-                <TableCell>{formatPrice(Number(loan.total_pending))}</TableCell>
+                <TableCell>{formatPrice(getLoanDebtAmount(loan))}</TableCell>
                 <TableCell>
                   {formatFrequency(loan.payment_plan.frequency)}
                 </TableCell>
