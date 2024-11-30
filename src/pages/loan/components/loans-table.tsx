@@ -8,10 +8,10 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { ILoan } from '@/types/loans'
+import { formatDateLong } from '@/utils/date-format'
 import { formatFrequency } from '@/utils/format-frequency'
 import { formatPrice } from '@/utils/price-format'
 import { LoanStatusBadge } from './loan-status-badge'
-import { formatDate } from '@/utils/date-format'
 
 interface ILoanTableProps {
   loans: ILoan[]
@@ -84,7 +84,7 @@ export function LoansTable({
                 <TableCell className="font-semibold">#{loan.id}</TableCell>
                 <TableCell>{loan.client.name}</TableCell>
                 <TableCell>{loan.client.dni}</TableCell>
-                <TableCell>{formatDate(loan.created_at)}</TableCell>
+                <TableCell>{formatDateLong(loan.created_at)}</TableCell>
                 <TableCell>{formatPrice(Number(loan.amount))}</TableCell>
                 <TableCell>
                   {formatPrice(
