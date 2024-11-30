@@ -79,7 +79,8 @@ export interface ICreatePaymentSchedule {
 export interface IPenaltyPlan {
   id: number
   total_penalty_amount: number
-  status: string
+  interest_rate: number
+  status: 'paid' | 'unpaid' | 'pending'
   penalty_payment_schedules: IPenaltyPaymentSchedule[]
 }
 
@@ -88,7 +89,7 @@ export interface IPenaltyPaymentSchedule {
   dueDate: Date
   amount_due: number
   amount_paid: number
-  status: string
+  status: 'unpaid' | 'paid' | 'pending'
 }
 
 export interface IPaymentScheduleDetails {
