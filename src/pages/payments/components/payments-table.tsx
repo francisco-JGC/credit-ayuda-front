@@ -229,37 +229,69 @@ export function PaymentsTable({
               </div>
             </TabsContent>
             <div className="mt-auto grid grid-cols-3 gap-2 pt-4 text-sm">
-              <div className="flex gap-1">
+              <div>
                 {loan != null && !isLoading && (
-                  <p>Total abonado: {formatPrice(totalPaid)}</p>
+                  <p className="inline-flex flex-col">
+                    <span className="text-sm text-muted-foreground">
+                      Total abonado:
+                    </span>{' '}
+                    {formatPrice(totalPaid)}
+                  </p>
                 )}
                 {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
-              <div className="flex gap-1">
+              <div>
                 {loan != null && !isLoading && (
-                  <p>Saldo pendiente: {formatPrice(totalDebt)}</p>
+                  <p className="inline-flex flex-col">
+                    <span className="text-sm text-muted-foreground">
+                      Saldo pendiente:
+                    </span>{' '}
+                    {formatPrice(totalDebt)}
+                  </p>
                 )}
                 {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
-              <div className="flex gap-1 place-self-end">
+              <div>
                 {loan != null && !isLoading && (
-                  <p>Monto atrasado: {formatPrice(totalLatePayment)}</p>
+                  <p className="inline-flex flex-col">
+                    <span className="text-sm text-muted-foreground">
+                      Monto atrasado:
+                    </span>{' '}
+                    {formatPrice(totalLatePayment)}
+                  </p>
                 )}
                 {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
-              <div className="flex gap-1">
-                {loan != null && !isLoading && <p>Abonos: {payments.length}</p>}
-                {isLoading && <Skeleton className="h-4 w-32" />}
-              </div>
-              <div className="">
+              <div>
                 {loan != null && !isLoading && (
-                  <p>Abonos pendientes: {totalPendingPayments}</p>
+                  <p className="inline-flex flex-col">
+                    <span className="text-muted-foreground text-sm">
+                      Abonos:
+                    </span>{' '}
+                    {payments.length}
+                  </p>
                 )}
                 {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
-              <div className="place-self-end">
+              <div>
                 {loan != null && !isLoading && (
-                  <p>Abonos atrasados: {totalLatePayments}</p>
+                  <p className="inline-flex flex-col">
+                    <span className="text-muted-foreground text-sm">
+                      Abonos pendientes:
+                    </span>{' '}
+                    {totalPendingPayments}
+                  </p>
+                )}
+                {isLoading && <Skeleton className="h-4 w-32" />}
+              </div>
+              <div>
+                {loan != null && !isLoading && (
+                  <p className="inline-flex flex-col">
+                    <span className="text-sm text-muted-foreground">
+                      Abonos atrasados:
+                    </span>{' '}
+                    {totalLatePayments}
+                  </p>
                 )}
                 {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
