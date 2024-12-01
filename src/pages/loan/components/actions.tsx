@@ -56,7 +56,7 @@ export const Actions = ({ loan }: IProps) => {
           <DropdownMenuItem asChild>
             {loan.status !== 'rejected' && loan.status !== 'paid' && (
               <Link
-                to={`/arrears/${loan.id}`}
+                to={`/arrears/create/${loan.id}`}
                 className="flex gap-2 items-center w-full hover:cursor-pointer"
               >
                 <ClockArrowUp className="h-4 w-4" />
