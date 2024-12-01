@@ -20,7 +20,7 @@ export function LoanDetails({ loan, isLoading }: LoanDetailsProps) {
         <CardTitle>Detalles del préstamo</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-2 gap-4 text-sm">
+        <div className="grid grid-cols-4 gap-4 text-sm">
           <div>
             <p className="text-muted-foreground">Creación del crédito:</p>
             {isLoading && <Skeleton className="h-4" />}
@@ -50,7 +50,7 @@ export function LoanDetails({ loan, isLoading }: LoanDetailsProps) {
 
             {loan != null && !isLoading && <p>{loan.interest_rate}%</p>}
           </div>
-          <div>
+          <div className="col-span-2">
             <p className="text-muted-foreground">Cuota:</p>
             {isLoading && <Skeleton className="h-4" />}
 
