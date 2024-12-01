@@ -14,7 +14,7 @@ export function ClientDetails({ loan, isLoading }: ClientDetailsProps) {
         <CardTitle>Información del cliente</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-2 gap-4 text-sm">
+        <div className="grid grid-cols-4 gap-4 text-sm">
           <div className="">
             <p className="text-muted-foreground">Nombre:</p>
             {isLoading && <Skeleton className="h-4" />}
