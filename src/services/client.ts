@@ -27,13 +27,23 @@ export const getClienByDni = async (
   })) as any
 }
 
+interface IGetClients extends IPagination {
+  route?: string
+}
+
 export const getPaginationClient = async ({
   filter,
   page,
   limit,
-}: IPagination): Promise<IHandleResponse> => {
-  return await fetchData({
-    url: `/client/${page}/${limit}/${filter}`,
+  route,
+}: IGetClients) => {
+  let url = `/client/${page}/${limit}/${filter}`
+  if (route) {
+    url += `?route=${route}`
+  }
+
+  return await fetchData<IPaginationResponse<IClientTable[]>>({
+    url,
     method: 'GET',
     useToken: true,
   })
