@@ -46,7 +46,7 @@ export default function Router() {
         }
       >
         <Route path="/" element={<HomePage />} />
-        <Route path="/arrears/:loanId" element={<CreateArrearPage />} />
+        <Route path="/arrears/create/:loanId" element={<CreateArrearPage />} />
         <Route path="/clients" element={<ClientPage />} />
         <Route path="/clients/create" element={<CreateClientPage />} />
         <Route path="/clients/update/:id" element={<UpdateClientPage />} />
