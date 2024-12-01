@@ -95,7 +95,7 @@ export function LoansTable({
                 <TableCell>
                   {formatFrequency(loan.payment_plan.frequency)}
                 </TableCell>
-                <TableCell>{loan.client.route?.name ?? ''}</TableCell>
+                <TableCell>{loan.client.route?.name ?? '-'}</TableCell>
                 <TableCell>
                   <LoanStatusBadge status={loan.status} />
                 </TableCell>
