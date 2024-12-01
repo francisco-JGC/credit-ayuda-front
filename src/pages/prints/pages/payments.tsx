@@ -67,11 +67,11 @@ export function PaymentsPrintPage() {
                 </tr>
                 <tr className="even:bg-slate-200 odd:bg-white">
                   <td className="font-bold">Abonado: </td>
-                  <td className="">C${formatPrice(payment.amount_paid)}</td>
+                  <td className="">{formatPrice(payment.amount_paid)}</td>
                 </tr>
                 <tr className="even:bg-slate-200 odd:bg-white">
                   <td className="font-bold">Restante: </td>
-                  <td className="">C${formatPrice(payment.amount_due)}</td>
+                  <td className="">{formatPrice(payment.amount_due)}</td>
                 </tr>
               </tbody>
             </table>
@@ -106,7 +106,7 @@ export function PaymentsPrintPage() {
                 <tr className="even:bg-slate-200 odd:bg-white">
                   <td className="font-bold">Monto:</td>
                   <td className="">
-                    C${formatPrice(payment.payment_plan.loan.amount)}
+                    {formatPrice(payment.payment_plan.loan.amount)}
                   </td>
                   <td className="font-bold">Interés:</td>
                   <td className="">
@@ -116,17 +116,16 @@ export function PaymentsPrintPage() {
                 <tr className="even:bg-slate-200 odd:bg-white">
                   <td className="font-bold">Recuperación:</td>
                   <td className="">
-                    C${formatPrice(payment.payment_plan.loan.total_recovered)}
+                    {formatPrice(payment.payment_plan.loan.total_recovered)}
                   </td>
                   <td className="font-bold">Cuota:</td>
                   <td className="">
-                    C${formatPrice(payment.payment_plan.payment_amount)}
+                    {formatPrice(payment.payment_plan.payment_amount)}
                   </td>
                 </tr>
                 <tr className="even:bg-slate-200 odd:bg-white">
                   <td className="font-bold">Monto abonado:</td>
                   <td className="">
-                    C$
                     {formatPrice(
                       payment.payment_plan.loan.total_recovered -
                         payment.payment_plan.loan.total_pending,
@@ -138,7 +137,6 @@ export function PaymentsPrintPage() {
                 <tr className="even:bg-slate-200 odd:bg-white">
                   <td className="font-bold">Monto pendiente:</td>
                   <td className="">
-                    C$
                     {formatPrice(payment.payment_plan.loan.total_pending)}
                   </td>
                   <td className="font-bold">Total Abonos pendientes:</td>
