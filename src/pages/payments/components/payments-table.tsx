@@ -228,7 +228,7 @@ export function PaymentsTable({
                 </Table>
               </div>
             </TabsContent>
-            <div className="mt-auto grid grid-cols-3 gap-2 pt-4 text-sm">
+            <div className="mt-auto grid grid-cols-4 gap-2 pt-8 text-sm">
               <div>
                 {loan != null && !isLoading && (
                   <p className="inline-flex flex-col">
@@ -273,7 +273,7 @@ export function PaymentsTable({
                 )}
                 {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
-              <div>
+              <div className="col-span-2">
                 {loan != null && !isLoading && (
                   <p className="inline-flex flex-col">
                     <span className="text-muted-foreground text-sm">
