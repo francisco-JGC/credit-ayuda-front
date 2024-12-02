@@ -12,7 +12,7 @@ import { useLoanDetails } from '@/pages/payments/hook/use-loan-details'
 import { formatDateLong } from '@/utils/date-format'
 import { formatPrice } from '@/utils/price-format'
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { redirect, useParams } from 'react-router-dom'
 import { useCreatePenalty } from '../hooks/use-penalty'
 import { toast } from 'sonner'
 
@@ -52,9 +52,11 @@ export function CreateArrearPage() {
       status: 'pending',
       penalty_payment_schedules: [],
       loan: loan,
+      current_penalty_amount: newPendingDebt,
     })
       .then(() => {
         toast.success('Mora creada exitosamente.')
+        redirect(`/arrears/${loanId}`)
       })
       .catch((error) => {
         toast.error(error.message)
