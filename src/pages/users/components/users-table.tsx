@@ -16,9 +16,7 @@ interface UsersTableProps {
 
 export function UsersTable({ users }: UsersTableProps) {
   const { user: currentUser } = useAuth()
-  const usersWithouthCurrentUser = users.filter(
-    (user) => user.username !== currentUser?.username,
-  )
+  const isCurrentUser = (user: User) => user.username === currentUser?.username
 
   return (
     <Table>
@@ -33,7 +31,7 @@ export function UsersTable({ users }: UsersTableProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {usersWithouthCurrentUser.map((user) => (
+        {users.map((user) => (
           <TableRow key={user.id} className="[&>td]:px-4">
             <TableCell>{user.id}</TableCell>
             <TableCell>{user.username}</TableCell>
@@ -46,12 +44,12 @@ export function UsersTable({ users }: UsersTableProps) {
             </TableCell>
             <TableCell>
               <div className="flex justify-end">
-                <UpdateUserModal user={user} />
+                {!isCurrentUser(user) && <UpdateUserModal user={user} />}
               </div>
             </TableCell>
           </TableRow>
         ))}
-        {usersWithouthCurrentUser.length === 0 && (
+        {users.length === 0 && (
           <TableRow>
             <TableCell colSpan={6} className="text-center">
               No hay usuarios registrados.
