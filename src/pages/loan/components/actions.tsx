@@ -54,15 +54,30 @@ export const Actions = ({ loan }: IProps) => {
             </DropdownMenuItem>
           )}
           <DropdownMenuItem asChild>
-            {loan.status !== 'rejected' && loan.status !== 'paid' && (
-              <Link
-                to={`/arrears/create/${loan.id}`}
-                className="flex gap-2 items-center w-full hover:cursor-pointer"
-              >
-                <ClockArrowUp className="h-4 w-4" />
-                Generar mora
-              </Link>
-            )}
+            {loan.status !== 'rejected' &&
+              loan.status !== 'paid' &&
+              loan.penalty_plan == null && (
+                <Link
+                  to={`/arrears/create/${loan.id}`}
+                  className="flex gap-2 items-center w-full hover:cursor-pointer"
+                >
+                  <ClockArrowUp className="h-4 w-4" />
+                  Generar mora
+                </Link>
+              )}
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            {loan.status !== 'rejected' &&
+              loan.status !== 'paid' &&
+              loan.penalty_plan != null && (
+                <Link
+                  to={`/arrears/${loan.id}`}
+                  className="flex gap-2 items-center w-full hover:cursor-pointer"
+                >
+                  <ClockArrowUp className="h-4 w-4" />
+                  Detalles de la mora
+                </Link>
+              )}
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
