@@ -82,7 +82,10 @@ export interface IPenaltyPlan {
   interest_rate: number
   status: 'paid' | 'unpaid' | 'pending'
   penalty_payment_schedules: IPenaltyPaymentSchedule[]
+  loan: ILoan
 }
+
+export type ICreatePenaltyPlan = Omit<IPenaltyPlan, 'id'>
 
 export interface IPenaltyPaymentSchedule {
   id: number
