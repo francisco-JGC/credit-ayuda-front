@@ -1,5 +1,5 @@
 import { LoanFrequency } from '@/pages/loan/hooks/use-loan-filters'
-import { LoanStatus, PaymentStatus } from '@/types/loans'
+import { LoanStatus, PaymentStatus, PenaltyStatus } from '@/types/loans'
 
 export const frequencies: LoanFrequency[] = [
   'daily',
@@ -35,4 +35,16 @@ export const paymentStatusMap: Record<PaymentStatus, string> = {
   pending: 'Pendiente',
   paid: 'Pagado',
   late: 'Atrasado',
+}
+
+export const penaltyStatus: PenaltyStatus[] = [
+  'pending',
+  'paid',
+  'unpaid',
+] as const
+
+export const penaltyStatusMap: Record<PenaltyStatus, string> = {
+  pending: 'Pendiente',
+  paid: 'Pagado',
+  unpaid: 'No pagado',
 }
