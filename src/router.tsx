@@ -29,6 +29,7 @@ import ReportDailyRPage from './pages/reports/pages/report-daily-page'
 import { ClientHistoryPage } from './pages/client/pages/history'
 import { PaymentsPrintPage } from './pages/prints/pages/payments'
 import { LoansPrint } from './pages/prints/pages/loans'
+import { ArrearDetailsPage } from './pages/arrears/pages/arear-details'
 
 function ProtectedRouteElement({ children }: { children: ReactNode }) {
   return <ProtectedRoute>{children}</ProtectedRoute>
@@ -47,6 +48,7 @@ export default function Router() {
       >
         <Route path="/" element={<HomePage />} />
         <Route path="/arrears/create/:loanId" element={<CreateArrearPage />} />
+        <Route path="/arrears/:id" element={<ArrearDetailsPage />} />
         <Route path="/clients" element={<ClientPage />} />
         <Route path="/clients/create" element={<CreateClientPage />} />
         <Route path="/clients/update/:id" element={<UpdateClientPage />} />
