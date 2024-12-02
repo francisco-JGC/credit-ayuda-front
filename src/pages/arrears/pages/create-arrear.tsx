@@ -11,11 +11,16 @@ import { Label } from '@/components/ui/label'
 import { useLoanDetails } from '@/pages/payments/hook/use-loan-details'
 import { formatDateLong } from '@/utils/date-format'
 import { formatPrice } from '@/utils/price-format'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useCreatePenalty } from '../hooks/use-penalty'
+import { toast } from 'sonner'
 
 export function CreateArrearPage() {
   const { loanId } = useParams()
   const { loan } = useLoanDetails({ id: Number(loanId) })
+  const [interestRate, setInterestRate] = useState<number | undefined>()
+  const { createPlan } = useCreatePenalty()
 
   const totalPaid =
     loan?.payment_plan.payment_schedules.reduce(
@@ -23,12 +28,38 @@ export function CreateArrearPage() {
       0,
     ) ?? 0
   const pendingDebt = (loan?.total_recovered ?? 0) - totalPaid
+  const newPendingDebt =
+    ((loan?.total_recovered ?? 0) - totalPaid) * ((interestRate ?? 0) / 100 + 1)
+
   const lastPaymentDate = loan?.payment_plan.payment_schedules
     .filter((schedule) => schedule.paid_date != null)
     .sort(
       (a, b) =>
         new Date(b.paid_date!).getTime() - new Date(a.paid_date!).getTime(),
     )[0]?.paid_date
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    if (interestRate == null || loan == null) {
+      toast.error('Por favor ingrese el interés por mora.')
+      return
+    }
+
+    createPlan({
+      interest_rate: interestRate,
+      total_penalty_amount: newPendingDebt,
+      status: 'pending',
+      penalty_payment_schedules: [],
+      loan: loan,
+    })
+      .then(() => {
+        toast.success('Mora creada exitosamente.')
+      })
+      .catch((error) => {
+        toast.error(error.message)
+      })
+  }
 
   return (
     <div>
@@ -80,21 +111,24 @@ export function CreateArrearPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-8">
               <div>
                 <Label htmlFor="amount" className="block mb-2">
                   Monto a pagar
                 </Label>
-                <Input
-                  disabled
-                  value={pendingDebt}
-                  type="number"
-                  id="amount"
-                  name="amount"
-                  className="input"
-                  placeholder="Monto a pagar"
-                />
+                <div className="flex items-center gap-2">
+                  <span className="text-muted-foreground">C$</span>
+                  <Input
+                    disabled
+                    value={newPendingDebt}
+                    type="number"
+                    id="amount"
+                    name="amount"
+                    className=""
+                    placeholder="Monto a pagar"
+                  />
+                </div>
               </div>
               <div>
                 <Label htmlFor="interest_rate" className="block mb-2">
@@ -105,6 +139,14 @@ export function CreateArrearPage() {
                     type="number"
                     max={100}
                     min={0}
+                    value={interestRate}
+                    onChange={(e) => {
+                      if (e.target.value === '') {
+                        setInterestRate(undefined)
+                        return
+                      }
+                      setInterestRate(Number(e.target.value))
+                    }}
                     id="interest_rate"
                     name="interest"
                     className="input"
@@ -114,7 +156,7 @@ export function CreateArrearPage() {
                 </div>
               </div>
             </div>
-            <div className="mt-8">
+            {/* <div className="mt-8">
               <h3 className="font-medium">Detalles del primer pago</h3>
               <p className="text-muted-foreground">
                 Por favor llene los siguientes campos.
@@ -130,6 +172,7 @@ export function CreateArrearPage() {
                 <Input type="number" name="payment_amount" />
               </div>
             </div>
+            */}
             <div className="mt-8 flex justify-end">
               <Button type="submit">Crear mora</Button>
             </div>
