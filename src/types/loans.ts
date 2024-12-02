@@ -43,7 +43,7 @@ export interface ILoan {
   status: 'active' | 'paid' | 'pending' | 'rejected'
   client: IClient
   payment_plan: IPaymentPlan
-  penalty_plans: IPenaltyPlan[]
+  penalty_plan: IPenaltyPlan
   created_at: string
 }
 
@@ -76,24 +76,30 @@ export interface ICreatePaymentSchedule {
   status: PaymentStatus
 }
 
+export type PenaltyStatus = 'paid' | 'unpaid' | 'pending'
+
 export interface IPenaltyPlan {
   id: number
   total_penalty_amount: number
+  current_penalty_amount: number
   interest_rate: number
-  status: 'paid' | 'unpaid' | 'pending'
+  status: PenaltyStatus
   penalty_payment_schedules: IPenaltyPaymentSchedule[]
   loan: ILoan
+  created_at: string
 }
 
-export type ICreatePenaltyPlan = Omit<IPenaltyPlan, 'id'>
+export type ICreatePenaltyPlan = Omit<IPenaltyPlan, 'id' | 'created_at'>
 
 export interface IPenaltyPaymentSchedule {
   id: number
-  dueDate: Date
+  dueDate: string
   amount_due: number
   amount_paid: number
-  status: 'unpaid' | 'paid' | 'pending'
+  status: PenaltyStatus
 }
+
+export type IPenaltyPaymentScheduleCreate = Omit<IPenaltyPaymentSchedule, 'id'>
 
 export interface IPaymentScheduleDetails {
   id: number
