@@ -5,7 +5,6 @@ import {
   PenIcon,
   Plus,
   TrashIcon,
-  User,
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
