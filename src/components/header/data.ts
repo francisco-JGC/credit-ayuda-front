@@ -26,11 +26,6 @@ export const reports = [
     icon: DocumentChartBarIcon,
   },
   {
-    name: 'Arqueo',
-    href: '#',
-    icon: CalculatorIcon,
-  },
-  {
     name: 'Caja Chica',
     href: '#',
     icon: BanknotesIcon,
