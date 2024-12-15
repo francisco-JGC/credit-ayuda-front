@@ -1,6 +1,5 @@
 import {
   BanknotesIcon,
-  CalculatorIcon,
   DocumentChartBarIcon,
 } from '@heroicons/react/24/outline'
 
