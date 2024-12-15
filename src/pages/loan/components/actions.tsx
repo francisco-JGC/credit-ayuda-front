@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { ILoan } from '@/types/loans'
+import { Pencil1Icon } from '@radix-ui/react-icons'
 import { Link } from 'react-router-dom'
 interface IProps {
   loan: ILoan
@@ -40,6 +41,15 @@ export const Actions = ({ loan }: IProps) => {
             >
               <BanknoteIcon className="h-4 w-4" />
               Detalles del Prestamo
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link
+              to={`/loans/edit/${loan.id}`}
+              className="flex gap-2 items-center w-full hover:cursor-pointer"
+            >
+              <Pencil1Icon className="h-4 w-4" />
+              Editar Prestamo
             </Link>
           </DropdownMenuItem>
           {loan.status !== 'rejected' && loan.penalty_plan == null && (

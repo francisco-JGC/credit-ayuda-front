@@ -30,6 +30,7 @@ import { ClientHistoryPage } from './pages/client/pages/history'
 import { PaymentsPrintPage } from './pages/prints/pages/payments'
 import { LoansPrint } from './pages/prints/pages/loans'
 import { ArrearDetailsPage } from './pages/arrears/pages/arear-details'
+import { EditLoanPage } from './pages/loan/edit-loan'
 
 function ProtectedRouteElement({ children }: { children: ReactNode }) {
   return <ProtectedRoute>{children}</ProtectedRoute>
@@ -59,6 +60,7 @@ export default function Router() {
         <Route path="/routes/my-route/" element={<MyRoutePage />} />
         <Route path="/loans" element={<LoanPage />} />
         <Route path="/loans/create" element={<CreateLoanPage />} />
+        <Route path="/loans/edit/:id" element={<EditLoanPage />} />
         <Route path="/loans/details/:id" element={<DetailsLoanPage />} />
         <Route path="/loans/payments/:id" element={<PaymentsPage />} />
         <Route path="/requests" element={<RequestsPage />} />
