@@ -1,5 +1,6 @@
-import { getUsers } from '@/services/user'
-import { useQuery } from '@tanstack/react-query'
+import { createUser, getUsers } from '@/services/user'
+import { UserCreate } from '@/types/user'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export function useUsers() {
   const { data, error, isFetching, refetch } = useQuery({
@@ -14,5 +15,31 @@ export function useUsers() {
     error,
     isLoading: isFetching,
     refetch,
+  }
+}
+
+export function useCreateUser() {
+  const queryCliennt = useQueryClient()
+  const {
+    mutateAsync: create,
+    data: newUser,
+    error,
+    isPending,
+  } = useMutation({
+    mutationFn: async (user: UserCreate) => {
+      return await createUser(user)
+    },
+    onSuccess: () => {
+      queryCliennt.invalidateQueries({
+        queryKey: ['users'],
+      })
+    },
+  })
+
+  return {
+    create,
+    newUser,
+    error,
+    isPending,
   }
 }
