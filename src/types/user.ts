@@ -22,3 +22,5 @@ export type User = {
   route?: IRoute
   created_at: string
 }
+
+export type UserCreate = Omit<User, 'id' | 'created_at'>
