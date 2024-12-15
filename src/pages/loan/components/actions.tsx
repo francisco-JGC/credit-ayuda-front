@@ -42,7 +42,7 @@ export const Actions = ({ loan }: IProps) => {
               Detalles del Prestamo
             </Link>
           </DropdownMenuItem>
-          {loan.status !== 'rejected' && (
+          {loan.status !== 'rejected' && loan.penalty_plan == null && (
             <DropdownMenuItem asChild>
               <Link
                 to={`/loans/payments/${loan.id}`}
@@ -75,7 +75,7 @@ export const Actions = ({ loan }: IProps) => {
                   className="flex gap-2 items-center w-full hover:cursor-pointer"
                 >
                   <ClockArrowUp className="h-4 w-4" />
-                  Detalles de la mora
+                  Abonos de mora
                 </Link>
               )}
           </DropdownMenuItem>
