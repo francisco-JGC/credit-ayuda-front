@@ -103,10 +103,10 @@ export function PaymentsTable({
                   <TableHeader className="bg-gray-100">
                     <TableRow className="[&>th]:px-4 [&>th]:text-xs [&>th]:sticky [&>th]:z-10 [&>th]:top-0">
                       <TableHead>ID</TableHead>
-                      <TableHead>Fecha de pago</TableHead>
                       <TableHead>Fecha de abono</TableHead>
-                      <TableHead>Monto abonado</TableHead>
+                      <TableHead>Fecha de pago</TableHead>
                       <TableHead>Monto restante</TableHead>
+                      <TableHead>Monto abonado</TableHead>
                       <TableHead>Estado</TableHead>
                       <TableHead></TableHead>
                       <TableHead></TableHead>
@@ -129,12 +129,12 @@ export function PaymentsTable({
                               formatDateLong(payment.paid_date)}
                           </TableCell>
                           <TableCell>
+                            {formatPrice(Number(payment.amount_due))}
+                          </TableCell>
+                          <TableCell>
                             <StatusBadge status="paid">
                               {formatPrice(Number(payment.amount_paid))}
                             </StatusBadge>
-                          </TableCell>
-                          <TableCell>
-                            {formatPrice(Number(payment.amount_due))}
                           </TableCell>
                           <TableCell>
                             <PaymentStatus status={payment.status} />
