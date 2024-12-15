@@ -1,4 +1,4 @@
-import { Roles, User } from '@/types/user'
+import { Roles, User, UserCreate } from '@/types/user'
 import { fetchData } from '@/utils/fetch-data'
 
 export async function getUser(username: string) {
@@ -60,4 +60,20 @@ export async function getUsers() {
   }
 
   return response.data as User[]
+}
+
+export async function createUser(user: UserCreate) {
+  const pathname = '/users/create'
+  const response = await fetchData({
+    url: pathname,
+    method: 'POST',
+    useToken: true,
+    data: user,
+  })
+
+  if (!response.success) {
+    throw new Error(response.message)
+  }
+
+  return response.data as User
 }
