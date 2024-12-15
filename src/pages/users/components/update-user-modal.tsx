@@ -125,7 +125,9 @@ export function UpdateUserModal({ user }: { user: User }) {
       }}
     >
       <DialogTrigger asChild>
-        <Button>Editar perfil</Button>
+        <Button variant="secondary" size="sm">
+          Editar perfil
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
