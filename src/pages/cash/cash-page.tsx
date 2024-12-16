@@ -1,4 +1,5 @@
 import { CreateRegisterModal } from './components/create-register-modal'
+import { GeneralCashDetails } from './components/general-details'
 import { RegistersTable } from './components/registers-table'
 import { useRegisters } from './hooks/use-registers'
 
@@ -22,6 +23,11 @@ export function CashPage() {
         </div>
         <div>{<CreateRegisterModal mostRecentRegister={rest} />}</div>
       </div>
+      <section className="mt-8">
+        {mostRecentRegister != null && (
+          <GeneralCashDetails lastRegister={mostRecentRegister} />
+        )}
+      </section>
 
       <section className="w-full mt-8">
         {registers != null && !isLoading && (
