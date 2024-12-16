@@ -25,14 +25,16 @@ import {
 } from '@/utils/contants'
 import { toast } from 'sonner'
 import { useCreateRegister } from '../hooks/use-registers'
+import { useState } from 'react'
 
 export function CreateRegisterModal({
   mostRecentRegister,
 }: {
   mostRecentRegister?: CreateRegister
 }) {
-  const { create } = useCreateRegister()
+  const { create, isPending } = useCreateRegister()
   const { userInfo } = useUserInfo()
+  const [open, setOpen] = useState(false)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -66,6 +68,7 @@ export function CreateRegisterModal({
         details,
         user: userInfo,
         cash: cash.toFixed(2),
+        withdraw: '0',
         savings: savings.toFixed(2),
       }
     }
@@ -79,6 +82,7 @@ export function CreateRegisterModal({
         amount: amount.toFixed(2),
         details,
         user: userInfo,
+        withdraw: '0',
         cash: cash.toFixed(2),
       }
     }
@@ -104,12 +108,14 @@ export function CreateRegisterModal({
     }
 
     if (register == null) {
+      toast.error('Selecciona un tipo de movimiento')
       return
     }
 
     create(register)
       .then(() => {
         toast.success('Movimiento registrado')
+        setOpen(false)
       })
       .catch(() => {
         toast.error('No se pudo registrar el movimiento')
@@ -117,7 +123,7 @@ export function CreateRegisterModal({
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>Nuevo movimiento</Button>
       </DialogTrigger>
@@ -158,7 +164,9 @@ export function CreateRegisterModal({
             ></Textarea>
           </div>
           <div className="flex justify-end mt-2">
-            <Button type="submit">Guardar</Button>
+            <Button type="submit">
+              {isPending ? 'Guardando...' : 'Guardar'}
+            </Button>
           </div>
         </form>
       </DialogContent>
