@@ -32,7 +32,7 @@ export async function fetchData<TData>({
   method,
   data,
   useToken = false,
-}: FetchDataParams<TData>): Promise<IHandleResponse<TData>> {
+}: FetchDataParams<unknown>): Promise<IHandleResponse<TData>> {
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
   }
