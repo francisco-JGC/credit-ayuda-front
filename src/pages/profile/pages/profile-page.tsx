@@ -1,3 +1,4 @@
+import { hasRole } from '@/utils/roles'
 import { UpdateProfileModal } from '../components/update-profile-modal'
 import { useUserInfo } from '../hooks/use-user-info'
 
@@ -12,7 +13,7 @@ export function ProfilePage() {
           <h2 className="text-2xl font-medium">Bienvenido a tu perfil</h2>
         </div>
         <div>
-          {userInfo != null && (
+          {userInfo != null && hasRole('admin', userInfo) && (
             <UpdateProfileModal user={userInfo} onUpdate={refetch} />
           )}
         </div>
