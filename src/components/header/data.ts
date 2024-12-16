@@ -26,7 +26,7 @@ export const reports = [
   },
   {
     name: 'Caja Chica',
-    href: '#',
+    href: '/cash',
     icon: BanknotesIcon,
   },
 ]
