@@ -21,6 +21,7 @@ import { useLoanDetails } from '../payments/hook/use-loan-details'
 import { toast } from 'sonner'
 import { useUpdateLoan } from '../requests/hooks/use-update-loan'
 import {
+  ILoan,
   IPaymentSchedule,
   IPenaltyPaymentSchedule,
   LoanStatus,
@@ -58,7 +59,7 @@ export function EditLoanPage() {
     )
     setPenaltyPaymentSchedules(
       (
-        structuredClone(loan?.penalty_plan.penalty_payment_schedules) ?? []
+        structuredClone(loan?.penalty_plan?.penalty_payment_schedules) ?? []
       ).sort((a, b) => a.id - b.id),
     )
   }, [loan])
@@ -128,7 +129,7 @@ export function EditLoanPage() {
       return
     }
 
-    update({
+    const newLoan: ILoan = {
       ...loan,
       client,
       amount,
@@ -141,11 +142,16 @@ export function EditLoanPage() {
         ...loan.payment_plan,
         payment_schedules: paymentSchedules,
       },
-      penalty_plan: {
+    }
+
+    if (loan.penalty_plan != null) {
+      newLoan.penalty_plan = {
         ...loan.penalty_plan,
         penalty_payment_schedules: penaltyPaymentSchedules,
-      },
-    })
+      }
+    }
+
+    update(newLoan)
       .then(() => {
         toast.success('Préstamo actualizado correctamente.')
       })
