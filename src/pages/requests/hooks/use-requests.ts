@@ -1,3 +1,4 @@
+import { LoanFrequency } from '@/pages/loan/hooks/use-loan-filters'
 import { getRequests } from '@/services/loan'
 import { LoanStatus } from '@/types/loans'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
@@ -9,9 +10,10 @@ export function useRequests({ limit = 10 } = {}) {
   const [currentPage, setCurrentPage] = useState(1)
   const [dni, setDni] = useState('')
   const [loanStatus, setLoanStatus] = useState<LoanStatus | undefined>()
+  const [frequency, setFrequency] = useState<LoanFrequency | undefined>()
   const [route, setRoute] = useState<string | undefined>()
   const { data, isError, error, isFetching } = useQuery({
-    queryKey: ['requests', currentPage, dni, loanStatus, route],
+    queryKey: ['requests', currentPage, dni, loanStatus, route, frequency],
     queryFn: async () => {
       return await getRequests({
         page: currentPage,
@@ -19,6 +21,7 @@ export function useRequests({ limit = 10 } = {}) {
         dni,
         status: loanStatus,
         route,
+        frequency,
       })
     },
     placeholderData: keepPreviousData,
@@ -47,6 +50,11 @@ export function useRequests({ limit = 10 } = {}) {
     setCurrentPage(1)
   }
 
+  const filterByFrequency = (frequency: LoanFrequency | undefined) => {
+    setFrequency(frequency)
+    setCurrentPage(1)
+  }
+
   const filterByRoute = (route: string | undefined) => {
     setRoute(route)
     setCurrentPage(1)
@@ -63,7 +71,7 @@ export function useRequests({ limit = 10 } = {}) {
     isError,
     error,
     isLoading,
-    currentPage,
+    currentPage: totalPages === 0 ? 0 : currentPage,
     requests,
     totalRequests,
     totalPages,
@@ -72,5 +80,6 @@ export function useRequests({ limit = 10 } = {}) {
     searchByDni: handleSearchByDni,
     goToPage,
     resetFilters,
+    filterByFrequency,
   }
 }
