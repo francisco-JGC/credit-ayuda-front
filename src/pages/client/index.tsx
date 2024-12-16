@@ -65,33 +65,19 @@ export default function ClientPage() {
         />
       </div>
 
-      <div className="overflow-x-auto">
-        <Table className="w-full">
+      <div className="border rounded-lg h-full overflow-x-auto">
+        <Table className="w-full table-auto min-w-[600px]">
           <TableCaption>Lista de clientes</TableCaption>
           <TableHeader className="bg-gray-100">
-            <TableRow>
-              <TableHead className="text-gray-800 font-bold py-4 px-6">
-                Nombre del Cliente
-              </TableHead>
-              <TableHead className="text-gray-800 font-bold py-4 px-6">
-                Cédula
-              </TableHead>
-              <TableHead className="text-gray-800 font-bold py-4 px-6">
-                Teléfono
-              </TableHead>
-              <TableHead className="text-gray-800 font-bold py-4 px-6">
-                Dirección
-              </TableHead>
-              <TableHead className="text-gray-800 font-bold py-4 px-6">
-                Deuda Actual
-              </TableHead>
-              <TableHead className="text-gray-800 font-bold py-4 px-6">
-                Ruta
-              </TableHead>
-              <TableHead className="text-gray-800 font-bold py-4 px-6">
-                Estado de préstamo
-              </TableHead>
-              <TableHead className="text-gray-800 font-bold py-4 px-6"></TableHead>
+            <TableRow className="[&>th]:px-4 [&>th]:text-xs">
+              <TableHead>Nombre del Cliente</TableHead>
+              <TableHead>Cédula</TableHead>
+              <TableHead>Teléfono</TableHead>
+              <TableHead>Dirección</TableHead>
+              <TableHead>Deuda Actual</TableHead>
+              <TableHead>Ruta</TableHead>
+              <TableHead>Estado de préstamo</TableHead>
+              <TableHead></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
