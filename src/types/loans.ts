@@ -43,7 +43,7 @@ export interface ILoan {
   status: 'active' | 'paid' | 'pending' | 'rejected'
   client: IClient
   payment_plan: IPaymentPlan
-  penalty_plan: IPenaltyPlan
+  penalty_plan?: IPenaltyPlan
   created_at: string
 }
 
