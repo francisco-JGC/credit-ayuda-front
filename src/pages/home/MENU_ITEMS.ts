@@ -7,6 +7,19 @@ import {
   UserGroupIcon,
 } from '@heroicons/react/24/solid'
 
+export const MENU_ITEMS_SELLER = [
+  {
+    path: '/routes/my-route',
+    label: 'Mi Ruta',
+    icon: MapPinIcon,
+  },
+  {
+    path: '/loans',
+    label: 'Préstamos',
+    icon: BanknotesIcon,
+  },
+]
+
 export const MENU_ITEMS = [
   {
     path: '/routes/my-route',
