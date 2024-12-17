@@ -1,5 +1,9 @@
-import { createRegister, getAllRegisters } from '@/services/registers'
-import { CreateRegister } from '@/types/registers'
+import {
+  createRegister,
+  getAllRegisters,
+  updateRegister,
+} from '@/services/registers'
+import { CreateRegister, Register } from '@/types/registers'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export function useRegisters() {
@@ -44,6 +48,19 @@ export function useCreateRegister() {
   return {
     newRegister,
     create,
+    isPending,
+  }
+}
+
+export function useUpdateRegister() {
+  const { mutateAsync: update, isPending } = useMutation({
+    mutationFn: async (register: Register) => {
+      return updateRegister(register)
+    },
+  })
+
+  return {
+    update,
     isPending,
   }
 }
