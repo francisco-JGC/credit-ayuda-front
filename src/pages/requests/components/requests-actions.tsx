@@ -13,6 +13,11 @@ import {
 } from '../../../components/ui/dropdown-menu'
 import { useUpdateLoan } from '../hooks/use-update-loan'
 import { toast } from 'sonner'
+import {
+  useCreateRegister,
+  useRegisters,
+} from '@/pages/cash/hooks/use-registers'
+import { useUserInfo } from '@/pages/profile/hooks/use-user-info'
 
 interface RequestsActionsProps {
   request: ILoan
@@ -20,17 +25,56 @@ interface RequestsActionsProps {
 
 export function RequestsActions({ request }: RequestsActionsProps) {
   const { update } = useUpdateLoan()
+  const { create } = useCreateRegister()
+  const { registers } = useRegisters()
+  const { userInfo } = useUserInfo()
 
   const handleAcceptRequest = async () => {
-    update({
-      ...request,
-      status: 'active',
+    const mostRecentRegister = registers[0]
+    if (mostRecentRegister == null) {
+      toast.error('No se puede aceptar la solicitud, no hay registros de caja')
+      return
+    }
+    if (userInfo == null) {
+      toast.error(
+        'No se puede aceptar la solicitud, no se pudo obtener la información del usuario',
+      )
+      return
+    }
+
+    const newCash = +(mostRecentRegister.cash ?? 0) - +request.amount
+    if (newCash < 0) {
+      toast.error(
+        'No hay suficiente efectivo en caja para aceptar la solicitud',
+      )
+      return
+    }
+
+    const { id, created_at, ...rest } = mostRecentRegister ?? {}
+
+    create({
+      ...rest,
+      type: 'loan',
+      amount: request.amount,
+      details: `Préstamo #${request.id} a ${request.client.name}`,
+      withdraw: '0',
+      cash: newCash.toFixed(2),
+      user: userInfo,
     })
       .then(() => {
-        toast.success('Solicitud aceptada correctamente')
+        update({
+          ...request,
+          status: 'active',
+        })
+          .then(() => {
+            toast.success('Solicitud aceptada correctamente')
+          })
+          .catch(() => {
+            toast.error('Ocurrió un error al aceptar la solicitud')
+          })
       })
       .catch(() => {
-        toast.error('Ocurrió un error al aceptar la solicitud')
+        toast.error('Ocurrió un error registrar el movimiento en caja')
       })
   }
 
