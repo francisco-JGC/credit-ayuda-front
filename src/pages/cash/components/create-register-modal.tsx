@@ -99,11 +99,29 @@ export function CreateRegisterModal({
       register = {
         ...mostRecentRegister,
         type: 'withdraw',
-        amount: amount.toFixed(2),
         details,
         user: userInfo,
+        amount: amount.toFixed(2),
         withdraw: withdraw.toFixed(2),
         savings: savings.toFixed(2),
+      }
+    }
+
+    if (type === 'expenses') {
+      const newCash = +(mostRecentRegister?.cash ?? 0) - amount
+      if (newCash < 0) {
+        toast.error('No hay suficiente dinero en caja')
+        return
+      }
+
+      register = {
+        ...mostRecentRegister,
+        type: 'expenses',
+        details,
+        user: userInfo,
+        withdraw: '0',
+        amount: amount.toFixed(2),
+        cash: newCash.toFixed(2),
       }
     }
 
