@@ -33,3 +33,20 @@ export async function createRegister(register: CreateRegister) {
 
   return response.data
 }
+
+export async function updateRegister(register: Register) {
+  const url = `/registers/update`
+
+  const response = await fetchData<Register>({
+    url,
+    method: 'POST',
+    useToken: true,
+    data: register,
+  })
+
+  if (!response.success) {
+    throw new Error(response.message)
+  }
+
+  return response.data
+}
