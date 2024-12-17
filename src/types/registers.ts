@@ -1,6 +1,12 @@
 import { User } from './user'
 
-export type RegisterType = 'income' | 'withdraw' | 'loan' | 'savings' | 'cash'
+export type RegisterType =
+  | 'income'
+  | 'withdraw'
+  | 'loan'
+  | 'savings'
+  | 'cash'
+  | 'expenses'
 
 export interface Register {
   id: number

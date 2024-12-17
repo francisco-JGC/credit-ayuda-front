@@ -56,6 +56,7 @@ export const registerTypes: RegisterType[] = [
   'withdraw',
   'loan',
   'savings',
+  'expenses',
 ] as const
 
 export const registerTypeMap: Record<RegisterType, string> = {
@@ -64,6 +65,7 @@ export const registerTypeMap: Record<RegisterType, string> = {
   withdraw: 'Retiro',
   loan: 'Préstamo',
   savings: 'Ahorro',
+  expenses: 'Gastos',
 }
 
 export const registerTypeView = [
