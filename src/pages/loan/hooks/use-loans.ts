@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 import { LoanFrequency } from './use-loan-filters'
 
-export function useLoans({ limit }: { limit?: number } = {}) {
+export function useLoans({ limit = 10 } = {}) {
   const [loading, setLoading] = useState(false) // This is state is used to show loading status instantly when user search by dni
   const [currentPage, setCurrentPage] = useState(1)
   const [dni, setDni] = useState('')

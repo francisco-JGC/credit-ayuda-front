@@ -15,16 +15,16 @@ import { Search } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Actions } from './components/actions'
 import { useClients } from './hooks/use-client'
-import { LoansPagination } from '../loan/components/loans-pagination'
+// import { LoansPagination } from '../loan/components/loans-pagination'
 import { FilterRoute } from '@/components/filterTables/filterRoute'
 
 export default function ClientPage() {
   const {
     clients,
     searchByDni,
-    currentPage,
-    goToPage,
-    totalPages,
+    // currentPage,
+    // goToPage,
+    // totalPages,
     filterByRoute,
   } = useClients({ limit: 10 })
 
@@ -57,15 +57,15 @@ export default function ClientPage() {
           <FilterRoute onChangeRoute={filterByRoute} />
         </div>
       </div>
-      <div className="flex justify-end mt-4 mb-4">
+      {/* <div className="flex justify-end mt-4">
         <LoansPagination
           currentPage={currentPage}
           goToPage={goToPage}
           totalPages={totalPages}
         />
-      </div>
+      </div> */}
 
-      <div className="border rounded-lg h-full overflow-x-auto">
+      <div className="border rounded-lg h-full overflow-x-auto mt-4">
         <Table className="w-full table-auto min-w-[600px]">
           <TableCaption>Lista de clientes</TableCaption>
           <TableHeader className="bg-gray-100">

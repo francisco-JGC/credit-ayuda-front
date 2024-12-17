@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { LoanStatusFilter } from './components/loan-status-filter'
-import { LoansPagination } from './components/loans-pagination'
+// import { LoansPagination } from './components/loans-pagination'
 import { LoansTable } from './components/loans-table'
 import { useLoans } from './hooks/use-loans'
 import { Actions } from './components/actions'
@@ -15,10 +15,10 @@ export default function LoanPage() {
     loans,
     isLoading,
     error,
-    currentPage,
-    totalPages,
+    // currentPage,
+    // totalPages,
     totalLoans,
-    goToPage,
+    // goToPage,
     searchByDni,
     filterByFrequency,
     filterByRoute,
@@ -65,7 +65,7 @@ export default function LoanPage() {
           <span className="text-sm text-muted-foreground place-self-end">
             Mostrando {loans.length} de {totalLoans} préstamos.
           </span>
-          <div>
+          {/* <div>
             <div
               className={`${
                 !isLoading && error == null && loans.length > 0
@@ -79,7 +79,7 @@ export default function LoanPage() {
                 goToPage={goToPage}
               />
             </div>
-          </div>
+          </div> */}
         </div>
         <LoansTable
           isLoading={isLoading}

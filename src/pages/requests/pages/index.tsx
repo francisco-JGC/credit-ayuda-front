@@ -1,7 +1,7 @@
 import { LoansTable } from '@/pages/loan/components/loans-table'
 import { RequestsActions } from '../components/requests-actions'
 import { useRequests } from '../hooks/use-requests'
-import { LoansPagination } from '@/pages/loan/components/loans-pagination'
+// // import { LoansPagination } from '@/pages/loan/components/loans-pagination'
 import { Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { FilterFrequency } from '@/components/filterTables/filterFrequency'
@@ -13,9 +13,9 @@ export function RequestsPage() {
     error,
     isLoading,
     totalRequests,
-    currentPage,
-    totalPages,
-    goToPage,
+    // // currentPage,
+    // // totalPages,
+    // // goToPage,
     searchByDni,
     filterByFrequency,
     filterByRoute,
@@ -48,13 +48,13 @@ export function RequestsPage() {
         </div>
       </div>
 
-      <div className="w-full flex justify-end">
+      {/* <div className="w-full flex justify-end">
         <LoansPagination
           currentPage={currentPage}
           goToPage={goToPage}
           totalPages={totalPages}
         />
-      </div>
+      </div> */}
 
       <div className="mt-4">
         <LoansTable
