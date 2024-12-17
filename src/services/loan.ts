@@ -32,7 +32,7 @@ export const getPaginationLoans = async ({
 
 interface IGetLoans {
   page: number
-  limit: number
+  limit?: number
   dni?: string
   status?: string
   frequency?: string

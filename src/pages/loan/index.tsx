@@ -23,7 +23,7 @@ export default function LoanPage() {
     filterByFrequency,
     filterByRoute,
     filterByStatus,
-  } = useLoans({ limit: 10 })
+  } = useLoans()
 
   return (
     <div className="flex flex-col gap-4">
@@ -67,10 +67,11 @@ export default function LoanPage() {
           </span>
           <div>
             <div
-              className={`${!isLoading && error == null && loans.length > 0
-                ? 'visible'
-                : 'invisible'
-                }`}
+              className={`${
+                !isLoading && error == null && loans.length > 0
+                  ? 'visible'
+                  : 'invisible'
+              }`}
             >
               <LoansPagination
                 currentPage={currentPage}
