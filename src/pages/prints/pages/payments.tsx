@@ -127,8 +127,8 @@ export function PaymentsPrintPage() {
                   <td className="font-bold">Monto abonado:</td>
                   <td className="">
                     {formatPrice(
-                      payment.payment_plan.loan.total_recovered -
-                        payment.payment_plan.loan.total_pending,
+                      +payment.payment_plan.loan.total_recovered -
+                        +payment.payment_plan.loan.total_pending,
                     )}
                   </td>
                   <td className="font-bold">Total Abonos:</td>

@@ -133,12 +133,12 @@ export function EditLoanPage() {
     const newLoan: ILoan = {
       ...loan,
       client: client as unknown as IClient,
-      amount,
-      interest_rate,
+      amount: amount.toFixed(2),
+      interest_rate: interest_rate.toString(),
       status,
       loan_date,
-      total_recovered,
-      total_pending,
+      total_recovered: total_recovered.toFixed(2),
+      total_pending: total_pending.toFixed(2),
       payment_plan: {
         ...loan.payment_plan,
         payment_schedules: paymentSchedules,

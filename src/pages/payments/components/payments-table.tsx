@@ -53,7 +53,7 @@ export function PaymentsTable({
     0,
   )
 
-  const totalDebt = (loan?.total_recovered ?? 0) - totalPaid
+  const totalDebt = +(loan?.total_recovered ?? 0) - totalPaid
 
   const totalPendingPayments = payments.filter(
     (payment) => payment.status === 'pending',

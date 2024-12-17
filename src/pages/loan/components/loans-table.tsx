@@ -34,7 +34,7 @@ export function LoansTable({
       },
       0,
     )
-    return loan.total_recovered - totalPaid
+    return +loan.total_recovered - totalPaid
   }
 
   return (

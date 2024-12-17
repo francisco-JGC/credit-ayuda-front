@@ -1,4 +1,4 @@
-export const formatPrice = (price: number) => {
+export const formatPrice = (price: number | string) => {
   if (price == null) return price
   price = Number(price)
 

@@ -27,9 +27,10 @@ export function CreateArrearPage() {
       (acc, schedule) => acc + Number(schedule.amount_paid),
       0,
     ) ?? 0
-  const pendingDebt = (loan?.total_recovered ?? 0) - totalPaid
+  const pendingDebt = +(loan?.total_recovered ?? 0) - totalPaid
   const newPendingDebt =
-    ((loan?.total_recovered ?? 0) - totalPaid) * ((interestRate ?? 0) / 100 + 1)
+    (+(loan?.total_recovered ?? 0) - totalPaid) *
+    ((interestRate ?? 0) / 100 + 1)
 
   const lastPaymentDate = loan?.payment_plan.payment_schedules
     .filter((schedule) => schedule.paid_date != null)

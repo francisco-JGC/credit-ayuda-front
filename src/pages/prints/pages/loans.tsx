@@ -89,7 +89,7 @@ export function LoansPrint() {
                   <td className="font-bold">Monto abonado:</td>
                   <td className="">
                     C$
-                    {formatPrice(loan.total_recovered - loan.total_pending)}
+                    {formatPrice(+loan.total_recovered - +loan.total_pending)}
                   </td>
                   <td className="font-bold">Total Abonos:</td>
                   <td className="">{loan.payment_plan.total_payments}</td>
