@@ -37,6 +37,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { useEffect, useState } from 'react'
+import { IClient } from '@/types/clients'
 
 export function EditLoanPage() {
   const { id } = useParams()
@@ -131,7 +132,7 @@ export function EditLoanPage() {
 
     const newLoan: ILoan = {
       ...loan,
-      client,
+      client: client as unknown as IClient,
       amount,
       interest_rate,
       status,

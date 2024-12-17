@@ -1,4 +1,4 @@
-import { IClient, IClientTable, ICreateClient } from '@/types/clients'
+import { IClientTable, ICreateClient } from '@/types/clients'
 import {
   fetchData,
   IHandleResponse,
@@ -42,7 +42,7 @@ export const getPaginationClient = async ({
     url += `?route=${route}`
   }
 
-  return await fetchData<IPaginationResponse<IClient[]>>({
+  return await fetchData<IPaginationResponse<IClientTable[]>>({
     url,
     method: 'GET',
     useToken: true,
