@@ -35,11 +35,11 @@ export interface ICreateLoan {
 
 export interface ILoan {
   id: number
-  amount: number
+  amount: string
   loan_date: string
-  interest_rate: number
-  total_recovered: number
-  total_pending: number
+  interest_rate: string
+  total_recovered: string
+  total_pending: string
   status: 'active' | 'paid' | 'pending' | 'rejected'
   client: IClient
   payment_plan: IPaymentPlan
@@ -52,7 +52,7 @@ export interface IPaymentPlan {
   total_payments: number
   payments_remaining: number
   frequency: 'daily' | 'weekly' | 'biweekly' | 'monthly' | 'yearly'
-  payment_amount: number
+  payment_amount: string
   loan: ILoan
   payment_schedules: IPaymentSchedule[]
 }
