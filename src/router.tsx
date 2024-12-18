@@ -1,6 +1,6 @@
-import { Routes, Route, Outlet } from 'react-router-dom'
-import ProtectedRoute from './components/protectedRoute'
 import { ReactNode } from 'react'
+import { Outlet, Route, Routes } from 'react-router-dom'
+import ProtectedRoute from './components/protectedRoute'
 
 import HomePage from './pages/home'
 import LoginPage from './pages/login'
@@ -13,25 +13,26 @@ import RoutesPage from './pages/routes'
 import CreateRoutePage from './pages/routes/createRoutePage'
 import UpdateRoutePage from './pages/routes/updateRoutePage'
 
+import { DashboardLayout } from './components/root-layout'
+import { CreateArrearPage } from './pages/arrears/pages/create-arrear'
 import LoanPage from './pages/loan'
 import CreateLoanPage from './pages/loan/createLoanPage'
 import DetailsLoanPage from './pages/loan/detailsLoanPage'
-import { DashboardLayout } from './components/root-layout'
 import { PaymentsPage } from './pages/payments/page'
-import { RequestsPage } from './pages/requests/pages'
-import { CreateArrearPage } from './pages/arrears/pages/create-arrear'
 import { ProfilePage } from './pages/profile/pages/profile-page'
-import { UsersPage } from './pages/users/pages/users-page'
+import { RequestsPage } from './pages/requests/pages'
 import MyRoutePage from './pages/routes/myRoutePage'
+import { UsersPage } from './pages/users/pages/users-page'
 
-import ReportMontlyPage from './pages/reports/pages/report-montly-page'
-import ReportDailyRPage from './pages/reports/pages/report-daily-page'
-import { ClientHistoryPage } from './pages/client/pages/history'
-import { PaymentsPrintPage } from './pages/prints/pages/payments'
-import { LoansPrint } from './pages/prints/pages/loans'
+import { NotAllowedPage } from './pages/access/not-allowed-page'
 import { ArrearDetailsPage } from './pages/arrears/pages/arear-details'
-import { EditLoanPage } from './pages/loan/edit-loan'
 import { CashPage } from './pages/cash/cash-page'
+import { ClientHistoryPage } from './pages/client/pages/history'
+import { EditLoanPage } from './pages/loan/edit-loan'
+import { LoansPrint } from './pages/prints/pages/loans'
+import { PaymentsPrintPage } from './pages/prints/pages/payments'
+import ReportDailyRPage from './pages/reports/pages/report-daily-page'
+import ReportMontlyPage from './pages/reports/pages/report-montly-page'
 
 function ProtectedRouteElement({ children }: { children: ReactNode }) {
   return <ProtectedRoute>{children}</ProtectedRoute>
@@ -84,6 +85,7 @@ export default function Router() {
         <Route path="payments/:paymentId" element={<PaymentsPrintPage />} />
         <Route path="loans/:loanId" element={<LoansPrint />} />
       </Route>
+      <Route path="/unauthorized" element={<NotAllowedPage />} />
     </Routes>
   )
 }
