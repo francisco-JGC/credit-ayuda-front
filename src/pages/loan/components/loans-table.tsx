@@ -79,6 +79,7 @@ export function LoansTable({
           )}
           {isLoading && <SkeletonTableRows columns={totalColumns} rows={10} />}
           {!isLoading &&
+            error == null &&
             loans.map((loan) => (
               <TableRow key={loan.id} className="[&>td]:px-4 text-sm">
                 <TableCell className="font-semibold">#{loan.id}</TableCell>
