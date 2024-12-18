@@ -13,6 +13,11 @@ import { useAddPenaltyPayment } from '../hooks/use-penalty'
 import { toast } from 'sonner'
 import { IPenaltyPlan } from '@/types/loans'
 import { useState } from 'react'
+import {
+  useCreateRegister,
+  useRegisters,
+} from '@/pages/cash/hooks/use-registers'
+import { useUserInfo } from '@/pages/profile/hooks/use-user-info'
 
 export function AddPenaltyPayment({
   penaltyPlan,
@@ -20,6 +25,9 @@ export function AddPenaltyPayment({
   penaltyPlan: IPenaltyPlan
 }) {
   const [open, setOpen] = useState(false)
+  const { create } = useCreateRegister()
+  const { registers } = useRegisters()
+  const { userInfo } = useUserInfo()
   const { addPayment, isPending } = useAddPenaltyPayment({ id: penaltyPlan.id })
   const today = new Date().toISOString()
 
@@ -32,20 +40,47 @@ export function AddPenaltyPayment({
       return
     }
 
-    addPayment({
-      amount_due: amount,
-      amount_paid: amount,
-      dueDate: today,
-      status: 'paid',
+    const mostRecentRegister = registers[0]
+    if (mostRecentRegister == null) {
+      toast.error('No hay registros de caja')
+      return
+    }
+
+    if (userInfo == null) {
+      toast.error('No se pudo obtener la información del usuario')
+      return
+    }
+
+    const { id, created_at, ...rest } = mostRecentRegister
+    const newCash = Number(mostRecentRegister.cash ?? 0) + amount
+    create({
+      ...rest,
+      amount: amount.toFixed(2),
+      type: 'income',
+      user: userInfo,
+      cash: newCash.toFixed(2),
+      details: `Abono a mora #${penaltyPlan.id}`,
+      withdraw: '0',
     })
       .then(() => {
-        toast.success('Pago de mora añadido correctamente')
+        addPayment({
+          amount_due: amount,
+          amount_paid: amount,
+          dueDate: today,
+          status: 'paid',
+        })
+          .then(() => {
+            toast.success('Pago de mora añadido correctamente')
+          })
+          .catch(() => {
+            toast.error('Ocurrió un error al añadir el pago de mora')
+          })
+          .finally(() => {
+            setOpen(false)
+          })
       })
       .catch(() => {
-        toast.error('Ocurrió un error al añadir el pago de mora')
-      })
-      .finally(() => {
-        setOpen(false)
+        toast.error('Ocurrió un error al registrar el movimiento')
       })
   }
 
