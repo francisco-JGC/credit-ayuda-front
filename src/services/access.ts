@@ -5,11 +5,8 @@ interface AccessResponse {
 }
 
 export async function isAllowedAccess(username: string) {
-  const response = (await fetchData({
+  return (await fetchData({
     url: `/access/${username}`,
     method: 'GET',
-    useToken: true,
   })) as unknown as AccessResponse
-
-  return response.allowed
 }

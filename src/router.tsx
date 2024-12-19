@@ -41,6 +41,7 @@ function ProtectedRouteElement({ children }: { children: ReactNode }) {
 export default function Router() {
   return (
     <Routes>
+      <Route path="/login" element={<LoginPage />} />
       <Route
         path="/"
         element={
@@ -73,7 +74,6 @@ export default function Router() {
         <Route path="/report/montly" element={<ReportMontlyPage />} />
         <Route path="/report/daily" element={<ReportDailyRPage />} />
       </Route>
-      <Route path="/login" element={<LoginPage />} />
       <Route
         path="/prints"
         element={

@@ -1,6 +1,7 @@
+import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useAllowedAccess } from '@/hooks/use-allowed-access'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Link } from 'react-router-dom'
 
 export function NotAllowedPage() {
   const { allowed } = useAllowedAccess()
@@ -20,6 +21,10 @@ export function NotAllowedPage() {
           <p>
             Si crees que esto es un error, por favor contacta al administrador.
           </p>
+
+          <Button className='mt-5'>
+            <Link to={'/login'}>Ir a iniciar sesión</Link>
+          </Button>
         </CardContent>
       </Card>
     </div>

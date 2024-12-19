@@ -5,9 +5,16 @@ import { useQuery } from '@tanstack/react-query'
 export function useAllowedAccess() {
   const { user } = useAuth()
   const role = user?.role
+
   const { data: allowed, isFetching } = useQuery({
     queryFn: async () => {
-      return await isAllowedAccess(role!)
+      const response = (await isAllowedAccess(role!)) as any
+
+      if (response.success) {
+        return response.data.allowed
+      }
+
+      return false
     },
     queryKey: ['allowed-access', role],
     enabled: !!user,
