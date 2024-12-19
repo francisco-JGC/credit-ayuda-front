@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useUpdateLoan } from '@/pages/requests/hooks/use-update-loan'
 import { ILoan, IPaymentSchedule } from '@/types/loans'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { useUpdatePayment } from '../hook/use-update-payment'
 import { StatusBadge } from './payment-status'
@@ -19,6 +19,7 @@ import {
   useRegisters,
 } from '@/pages/cash/hooks/use-registers'
 import { useUserInfo } from '@/pages/profile/hooks/use-user-info'
+import { Checkbox } from '@/components/ui/checkbox'
 
 interface AddNewPaymentProps {
   loan: ILoan
@@ -34,6 +35,7 @@ export function AddNewPayment({
   onOpenChange,
 }: AddNewPaymentProps) {
   const { update, isPending } = useUpdatePayment({ loanId: loan.id })
+  const [useRest, setUseRest] = useState(false)
   const { registers } = useRegisters()
   const { create } = useCreateRegister()
   const { userInfo } = useUserInfo()
@@ -54,12 +56,17 @@ export function AddNewPayment({
       return
     }
 
+    if (useRest && amount > +(loan.total_pending ?? 0)) {
+      toast.warning('El monto no puede ser mayor al monto pendiente')
+      return
+    }
+
     if (amount <= 0) {
       toast.warning('El monto debe ser mayor a 0')
       return
     }
 
-    if (amount > Number(payment.amount_due ?? 0)) {
+    if (!useRest && amount > Number(payment.amount_due ?? 0)) {
       toast.warning('El monto no puede ser mayor al monto pendiente')
       return
     }
@@ -156,8 +163,18 @@ export function AddNewPayment({
             <Label htmlFor="amount">Monto:</Label>
             <Input type="number" step={0.01} name="amount" id="amount" />
           </div>
-
-          <div className="mt-2">
+          <div className="mt-2 flex items-center space-x-2">
+            <Checkbox
+              name="use-rest"
+              id="use-rest"
+              checked={useRest}
+              onCheckedChange={(checked: boolean) => setUseRest(checked)}
+            />
+            <Label htmlFor="use-rest">
+              Usar restante para los siguientes abonos.
+            </Label>
+          </div>
+          <div className="mt-4">
             <div className="text-sm">
               <p>
                 El monto se agregará al pago con la fecha{' '}
