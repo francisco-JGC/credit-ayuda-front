@@ -23,5 +23,6 @@ export function useAllowedAccess() {
   return {
     allowed,
     isLoading: isFetching,
+    user,
   }
 }

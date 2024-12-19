@@ -4,7 +4,7 @@ import { Toaster } from 'sonner'
 import { Header } from '../header'
 
 export function DashboardLayout() {
-  const { allowed, isLoading } = useAllowedAccess()
+  const { allowed, isLoading, user } = useAllowedAccess()
 
   if (isLoading) {
     return (
@@ -14,8 +14,11 @@ export function DashboardLayout() {
     )
   }
 
-  if (!allowed) {
-    console.log('Navigate to unauthorized')
+  if (user == null) {
+    return <Navigate to="/login" />
+  }
+
+  if (allowed === false) {
     return <Navigate to="/unauthorized" />
   }
 
