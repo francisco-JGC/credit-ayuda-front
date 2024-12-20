@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AddNewPayment } from './components/add-payment'
 import { ClientDetails } from './components/client-details'
 import { LoanDetails } from './components/loan-details'
@@ -7,7 +7,7 @@ import { useLoanDetails } from './hook/use-loan-details'
 import { useState } from 'react'
 import { IPaymentSchedule } from '@/types/loans'
 import { Button } from '@/components/ui/button'
-import { PrinterIcon } from 'lucide-react'
+import { ChevronLeft, PrinterIcon } from 'lucide-react'
 
 export function PaymentsPage() {
   const { id } = useParams()
@@ -19,14 +19,23 @@ export function PaymentsPage() {
     setPayment(payment)
     setModalOpen(true)
   }
+  const navigate = useNavigate()
+  const handleClickNavigate = () => navigate(-1)
 
   return (
     <div className="p-4">
       <div className="flex flex-col md:flex-row md:justify-between">
         <div className="flex w-full justify-between">
-          <div>
-            <h2 className="text-2xl font-medium">Abonos</h2>
-            <p className="text-sm text-muted-foreground">Préstamo #{id}</p>
+          <div className="lg:flex lg:items-center gap-4">
+            <div>
+              <Button className="p-2 md:p-3" onClick={handleClickNavigate}>
+                <ChevronLeft width={18} />
+              </Button>
+            </div>
+            <div>
+              <h2 className="text-2xl font-medium">Abonos</h2>
+              <p className="text-sm text-muted-foreground">Préstamo #{id}</p>
+            </div>
           </div>
           <div>
             <Button asChild>
