@@ -18,9 +18,9 @@ interface RegistersTableProps {
 export function RegistersTable({ registers }: RegistersTableProps) {
   return (
     <div className="border rounded-lg h-full overflow-x-auto">
-      <Table className="table-auto min-w-[600px]">
+      <Table className="table-auto lg:min-w-[600px]">
         <TableHeader className="bg-gray-100">
-          <TableRow className="[&>th]:px-4 [&>th]:text-xs">
+          <TableRow className="lg:[&>th]:px-4 [&>th]:text-xs">
             <TableHead>Fecha</TableHead>
             <TableHead>Tipo</TableHead>
             <TableHead>Detalles</TableHead>
@@ -33,7 +33,10 @@ export function RegistersTable({ registers }: RegistersTableProps) {
         </TableHeader>
         <TableBody>
           {registers.map((register) => (
-            <TableRow key={register.id} className="[&>td]:px-4 [&>td]:py-4">
+            <TableRow
+              key={register.id}
+              className="lg:[&>td]:px-4 lg:[&>td]:py-4"
+            >
               <TableCell>{formatDateLong(register.created_at)}</TableCell>
               <TableCell>{registerTypeMap[register.type]}</TableCell>
               <TableCell>{register.details}</TableCell>

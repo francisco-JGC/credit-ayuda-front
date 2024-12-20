@@ -13,8 +13,8 @@ export function CashPage() {
   const { id, created_at, ...rest } = mostRecentRegister ?? {}
 
   return (
-    <div>
-      <div className="flex justify-between">
+    <div className="container mx-auto p-4">
+      <div className="flex lg:justify-between flex-col lg:flex-row gap-y-4">
         <div>
           <h2 className="text-2xl font-medium">Caja chica</h2>
           <p className="text-sm text-muted-foreground">

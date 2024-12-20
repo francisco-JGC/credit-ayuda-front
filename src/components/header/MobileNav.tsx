@@ -32,21 +32,23 @@ export const MobileNav = ({
         </div>
         <div className="mt-6 flow-root mx-4">
           <div className="-my-6 divide-y divide-gray-500/10">
-            <div
-              className="space-y-2 py-6"
-              onClick={(e) => {
-                e.stopPropagation()
-                onClose()
-              }}
-            >
+            <div className="space-y-2 py-6">
               <Link
                 to="/"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onClose()
+                }}
                 className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
               >
                 Inicio
               </Link>
               <Link
                 to="/loans"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onClose()
+                }}
                 className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
               >
                 Préstamos
@@ -54,6 +56,10 @@ export const MobileNav = ({
               {hasRole('admin', userInfo) && (
                 <Link
                   to="/clients"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onClose()
+                  }}
                   className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Clientes
@@ -68,6 +74,10 @@ export const MobileNav = ({
                   <DisclosurePanel>
                     {[...reports].map((item) => (
                       <Link
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          onClose()
+                        }}
                         key={item.name}
                         to={item.href}
                         className="block px-6 py-2 text-gray-900 hover:bg-gray-50"
@@ -81,6 +91,10 @@ export const MobileNav = ({
               {hasRole('admin', userInfo) && (
                 <Link
                   to="/requests"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onClose()
+                  }}
                   className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Solicitudes
@@ -89,6 +103,10 @@ export const MobileNav = ({
               {hasRole('admin', userInfo) && (
                 <Link
                   to="/routes"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onClose()
+                  }}
                   className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Rutas
