@@ -26,7 +26,7 @@ export const Actions = ({ loan }: IProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost">
+        <Button variant="ghost" size="sm">
           <EllipsisVertical width={15} />
         </Button>
       </DropdownMenuTrigger>

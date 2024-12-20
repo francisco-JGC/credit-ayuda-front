@@ -12,6 +12,7 @@ import { formatDateLong } from '@/utils/date-format'
 import { formatFrequency } from '@/utils/format-frequency'
 import { formatPrice } from '@/utils/price-format'
 import { LoanStatusBadge } from './loan-status-badge'
+import { useMobile } from '@/hooks/use-mobile'
 
 interface ILoanTableProps {
   loans: ILoan[]
@@ -26,6 +27,8 @@ export function LoansTable({
   error,
   renderActions,
 }: ILoanTableProps) {
+  const { isMobile } = useMobile()
+
   const totalColumns = 11
   const getLoanDebtAmount = (loan: ILoan) => {
     const totalPaid = loan.payment_plan.payment_schedules.reduce(
@@ -39,9 +42,10 @@ export function LoansTable({
 
   return (
     <div className="border rounded-lg h-full overflow-x-auto">
-      <Table className="table-auto min-w-[600px]">
+      <Table className="table-auto lg:min-w-[600px]">
         <TableHeader className="bg-gray-100">
-          <TableRow className="[&>th]:px-4 [&>th]:text-xs">
+          <TableRow className="[&>th]:text-xs lg:[&>th]:px-4">
+            {isMobile && <TableHead className=""></TableHead>}
             <TableHead className="">ID</TableHead>
             <TableHead className="">Cliente</TableHead>
             <TableHead className="">Cédula</TableHead>
@@ -52,7 +56,7 @@ export function LoansTable({
             <TableHead className="">Tipo de Préstamo</TableHead>
             <TableHead className="">Ruta</TableHead>
             <TableHead className="">Estado</TableHead>
-            <TableHead className=""></TableHead>
+            {!isMobile && <TableHead className=""></TableHead>}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -60,7 +64,7 @@ export function LoansTable({
             <TableRow>
               <TableCell
                 colSpan={totalColumns}
-                className="text-gray-600 text-center"
+                className="text-gray-600 lg:text-center"
               >
                 No se encontraron préstamos
               </TableCell>
@@ -70,7 +74,7 @@ export function LoansTable({
             <TableRow>
               <TableCell
                 colSpan={totalColumns}
-                className="text-red-600 text-center"
+                className="text-red-600 lg:text-center"
               >
                 Ocurrió un error al obtener los préstamos, por favor intenta de
                 nuevo.
@@ -81,7 +85,11 @@ export function LoansTable({
           {!isLoading &&
             error == null &&
             loans.map((loan) => (
-              <TableRow key={loan.id} className="[&>td]:px-4 text-sm">
+              <TableRow
+                key={loan.id}
+                className="[&>td]:px-2 lg:[&>td]:px-4 text-sm"
+              >
+                {isMobile && <TableCell>{renderActions(loan)}</TableCell>}
                 <TableCell className="font-semibold">#{loan.id}</TableCell>
                 <TableCell>{loan.client.name}</TableCell>
                 <TableCell>{loan.client.dni}</TableCell>
@@ -100,7 +108,7 @@ export function LoansTable({
                 <TableCell>
                   <LoanStatusBadge status={loan.status} />
                 </TableCell>
-                <TableCell>{renderActions(loan)}</TableCell>
+                {!isMobile && <TableCell>{renderActions(loan)}</TableCell>}
               </TableRow>
             ))}
         </TableBody>

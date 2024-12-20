@@ -7,7 +7,7 @@ export function ProfilePage() {
   const rolesNames = userInfo?.roles.map((role) => role.label).join(', ')
 
   return (
-    <div>
+    <div className="container mx-auto p-4">
       <div className="flex justify-between">
         <div className="mb-6">
           <h2 className="text-2xl font-medium">Bienvenido a tu perfil</h2>

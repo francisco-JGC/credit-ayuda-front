@@ -26,7 +26,7 @@ export default function LoanPage() {
   } = useLoans()
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 container mx-auto p-4">
       <div className="flex justify-between">
         <div>
           <h2 className="text-2xl font-medium">Préstamos</h2>
@@ -52,7 +52,7 @@ export default function LoanPage() {
               onChange={(e) => searchByDni(e.target.value)}
             />
           </div>
-          <div className="flex gap-2">
+          <div className="gap-2 flex flex-col lg:flex-row">
             <LoanStatusFilter onChangeStatus={filterByStatus} />
             <FilterFrequency onChangeFrequency={filterByFrequency} />
             <FilterRoute onChangeRoute={filterByRoute} />
