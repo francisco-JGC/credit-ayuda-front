@@ -15,7 +15,7 @@ import {
   penaltyStatusMap,
   statusMap,
 } from '@/utils/contants'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useClients } from '../client/hooks/use-client'
 import { useLoanDetails } from '../payments/hook/use-loan-details'
 import { toast } from 'sonner'
@@ -38,8 +38,11 @@ import {
 } from '@/components/ui/table'
 import { useEffect, useState } from 'react'
 import { IClient } from '@/types/clients'
+import { ChevronLeft } from 'lucide-react'
 
 export function EditLoanPage() {
+  const navigate = useNavigate()
+  const handleClickNavigate = () => navigate(-1)
   const { id } = useParams()
   const { clients } = useClients()
   const { loan } = useLoanDetails({ id: Number(id) })
@@ -162,13 +165,20 @@ export function EditLoanPage() {
   }
 
   return (
-    <div>
-      <div className="flex justify-between">
-        <div className="mb-6">
-          <h2 className="text-2xl font-medium">Préstamo #{id}</h2>
-          <p className="text-sm text-muted-foreground">
-            Edita la información del préstamo.
-          </p>
+    <div className="container mx-auto p-4">
+      <div className="mb-6 flex justify-between lg:items-center">
+        <div className="flex gap-2 lg:items-center lg:flex-row flex-col">
+          <div>
+            <Button className="p-2 md:p-3" onClick={handleClickNavigate}>
+              <ChevronLeft width={18} />
+            </Button>
+          </div>
+          <div className="">
+            <h2 className="text-2xl font-medium">Préstamo #{id}</h2>
+            <p className="text-sm text-muted-foreground">
+              Edita la información del préstamo.
+            </p>
+          </div>
         </div>
         <div>
           <Button type="submit" form="edit-loan-form">
@@ -277,7 +287,7 @@ export function EditLoanPage() {
         </h3>
         <Table>
           <TableHeader>
-            <TableRow>
+            <TableRow className="[&>th]:px-4">
               <TableHead>ID</TableHead>
               <TableHead>Fecha de abono</TableHead>
               <TableHead>Fecha de pago</TableHead>
@@ -288,7 +298,7 @@ export function EditLoanPage() {
           </TableHeader>
           <TableBody>
             {paymentSchedules?.map((payment) => (
-              <TableRow key={payment.id}>
+              <TableRow key={payment.id} className="[&>td]:px-4">
                 <TableCell>#{payment.id}</TableCell>
                 <TableCell>
                   <div className="w-[120px]">
@@ -384,7 +394,7 @@ export function EditLoanPage() {
           </h3>
           <Table>
             <TableHeader>
-              <TableRow>
+              <TableRow className="[&>th]:px-4">
                 <TableHead>ID</TableHead>
                 <TableHead>Fecha de pago</TableHead>
                 <TableHead>Monto pendiente</TableHead>
@@ -394,7 +404,7 @@ export function EditLoanPage() {
             </TableHeader>
             <TableBody>
               {penaltyPaymentSchedules.map((payment) => (
-                <TableRow key={payment.id}>
+                <TableRow key={payment.id} className="[&>td]:px-4">
                   <TableCell>#{payment.id}</TableCell>
                   <TableCell>
                     <div className="w-[120px]">
@@ -427,7 +437,7 @@ export function EditLoanPage() {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <div className="w-[120px] flex gap-1 items-center">
+                    <div className="flex gap-1 items-center">
                       C$
                       <Input
                         type="number"
