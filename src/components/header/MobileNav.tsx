@@ -1,11 +1,22 @@
-import { Dialog, Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
-import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/20/solid';
-import { Link } from 'react-router-dom';
-import { reports } from './data';
-import { Logo } from './Logo';
-import { UserMenu } from './UserMenu';
+import {
+  Dialog,
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from '@headlessui/react'
+import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/20/solid'
+import { Link } from 'react-router-dom'
+import { reports } from './data'
+import { Logo } from './Logo'
+import { UserMenu } from './UserMenu'
 
-export const MobileNav = ({ open, onClose }: { open: boolean; onClose: () => void }) => (
+export const MobileNav = ({
+  open,
+  onClose,
+}: {
+  open: boolean
+  onClose: () => void
+}) => (
   <Dialog open={open} onClose={onClose} className="lg:hidden">
     <div className="fixed inset-0 z-10" />
     <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full bg-white sm:max-w-sm">
@@ -17,14 +28,29 @@ export const MobileNav = ({ open, onClose }: { open: boolean; onClose: () => voi
       </div>
       <div className="mt-6 flow-root">
         <div className="-my-6 divide-y divide-gray-500/10">
-          <div className="space-y-2 py-6">
-            <Link to="/" className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+          <div
+            className="space-y-2 py-6"
+            onClick={(e) => {
+              e.stopPropagation()
+              onClose()
+            }}
+          >
+            <Link
+              to="/"
+              className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+            >
               Inicio
             </Link>
-            <Link to="/loans" className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+            <Link
+              to="/loans"
+              className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+            >
               Préstamos
             </Link>
-            <Link to="/clients" className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+            <Link
+              to="/clients"
+              className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+            >
               Clientes
             </Link>
             <Disclosure>
@@ -34,19 +60,26 @@ export const MobileNav = ({ open, onClose }: { open: boolean; onClose: () => voi
               </DisclosureButton>
               <DisclosurePanel>
                 {[...reports].map((item) => (
-                  <Link key={item.name} to={item.href} className="block px-6 py-2 text-gray-900 hover:bg-gray-50">
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="block px-6 py-2 text-gray-900 hover:bg-gray-50"
+                  >
                     {item.name}
                   </Link>
                 ))}
               </DisclosurePanel>
             </Disclosure>
-            <Link to="#" className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-              Catálogos
-            </Link>
-            <Link to="#" className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+            <Link
+              to="/requests"
+              className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+            >
               Solicitudes
             </Link>
-            <Link to="/routes" className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+            <Link
+              to="/routes"
+              className="block px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+            >
               Rutas
             </Link>
           </div>
@@ -57,4 +90,4 @@ export const MobileNav = ({ open, onClose }: { open: boolean; onClose: () => voi
       </div>
     </Dialog.Panel>
   </Dialog>
-);
+)

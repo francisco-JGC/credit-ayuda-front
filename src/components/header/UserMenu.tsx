@@ -9,10 +9,10 @@ export const UserMenu = () => {
 
   return (
     <Menu as="div" className="relative">
-      <MenuButton className="relative flex rounded-full">
+      <MenuButton className="relative px-2  flex rounded-full">
         <User2Icon />
       </MenuButton>
-      <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+      <MenuItems className="lg:absolute right-0 z-10 mt-2 w-48 origin-top-right bg-white shadow-lg ring-1 ring-black ring-opacity-5">
         <MenuItem>
           <Link
             to="/profile"
