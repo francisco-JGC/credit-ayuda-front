@@ -28,6 +28,7 @@ import { formatPrice } from '@/utils/price-format'
 import { PrinterIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { PaymentStatus, StatusBadge } from './payment-status'
+import { useMobile } from '@/hooks/use-mobile'
 
 interface PaymentsTableProps {
   loan?: ILoan
@@ -72,6 +73,7 @@ export function PaymentsTable({
 
     return allowedStatuses.includes(paymentStatus)
   }
+  const { isMobile } = useMobile()
 
   return (
     <Tabs defaultValue="calendar">
@@ -98,17 +100,18 @@ export function PaymentsTable({
         <CardContent className="flex-1">
           <div className="h-full flex flex-col">
             <TabsContent value="calendar">
-              <div className="border rounded-lg h-[320px] overflow-auto">
-                <Table className="table-fixed">
+              <div className="border rounded-lg overflow-auto">
+                <Table className="table-auto">
                   <TableHeader className="bg-gray-100">
-                    <TableRow className="[&>th]:px-4 [&>th]:text-xs [&>th]:sticky [&>th]:z-10 [&>th]:top-0">
+                    <TableRow className="lg:[&>th]:px-4 [&>th]:text-xs">
+                      {isMobile && <TableHead></TableHead>}
                       <TableHead>ID</TableHead>
                       <TableHead>Fecha de abono</TableHead>
                       <TableHead>Fecha de pago</TableHead>
                       <TableHead>Monto restante</TableHead>
                       <TableHead>Monto abonado</TableHead>
                       <TableHead>Estado</TableHead>
-                      <TableHead></TableHead>
+                      {!isMobile && <TableHead></TableHead>}
                       <TableHead></TableHead>
                     </TableRow>
                   </TableHeader>
@@ -118,6 +121,21 @@ export function PaymentsTable({
                       !isLoading &&
                       payments.map((payment) => (
                         <TableRow key={payment.id} className="hover:bg-inherit">
+                          {isMobile && (
+                            <TableCell className="">
+                              <div>
+                                {canAddPaymentAmount(payment.status) && (
+                                  <Button
+                                    onClick={() => onAddPayment(payment)}
+                                    variant="secondary"
+                                    size="sm"
+                                  >
+                                    Agregar abono
+                                  </Button>
+                                )}
+                              </div>
+                            </TableCell>
+                          )}
                           <TableCell className="font-semibold">
                             #{payment.id}
                           </TableCell>
@@ -139,19 +157,21 @@ export function PaymentsTable({
                           <TableCell>
                             <PaymentStatus status={payment.status} />
                           </TableCell>
-                          <TableCell className="">
-                            <div>
-                              {canAddPaymentAmount(payment.status) && (
-                                <Button
-                                  onClick={() => onAddPayment(payment)}
-                                  variant="secondary"
-                                  size="sm"
-                                >
-                                  Agregar abono
-                                </Button>
-                              )}
-                            </div>
-                          </TableCell>
+                          {!isMobile && (
+                            <TableCell className="">
+                              <div>
+                                {canAddPaymentAmount(payment.status) && (
+                                  <Button
+                                    onClick={() => onAddPayment(payment)}
+                                    variant="secondary"
+                                    size="sm"
+                                  >
+                                    Agregar abono
+                                  </Button>
+                                )}
+                              </div>
+                            </TableCell>
+                          )}
                           <TableCell>
                             <div className="flex justify-center">
                               <Button variant="outline" size="sm" asChild>
@@ -174,10 +194,10 @@ export function PaymentsTable({
               </div>
             </TabsContent>
             <TabsContent value="general">
-              <div className="border rounded-lg h-[320px] overflow-auto">
-                <Table className="table-fixed">
+              <div className="border rounded-lg overflow-auto">
+                <Table className="table-auto">
                   <TableHeader className="bg-gray-100">
-                    <TableRow className="[&>th]:px-4 [&>th]:text-xs [&>th]:sticky [&>th]:z-10 [&>th]:top-0">
+                    <TableRow className="lg:[&>th]:px-4 [&>th]:text-xs">
                       <TableHead>ID</TableHead>
                       <TableHead>Recibido</TableHead>
                       <TableHead>Fecha</TableHead>
@@ -191,7 +211,7 @@ export function PaymentsTable({
                       !isLoading &&
                       generalPayments.length === 0 && (
                         <TableRow>
-                          <TableCell colSpan={5} className="text-center">
+                          <TableCell colSpan={5} className="lg:text-center">
                             No hay pagos realizados
                           </TableCell>
                         </TableRow>
@@ -228,7 +248,7 @@ export function PaymentsTable({
                 </Table>
               </div>
             </TabsContent>
-            <div className="mt-auto grid grid-cols-4 gap-2 pt-8 text-sm">
+            <div className="mt-auto grid grid-cols-2 lg:grid-cols-4 gap-2 pt-8 text-sm">
               <div>
                 {loan != null && !isLoading && (
                   <p className="inline-flex flex-col">
@@ -273,7 +293,7 @@ export function PaymentsTable({
                 )}
                 {isLoading && <Skeleton className="h-4 w-32" />}
               </div>
-              <div className="col-span-2">
+              <div className="lg:col-span-2">
                 {loan != null && !isLoading && (
                   <p className="inline-flex flex-col">
                     <span className="text-muted-foreground text-sm">
