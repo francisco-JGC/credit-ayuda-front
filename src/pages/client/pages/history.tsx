@@ -11,7 +11,7 @@ export function ClientHistoryPage() {
   const { error, loans, isLoading } = useLoansByClient({ clientId: Number(id) })
 
   return (
-    <div>
+    <div className="container mx-auto p-4">
       <div className="flex justify-between">
         <div className="mb-4">
           <h1 className="text-2xl font-medium">{client?.name}</h1>

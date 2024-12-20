@@ -22,14 +22,14 @@ export function RequestsPage() {
   } = useRequests()
 
   return (
-    <div>
+    <div className="container mx-auto p-4">
       <div className="">
         <h1 className="text-2xl font-medium">Solicitudes</h1>
         <p className="text-sm text-muted-foreground">
           {totalRequests} solicitud/es.
         </p>
       </div>
-      <div className="mt-4 flex justify-between">
+      <div className="mt-4 flex lg:justify-between lg:flex-row flex-col gap-4">
         <div className="relative w-full md:w-[350px]">
           <Search
             className="text-gray-500 absolute top-0 bottom-0 my-auto left-3"
@@ -42,7 +42,7 @@ export function RequestsPage() {
             onChange={(e) => searchByDni(e.target.value)}
           />
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-col lg:flex-row gap-2">
           <FilterFrequency onChangeFrequency={filterByFrequency} />
           <FilterRoute onChangeRoute={filterByRoute} />
         </div>
