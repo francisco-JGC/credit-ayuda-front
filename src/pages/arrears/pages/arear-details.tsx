@@ -22,7 +22,7 @@ export function ArrearDetailsPage() {
   ).length
 
   return (
-    <div>
+    <div className="container mx-auto p-4">
       <div className="flex justify-between">
         <div>
           <h2 className="text-2xl font-medium">Mora #{id}</h2>
@@ -41,7 +41,7 @@ export function ArrearDetailsPage() {
           <CardTitle>Detalles de la mora</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-4 w-full gap-x-2 gap-y-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 w-full gap-x-2 gap-y-6">
             <p className="inline-flex flex-col">
               <span className="text-sm text-muted-foreground">Cliente: </span>
               <span className="font-medium">

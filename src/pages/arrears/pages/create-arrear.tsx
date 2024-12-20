@@ -11,10 +11,11 @@ import { Label } from '@/components/ui/label'
 import { useLoanDetails } from '@/pages/payments/hook/use-loan-details'
 import { formatDateLong } from '@/utils/date-format'
 import { formatPrice } from '@/utils/price-format'
+import { ChevronLeft } from 'lucide-react'
 import { useState } from 'react'
-import { redirect, useParams } from 'react-router-dom'
-import { useCreatePenalty } from '../hooks/use-penalty'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
+import { useCreatePenalty } from '../hooks/use-penalty'
 
 export function CreateArrearPage() {
   const { loanId } = useParams()
@@ -57,23 +58,32 @@ export function CreateArrearPage() {
     })
       .then(() => {
         toast.success('Mora creada exitosamente.')
-        redirect(`/arrears/${loanId}`)
+        navigate(`/arrears/${loanId}`)
       })
       .catch((error) => {
         toast.error(error.message)
       })
   }
+  const navigate = useNavigate()
+  const handleClickNavigate = () => navigate(-1)
 
   return (
-    <div>
-      <div>
-        <h2 className="text-2xl font-medium">Nueva mora</h2>
-        <p className="text-sm text-muted-foreground">Préstamo #{loanId}.</p>
+    <div className="container mx-auto p-4">
+      <div className="lg:flex lg:items-center gap-2">
+        <div>
+          <Button className="p-2 md:p-3" onClick={handleClickNavigate}>
+            <ChevronLeft width={18} />
+          </Button>
+        </div>
+        <div>
+          <h2 className="text-2xl font-medium">Nueva mora</h2>
+          <p className="text-sm text-muted-foreground">Préstamo #{loanId}.</p>
+        </div>
       </div>
       <Card className="shadow-sm h-full rounded-sm mt-4">
         <CardContent className="p-6">
           <section>
-            <div className="grid grid-cols-4 gap-8 w-full">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 w-full">
               <p className="inline-flex flex-col">
                 <span className="text-sm text-muted-foreground">Cliente: </span>
                 <span className="font-medium">{loan?.client.name}</span>

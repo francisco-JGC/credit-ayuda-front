@@ -81,7 +81,7 @@ export const Actions = ({ loan }: IProps) => {
               loan.status !== 'paid' &&
               loan.penalty_plan != null && (
                 <Link
-                  to={`/arrears/${loan.id}`}
+                  to={`/arrears/${loan.penalty_plan.id}`}
                   className="flex gap-2 items-center w-full hover:cursor-pointer"
                 >
                   <ClockArrowUp className="h-4 w-4" />

@@ -7,7 +7,7 @@ import {
   ICreatePenaltyPlan,
   IPenaltyPaymentScheduleCreate,
 } from '@/types/loans'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export function useCreatePenalty() {
   const {
@@ -49,6 +49,7 @@ export function usePenalty({ id }: { id: number }) {
 }
 
 export function useAddPenaltyPayment({ id }: { id: number }) {
+  const queryClient = useQueryClient()
   const {
     data: penaltyPayment,
     isPending,
@@ -57,6 +58,11 @@ export function useAddPenaltyPayment({ id }: { id: number }) {
   } = useMutation({
     mutationFn: async (penaltyPayment: IPenaltyPaymentScheduleCreate) => {
       return await addPenaltyPayment(id, penaltyPayment)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['penalty', id],
+      })
     },
   })
 

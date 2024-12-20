@@ -19,10 +19,10 @@ export function PenaltyPaymentsTable({
   penaltyPayments,
 }: PenaltyPaymentsTableProps) {
   return (
-    <div className="h-[220px] overflow-y-auto">
+    <div className="overflow-y-auto">
       <Table>
         <TableHeader className="bg-gray-100">
-          <TableRow className="[&>th]:px-4 [&>th]:text-xs [&>th]:sticky [&>th]:z-10 [&>th]:top-0">
+          <TableRow className="[&>th]:px-2 lg:[&>th]:px-4 [&>th]:text-xs">
             <TableHead>ID</TableHead>
             <TableHead>Fecha de pago</TableHead>
             <TableHead>Monto pagado</TableHead>
@@ -32,7 +32,10 @@ export function PenaltyPaymentsTable({
         </TableHeader>
         <TableBody>
           {penaltyPayments.map((penaltyPayment) => (
-            <TableRow key={penaltyPayment.id} className="[&>td]:px-4">
+            <TableRow
+              key={penaltyPayment.id}
+              className="[&>td]:px-2 lg:[&>td]:px-4"
+            >
               <TableCell>#{penaltyPayment.id}</TableCell>
               <TableCell>{formatDateLong(penaltyPayment.dueDate)}</TableCell>
               <TableCell>{formatPrice(penaltyPayment.amount_paid)}</TableCell>
