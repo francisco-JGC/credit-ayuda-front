@@ -4,7 +4,7 @@ import { useAuth } from '../protectedRoute/authProvider'
 import { Button } from '../ui/button'
 import { Link } from 'react-router-dom'
 
-export const UserMenu = () => {
+export const UserMenu = ({ onClick }: { onClick?: () => void }) => {
   const { logout } = useAuth()
 
   return (
@@ -16,6 +16,10 @@ export const UserMenu = () => {
         <MenuItem>
           <Link
             to="/profile"
+            onClick={(e) => {
+              e.stopPropagation()
+              onClick?.()
+            }}
             className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
           >
             Perfil
@@ -23,7 +27,11 @@ export const UserMenu = () => {
         </MenuItem>
         <MenuItem>
           <Button
-            onClick={logout}
+            onClick={(e) => {
+              e.stopPropagation()
+              logout()
+              onClick?.()
+            }}
             className="w-full text-start block px-4 py-2 text-gray-700 hover:bg-gray-100 bg-transparent border-none shadow-none"
           >
             Cerrar Sesión
