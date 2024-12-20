@@ -2,10 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { penaltyStatusMap } from '@/utils/contants'
 import { formatDateLong } from '@/utils/date-format'
 import { formatPrice } from '@/utils/price-format'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { AddPenaltyPayment } from '../components/add-penalty-payment'
 import { PenaltyPaymentsTable } from '../components/penalty-payments-table'
 import { usePenalty } from '../hooks/use-penalty'
+import { Button } from '@/components/ui/button'
+import { ChevronLeft } from 'lucide-react'
 
 export function ArrearDetailsPage() {
   const { id } = useParams<{ id: string }>()
@@ -21,14 +23,25 @@ export function ArrearDetailsPage() {
     (schedule) => schedule.status === 'paid',
   ).length
 
+  const navigate = useNavigate()
+  const handleClickNavigate = () => navigate(-1)
+
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-between">
-        <div>
-          <h2 className="text-2xl font-medium">Mora #{id}</h2>
-          <p className="text-sm text-muted-foreground">
-            Préstamo #{penaltyPlan?.loan.id}.
-          </p>
+        <div className="lg:flex items-center gap-2">
+          <div>
+            <Button className="p-2 md:p-3" onClick={handleClickNavigate}>
+              <ChevronLeft width={18} />
+            </Button>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-medium">Mora #{id}</h2>
+            <p className="text-sm text-muted-foreground">
+              Préstamo #{penaltyPlan?.loan.id}.
+            </p>
+          </div>
         </div>
         <div>
           {penaltyPlan != null && (
