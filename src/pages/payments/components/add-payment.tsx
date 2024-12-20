@@ -75,61 +75,92 @@ export function AddNewPayment({
       toast.error('No se pudo obtener la información del usuario')
       return
     }
+    let restAmount = 0
+    const makeRestPayment = async (
+      amountToPay: number,
+      payment: IPaymentSchedule,
+    ) => {
+      const originalAmount = amountToPay
+      let status = payment.status
+      if (amountToPay >= Number(payment.amount_due)) {
+        status = 'paid'
+        const tempPayments = loan.payment_plan.payment_schedules.map((p) => {
+          if (p.id === payment.id) {
+            return {
+              ...p,
+              status: 'paid',
+            }
+          }
+          return p
+        })
+
+        const hasBeenPaid = tempPayments.every((p) => p.status === 'paid')
+        if (hasBeenPaid) {
+          await updateLoan({
+            ...loan,
+            status: 'paid',
+          })
+        }
+      }
+      if (amountToPay > Number(payment.amount_due)) {
+        restAmount = amountToPay - Number(payment.amount_due)
+        amountToPay = Number(payment.amount_due)
+      } else {
+        restAmount = 0
+      }
+
+      await update({
+        ...payment,
+        paid_date: new Date().toISOString(),
+        amount_paid: (Number(payment.amount_paid) + amountToPay).toFixed(2),
+        amount_due: (Number(payment.amount_due) - amountToPay).toFixed(2),
+        status,
+      })
+
+      const sortedPayments = [...loan.payment_plan.payment_schedules].sort(
+        (a, b) =>
+          new Date(a.due_date).getTime() - new Date(b.due_date).getTime(),
+      )
+
+      let nextPaymentIndex = -1
+
+      for (const [index, sortedPayment] of sortedPayments.entries()) {
+        if (payment.id === sortedPayment.id) {
+          nextPaymentIndex = index + 1
+          break
+        }
+      }
+
+      if (nextPaymentIndex === -1) {
+        return amountToPay
+      }
+
+      const nextPayment = sortedPayments[nextPaymentIndex]
+
+      if (restAmount > 0) {
+        await makeRestPayment(restAmount, nextPayment)
+      }
+      return originalAmount
+    }
 
     const { id, created_at, ...rest } = mostRecentRegister
     const newCash = Number(mostRecentRegister.cash ?? 0) + amount
 
-    create({
-      ...rest,
-      amount: amount.toFixed(2),
-      type: 'income',
-      withdraw: '0',
-      cash: newCash.toFixed(2),
-      user: userInfo,
-      details: `Abono a préstamo #${loan.id}`,
-    })
-      .then(async () => {
-        let status = payment.status
-        if (amount === Number(payment.amount_due)) {
-          status = 'paid'
-          const tempPayments = loan.payment_plan.payment_schedules.map((p) => {
-            if (p.id === payment.id) {
-              return {
-                ...p,
-                status: 'paid',
-              }
-            }
-            return p
-          })
-
-          const hasBeenPaid = tempPayments.every((p) => p.status === 'paid')
-          if (hasBeenPaid) {
-            await updateLoan({
-              ...loan,
-              status: 'paid',
-            })
-          }
-        }
-
-        const updatedPayment: IPaymentSchedule = {
-          ...payment,
-          paid_date: new Date().toISOString(),
-          amount_paid: (Number(payment.amount_paid) + amount).toFixed(2),
-          amount_due: (Number(payment.amount_due) - amount).toFixed(2),
-          status,
-        }
-        update(updatedPayment)
-          .then(() => {
-            toast.success('Abono guardado correctamente')
-            closeModalRef.current?.click()
-          })
-          .catch(() => {
-            toast.error('Ocurrió un error al guardar el abono')
-          })
+    try {
+      const amountPaid = await makeRestPayment(amount, payment)
+      await create({
+        ...rest,
+        amount: amountPaid.toFixed(2),
+        type: 'income',
+        withdraw: '0',
+        cash: newCash.toFixed(2),
+        user: userInfo,
+        details: `Abono a préstamo #${loan.id}`,
       })
-      .catch(() => {
-        toast.error('Ocurrió un error al registrar el movimiento')
-      })
+      toast.success('Abono guardado correctamente')
+    } catch (error) {
+      toast.error('Ocurrió un error al registrar el movimiento')
+    }
   }
 
   const handleNoPayment = () => {
