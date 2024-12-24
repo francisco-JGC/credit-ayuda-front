@@ -1,8 +1,6 @@
 import { LayuotPage } from "@/components/layuotPage";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import useForm from "@/hooks/useForm";
-import { Printer } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Subject } from "../components/subject";
 import { formatPrice } from "@/utils/price-format";
@@ -24,9 +22,9 @@ export default function ReportDailyPage() {
           <div className="flex gap-4 items-center mt-4">
             <Input type="date" value={formValues.filterDate} id="filterDate" name="filterDate" onChange={handleInputChange} />
             <Link to={`#`}>
-              <Button className="bg-indigo-500 flex gap-4">
+              {/* <Button className="bg-indigo-500 flex gap-4">
                 <Printer width={18} /> <span>IMPRIMIR</span>
-              </Button>
+              </Button> */}
             </Link>
           </div>
         </div>

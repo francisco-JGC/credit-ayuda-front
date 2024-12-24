@@ -48,7 +48,7 @@ export function useCredit({
       let totalAmountCollected = 0
       let totalPendingAmount = 0
 
-      credits.forEach((loan) => {
+      credits?.forEach((loan) => {
         totalPayments += loan.paid_installments
         totalPendingPayments += loan.pending_installments
         totalAmountCollected += loan.collected
