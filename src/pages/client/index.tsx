@@ -50,7 +50,7 @@ export default function ClientPage() {
         <div className="relative">
           <Search className="text-gray-500 absolute top-2 left-2" width={19} />
           <Input
-            placeholder="Cédula del cliente..."
+            placeholder="Nombre del cliente..."
             className="pl-10 w-full"
             name="search_dni"
             onChange={(e) => searchByDni(e.target.value)}
@@ -107,28 +107,27 @@ export default function ClientPage() {
                   </TableCell>
                   <TableCell className="">{client.route}</TableCell>
                   <TableCell
-                    className={` font-bold ${
-                      client.loan_status === 'active'
+                    className={` font-bold ${client.loan_status === 'active'
                         ? 'text-green-500'
                         : client.loan_status === 'pending'
-                        ? 'text-yellow-500'
-                        : client.loan_status === 'paid'
-                        ? 'text-indigo-500'
-                        : client.loan_status === 'rejected'
-                        ? 'text-red-500'
-                        : 'text-gray-500'
-                    }
+                          ? 'text-yellow-500'
+                          : client.loan_status === 'paid'
+                            ? 'text-indigo-500'
+                            : client.loan_status === 'rejected'
+                              ? 'text-red-500'
+                              : 'text-gray-500'
+                      }
                     }`}
                   >
                     {client.loan_status === 'active'
                       ? 'Activo'
                       : client.loan_status === 'pending'
-                      ? 'Pendiente'
-                      : client.loan_status === 'paid'
-                      ? 'Pagado'
-                      : client.loan_status === 'rejected'
-                      ? 'Rechazado'
-                      : 'Sin prestamo'}
+                        ? 'Pendiente'
+                        : client.loan_status === 'paid'
+                          ? 'Pagado'
+                          : client.loan_status === 'rejected'
+                            ? 'Rechazado'
+                            : 'Sin prestamo'}
                   </TableCell>
                   {!isMobile && (
                     <TableCell className="">
